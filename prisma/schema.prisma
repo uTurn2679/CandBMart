@@ -1,0 +1,184 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma/client"
+}
+
+model User {
+  id               String         @id @default(uuid())
+  name             String?
+  email            String?        @unique
+  phone_number     String?        @unique
+  passwordHash     String?
+  isPhoneVerified  Boolean        @default(false)
+  isEmailVerified  Boolean        @default(false)
+  role             String         @default("USER") // "USER" or "ADMIN"
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  orders           Order[]
+  paymentsVerified Payment[]      @relation("VerifiedByAdmin")
+}
+
+model Otp {
+  id          String   @id @default(uuid())
+  identifier  String   // Email or Phone number
+  otpCode     String
+  purpose     String   // "REGISTRATION", "LOGIN", "PASSWORD_RESET"
+  expiresAt   DateTime
+  isUsed      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model Category {
+  id          String     @id @default(uuid())
+  name        String
+  slug        String     @unique
+  description String?
+  parentId    String?
+  parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryHierarchy")
+  products    Product[]
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Product {
+  id               String           @id @default(uuid())
+  categoryId       String
+  category         Category         @relation(fields: [categoryId], references: [id])
+  name             String
+  slug             String           @unique
+  description      String?
+  price            Float
+  compareAtPrice   Float?
+  sku              String?          @unique
+  stockQuantity    Int              @default(0)
+  isActive         Boolean          @default(true)
+  images           ProductImage[]
+  variants         ProductVariant[]
+  orderItems       OrderItem[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+model ProductImage {
+  id           String   @id @default(uuid())
+  productId    String
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  imageUrl     String
+  isPrimary    Boolean  @default(false)
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+}
+
+model ProductVariant {
+  id            String      @id @default(uuid())
+  productId     String
+  product       Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variantName   String      // e.g., 'Size: L', 'Color: Blue'
+  sku           String?     @unique
+  priceOverride Float?
+  stockQuantity Int         @default(0)
+  orderItems    OrderItem[]
+  createdAt     DateTime    @default(now())
+}
+
+model Coupon {
+  id                String   @id @default(uuid())
+  code              String   @unique
+  discountType      String   // "FIXED" or "PERCENTAGE"
+  discountValue     Float
+  minCartAmount     Float    @default(0.0)
+  maxDiscountAmount Float?
+  startsAt          DateTime
+  expiresAt         DateTime
+  usageLimit        Int?
+  usedCount         Int      @default(0)
+  isActive          Boolean  @default(true)
+  orders            Order[]
+  createdAt         DateTime @default(now())
+}
+
+model Order {
+  id              String          @id @default(uuid())
+  orderNumber     String          @unique
+  userId          String?
+  user            User?           @relation(fields: [userId], references: [id])
+  
+  // Customer Info snapshot
+  customerName    String
+  customerPhone   String
+  deliveryAddress String
+  deliveryZone    String          // "INSIDE_DHAKA" or "OUTSIDE_DHAKA"
+  
+  // Totals
+  subtotalAmount  Float
+  deliveryCharge  Float           @default(0.0)
+  couponId        String?
+  coupon          Coupon?         @relation(fields: [couponId], references: [id])
+  discountAmount  Float           @default(0.0)
+  totalAmount     Float           // net payable
+  
+  orderStatus     String          @default("PENDING") // "PENDING", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"
+  paymentStatus   String          @default("PENDING") // "PENDING", "PAID", "REFUNDED", "FAILED"
+  
+  items           OrderItem[]
+  payment         Payment?
+  trackingHistory OrderTracking[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model OrderItem {
+  id          String          @id @default(uuid())
+  orderId     String
+  order       Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product         @relation(fields: [productId], references: [id])
+  variantId   String?
+  variant     ProductVariant? @relation(fields: [variantId], references: [id])
+  productName String
+  variantName String?
+  unitPrice   Float
+  quantity    Int
+  totalPrice  Float
+}
+
+model Payment {
+  id              String    @id @default(uuid())
+  orderId         String    @unique
+  order           Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  paymentMethod   String    // "COD", "BKASH_MANUAL", "NAGAD_MANUAL", "ROCKET_MANUAL"
+  paymentStatus   String    @default("PENDING") // "PENDING", "VERIFIED", "FAILED"
+  amountPaid      Float
+  
+  // MFS verification
+  transactionId   String?   @unique
+  lastThreeDigits String?
+  
+  verifiedById    String?
+  verifiedBy      User?     @relation("VerifiedByAdmin", fields: [verifiedById], references: [id])
+  verifiedAt      DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model OrderTracking {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  status    String
+  notes     String?
+  createdAt DateTime @default(now())
+}
+
+model SystemSetting {
+  key         String   @id
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+}

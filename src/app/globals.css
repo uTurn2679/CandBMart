@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+/* Enable class-based dark mode variant in Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #ffffff;
+  --foreground: #1c2420; /* Dark charcoal/green text for light mode */
+  --primary: #f37021;
+  --secondary: #115e2e;
+
+  /* Theme-dependent zinc shades for light mode */
+  --color-zinc-50: #fcfdfc;
+  --color-zinc-100: #f5f7f5;
+  --color-zinc-105: #f5f7f5;
+  --color-zinc-150: #ebebeb;
+  --color-zinc-200: #e2e8e3;
+  --color-zinc-205: #e2e8e3;
+  --color-zinc-345: #6f8171;
+  --color-zinc-350: #6f8171;
+  --color-zinc-400: #556657;
+  --color-zinc-450: #425044;
+  --color-zinc-500: #2d382e;
+  --color-zinc-650: #222c23;
+  --color-zinc-655: #222c23;
+  --color-zinc-700: #1a231b;
+  --color-zinc-800: #1a231b;
+  --color-zinc-805: #1a231b;
+  --color-zinc-850: #0f1510;
+  --color-zinc-900: #0f1510;
+  --color-zinc-905: #0f1510;
+  --color-zinc-950: #080b08;
+}
+
+/* Dark mode variable overrides */
+.dark {
+  --background: #06130b; /* Forest Night background */
+  --foreground: #eef6f0; /* Pistachio white text */
+  
+  /* Theme-dependent zinc shades for dark mode (Forest Green scale) */
+  --color-zinc-50: #0f2518;
+  --color-zinc-100: #132f1f;
+  --color-zinc-105: #132f1f;
+  --color-zinc-150: #1b3d2b;
+  --color-zinc-200: #25543c;
+  --color-zinc-205: #25543c;
+  --color-zinc-345: #45885c;
+  --color-zinc-350: #45885c;
+  --color-zinc-400: #57a772;
+  --color-zinc-450: #71b789;
+  --color-zinc-500: #92caa5;
+  --color-zinc-655: #daecd0;
+  --color-zinc-650: #daecd0;
+  --color-zinc-700: #eef6f0;
+  --color-zinc-800: #153c23;
+  --color-zinc-805: #102d1a;
+  --color-zinc-850: #0b1f12;
+  --color-zinc-900: #06130b;
+  --color-zinc-905: #040d07;
+  --color-zinc-950: #020703;
+}
+
+@theme {
+  --color-brand-orange: #f37021;
+  --color-brand-dark: #115e2e;
+  --color-brand-green-dark: #115e2e;
+  --color-brand-green-lime: #61b037;
+
+  /* Map zinc variables so they dynamically toggle between light and dark green-slate mode */
+  --color-zinc-50: var(--color-zinc-50);
+  --color-zinc-100: var(--color-zinc-100);
+  --color-zinc-105: var(--color-zinc-105);
+  --color-zinc-150: var(--color-zinc-150);
+  --color-zinc-200: var(--color-zinc-200);
+  --color-zinc-205: var(--color-zinc-205);
+  --color-zinc-345: var(--color-zinc-345);
+  --color-zinc-350: var(--color-zinc-350);
+  --color-zinc-400: var(--color-zinc-400);
+  --color-zinc-450: var(--color-zinc-450);
+  --color-zinc-500: var(--color-zinc-500);
+  --color-zinc-650: var(--color-zinc-650);
+  --color-zinc-655: var(--color-zinc-655);
+  --color-zinc-700: var(--color-zinc-700);
+  --color-zinc-800: var(--color-zinc-800);
+  --color-zinc-805: var(--color-zinc-805);
+  --color-zinc-850: var(--color-zinc-850);
+  --color-zinc-900: var(--color-zinc-900);
+  --color-zinc-905: var(--color-zinc-905);
+  --color-zinc-950: var(--color-zinc-950);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-open-sans), sans-serif;
+}
+
+/* Custom micro-animations matching premium retail design */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
+}
+
+.animate-wiggle {
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+/* Customer reviews left-to-right marquee */
+@keyframes marquee-ltr {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.review-marquee {
+  animation: marquee-ltr 28s linear infinite;
+  will-change: transform;
+  min-width: max-content;
+}
+
+.review-marquee:hover {
+  animation-play-state: paused;
+}
