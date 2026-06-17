@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
       </head>
-      <body className={`${openSans.variable} font-sans bg-zinc-50 text-zinc-900 min-h-screen flex flex-col`}>
+      <body className={`${openSans.variable} font-sans bg-zinc-50 text-zinc-900 min-h-screen flex flex-col overflow-x-hidden`}>
         <AuthProvider>
           <CartProvider>
             <main className="flex-1 flex flex-col">{children}</main>
