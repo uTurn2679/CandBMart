@@ -81,19 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      {/* Top Trust & Contact Bar */}
-      <div className="w-full bg-[#031716] dark:bg-zinc-950 text-white text-[11px] font-bold py-2 px-4 border-b border-orange-500/10">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1.5 sm:gap-4">
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1"><Phone size={12} className="text-brand-orange" /> Hotline: 09642922922</span>
-            <span className="hidden md:flex items-center gap-1"><Clock size={12} className="text-brand-orange" /> Sat - Fri: 9:00 AM - 9:00 PM</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1"><ShieldCheck size={12} className="text-emerald-400" /> 100% Safe & Organic Quality</span>
-            <span className="hidden sm:inline bg-brand-orange text-white text-[9px] px-2 py-0.5 rounded-full uppercase">Free Delivery Above 2,000 TK</span>
-          </div>
-        </div>
-      </div>
+
 
       <header className="sticky top-0 z-40 w-full bg-white dark:bg-zinc-950 transition shadow-xs border-b border-zinc-100 dark:border-zinc-900">
         {/* Main Navbar Row */}
