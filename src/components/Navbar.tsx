@@ -47,26 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   
-  // Theme Toggle States
-  const [theme, setTheme] = useState<"light" | "dark">("light");
 
-  // Sync state with HTML class list on mount
-  useEffect(() => {
-    const isDark = document.documentElement.classList.contains("dark");
-    setTheme(isDark ? "dark" : "light");
-  }, []);
-
-  const toggleTheme = () => {
-    if (theme === "light") {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-      setTheme("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-      setTheme("light");
-    }
-  };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -214,15 +195,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="hidden sm:inline text-[10px] font-bold mt-1">Wishlist</span>
             </button>
 
-            {/* Dark/Bright Mode Toggler */}
-            <button
-              onClick={toggleTheme}
-              className="flex flex-col items-center cursor-pointer text-zinc-650 dark:text-zinc-350 hover:text-brand-orange transition"
-              title={theme === "light" ? "Switch to Dark Mode" : "Switch to Bright Mode"}
-            >
-              {theme === "light" ? <Moon size={20} className="stroke-[1.8]" /> : <Sun size={20} className="stroke-[1.8]" />}
-              <span className="hidden sm:inline text-[10px] font-bold mt-1">{theme === "light" ? "Dark Mode" : "Bright Mode"}</span>
-            </button>
+
 
             {/* Shopping Cart Button */}
             <button

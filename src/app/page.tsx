@@ -687,9 +687,9 @@ export default function CatalogPage() {
 
       {/* Review Slider + Trust Card */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Product Banner Slider — 2 cols */}
-          <div className="lg:col-span-2 aspect-[21/9] md:aspect-[24/9]">
+          <div className="lg:col-span-2 aspect-[4/3] sm:aspect-[21/9] md:aspect-[24/9]">
             <ProductBannerSlider onSearchChange={setSearchQuery} />
           </div>
 
