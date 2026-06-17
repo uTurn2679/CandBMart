@@ -416,9 +416,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                   >
                     {actionLoading ? "Logging In..." : "Log In with Password"}
                   </button>
-                  <p className="text-zinc-500 text-xs text-center">
-                    Hint: Admin is <code className="bg-zinc-100 p-0.5 px-1 rounded">admin@ecommerce.com</code> / <code className="bg-zinc-100 p-0.5 px-1 rounded">admin123</code>
-                  </p>
+
                 </form>
               )}
 
