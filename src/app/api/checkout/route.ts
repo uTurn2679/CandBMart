@@ -200,8 +200,8 @@ export async function POST(request: Request) {
         const message = encodeURIComponent(`🛒 *New Order Received!*\n\n*Order No:* ${result.orderNumber}\n*Customer:* ${customerName}\n*Phone:* ${customerPhone}\n*Total:* ${result.totalAmount} TK\n*Payment:* ${paymentMethod}\n\nPlease check the admin panel for details.`);
         const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${telegramChatId}&text=${message}&parse_mode=Markdown`;
         
-        // Fire and forget (don't await so it doesn't block checkout)
-        fetch(url).catch(err => console.error("Telegram Fetch Error:", err));
+        // Await the fetch so Vercel does not terminate the lambda early
+        await fetch(url).catch(err => console.error("Telegram Fetch Error:", err));
       }
     } catch (e) {
       console.error("Failed to trigger Telegram notification:", e);
