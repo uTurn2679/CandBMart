@@ -192,18 +192,19 @@ export async function POST(request: Request) {
       return order;
     });
 
-    // 3. Send WhatsApp Notification via CallMeBot
+    // 3. Send Telegram Notification
     try {
-      const apiKey = process.env.CALLMEBOT_API_KEY;
-      if (apiKey) {
+      const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
+      const telegramChatId = process.env.TELEGRAM_CHAT_ID;
+      if (telegramBotToken && telegramChatId) {
         const message = encodeURIComponent(`🛒 *New Order Received!*\n\n*Order No:* ${result.orderNumber}\n*Customer:* ${customerName}\n*Phone:* ${customerPhone}\n*Total:* ${result.totalAmount} TK\n*Payment:* ${paymentMethod}\n\nPlease check the admin panel for details.`);
-        const url = `https://api.callmebot.com/whatsapp.php?phone=+8801960927913&text=${message}&apikey=${apiKey}`;
+        const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${telegramChatId}&text=${message}&parse_mode=Markdown`;
         
         // Fire and forget (don't await so it doesn't block checkout)
-        fetch(url).catch(err => console.error("CallMeBot Fetch Error:", err));
+        fetch(url).catch(err => console.error("Telegram Fetch Error:", err));
       }
     } catch (e) {
-      console.error("Failed to trigger WhatsApp notification:", e);
+      console.error("Failed to trigger Telegram notification:", e);
     }
 
     return NextResponse.json({
