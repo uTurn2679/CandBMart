@@ -174,7 +174,7 @@ export default function AdminDashboard() {
   const loadAdminProducts = async () => {
     setAdminProductLoading(true);
     try {
-      const res = await fetch("/api/admin/products");
+      const res = await fetch("/api/admin/products", { cache: "no-store" });
       const data = await res.json();
       if (data.success) {
         setAdminProducts(data.products);
