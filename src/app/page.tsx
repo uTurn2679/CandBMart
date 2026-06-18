@@ -703,8 +703,7 @@ export default function CatalogPage() {
       } catch (error) {
         console.error("Failed to load categories:", error);
       }
-      }
-    };
+    }
 
     const loadBannerProducts = async () => {
       try {
