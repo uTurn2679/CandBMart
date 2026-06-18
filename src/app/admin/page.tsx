@@ -366,6 +366,31 @@ export default function AdminDashboard() {
     }
   };
 
+  // Toggle Banner status
+  const handleToggleBanner = async (prodId: string, currentStatus: boolean) => {
+    if (!currentStatus) {
+      // Trying to add to banner, check limit
+      const bannerCount = adminProducts.filter((p) => p.isBanner).length;
+      if (bannerCount >= 4) {
+        alert("আপনি সর্বোচ্চ ৪টি প্রোডাক্ট ব্যানারে রাখতে পারবেন। নতুনটি যোগ করার আগে একটি রিমুভ করুন।");
+        return;
+      }
+    }
+
+    try {
+      const res = await fetch(`/api/admin/products/${prodId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isBanner: !currentStatus }),
+      });
+      if (res.ok) {
+        loadAdminProducts();
+      }
+    } catch (e) {
+      console.error("Failed to toggle banner status");
+    }
+  };
+
   // Save edited product
   const handleSaveEditProduct = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -874,6 +899,7 @@ export default function AdminDashboard() {
                         <th className="pb-3 pr-2">Category</th>
                         <th className="pb-3 pr-2">Price</th>
                         <th className="pb-3 pr-2">Stock</th>
+                        <th className="pb-3 pr-2">Banner</th>
                         <th className="pb-3 pr-2">Active</th>
                         <th className="pb-3 pr-2 text-right">Actions</th>
                       </tr>
@@ -894,6 +920,18 @@ export default function AdminDashboard() {
                           <td className="py-3 pr-2 font-bold">{p.category?.name}</td>
                           <td className="py-3 pr-2 font-extrabold text-zinc-905 dark:text-white">{p.price} TK</td>
                           <td className="py-3 pr-2">{p.stockQuantity}</td>
+                          <td className="py-3 pr-2">
+                            <button
+                              onClick={() => handleToggleBanner(p.id, p.isBanner)}
+                              className={`px-2 py-0.5 rounded-full text-[9px] font-black ${
+                                p.isBanner
+                                  ? "bg-amber-50 text-amber-600 dark:bg-amber-950/20"
+                                  : "bg-zinc-100 text-zinc-500 dark:bg-zinc-900 dark:text-zinc-400"
+                              }`}
+                            >
+                              {p.isBanner ? "YES" : "NO"}
+                            </button>
+                          </td>
                           <td className="py-3 pr-2">
                             <button
                               onClick={() => handleToggleProductActive(p.id, p.isActive)}

@@ -154,12 +154,38 @@ const PRODUCT_BANNERS = [
   },
 ];
 
-function ProductBannerSlider({ onSearchChange }: { onSearchChange?: (q: string) => void }) {
+function ProductBannerSlider({ onSearchChange, bannerProducts = [] }: { onSearchChange?: (q: string) => void, bannerProducts?: any[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [visible, setVisible] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
   const router = useRouter();
   const { addToCart } = useCart();
+
+  const slides = React.useMemo(() => {
+    if (bannerProducts.length > 0) {
+      return bannerProducts.map((p, idx) => {
+        const colors = [
+          { badge: "#f48721", accent: "#1d4ed8", bg: "TOP SELLER" },
+          { badge: "#059669", accent: "#475569", bg: "NEW COLLECTION" },
+          { badge: "#db2777", accent: "#1e3a8a", bg: "POPULAR" },
+          { badge: "#7c3aed", accent: "#7c3aed", bg: "TRENDING" }
+        ];
+        const color = colors[idx % colors.length];
+        return {
+          name: p.name,
+          subtitle: p.description?.slice(0, 60) || "Discover our amazing collection.",
+          image: p.images?.find((img: any) => img.isPrimary)?.imageUrl || p.images?.[0]?.imageUrl || "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600",
+          price: `৳${p.price.toLocaleString()}`,
+          oldPrice: p.compareAtPrice ? `৳${p.compareAtPrice.toLocaleString()}` : "",
+          badge: color.bg,
+          badgeColor: color.badge,
+          slug: p.slug,
+          accent: color.accent,
+        };
+      });
+    }
+    return PRODUCT_BANNERS;
+  }, [bannerProducts]);
 
   const goTo = useCallback((idx: number) => {
     setVisible(false);
@@ -211,15 +237,16 @@ function ProductBannerSlider({ onSearchChange }: { onSearchChange?: (q: string) 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prev) => {
-        const next = (prev + 1) % PRODUCT_BANNERS.length;
+        const next = (prev + 1) % slides.length;
         goTo(next);
         return prev;
       });
     }, 4500);
     return () => clearInterval(interval);
-  }, [goTo]);
+  }, [slides.length, goTo]);
 
-  const slide = PRODUCT_BANNERS[activeIndex];
+  const slide = slides[activeIndex] || slides[0];
+  if (!slide) return null;
 
   return (
     <div
@@ -294,7 +321,7 @@ function ProductBannerSlider({ onSearchChange }: { onSearchChange?: (q: string) 
       <button
         onClick={(e) => {
           e.stopPropagation();
-          goTo((activeIndex - 1 + PRODUCT_BANNERS.length) % PRODUCT_BANNERS.length);
+          goTo((activeIndex - 1 + slides.length) % slides.length);
         }}
         className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-md p-2 rounded-full shadow transition opacity-0 group-hover:opacity-100 z-10"
       >
@@ -305,7 +332,7 @@ function ProductBannerSlider({ onSearchChange }: { onSearchChange?: (q: string) 
       <button
         onClick={(e) => {
           e.stopPropagation();
-          goTo((activeIndex + 1) % PRODUCT_BANNERS.length);
+          goTo((activeIndex + 1) % slides.length);
         }}
         className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-md p-2 rounded-full shadow transition opacity-0 group-hover:opacity-100 z-10"
       >
@@ -314,7 +341,7 @@ function ProductBannerSlider({ onSearchChange }: { onSearchChange?: (q: string) 
 
       {/* Dot indicators */}
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-        {PRODUCT_BANNERS.map((_, idx) => (
+        {slides.map((_, idx) => (
           <button
             key={idx}
             onClick={(e) => {
@@ -737,7 +764,10 @@ export default function CatalogPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Product Banner Slider — 2 cols */}
           <div className="lg:col-span-2 aspect-[4/3] sm:aspect-[21/9] md:aspect-[24/9]">
-            <ProductBannerSlider onSearchChange={setSearchQuery} />
+            <ProductBannerSlider 
+              onSearchChange={setSearchQuery} 
+              bannerProducts={products.filter((p) => p.isBanner)}
+            />
           </div>
 
           {/* Trust & Promise card — 1 col */}
