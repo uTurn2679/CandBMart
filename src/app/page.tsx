@@ -157,7 +157,9 @@ const PRODUCT_BANNERS = [
 function ProductBannerSlider({ onSearchChange }: { onSearchChange?: (q: string) => void }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [isAdding, setIsAdding] = useState(false);
   const router = useRouter();
+  const { addToCart } = useCart();
 
   const goTo = useCallback((idx: number) => {
     setVisible(false);
@@ -166,6 +168,45 @@ function ProductBannerSlider({ onSearchChange }: { onSearchChange?: (q: string) 
       setVisible(true);
     }, 300);
   }, []);
+
+  const handleOrder = async (e: React.MouseEvent, slide: any) => {
+    e.stopPropagation();
+    setIsAdding(true);
+    try {
+      const res = await fetch(`/api/products/${slide.slug}`);
+      if (!res.ok) {
+        alert("Product not found in database. Please create a product with this slug.");
+        setIsAdding(false);
+        return;
+      }
+      const data = await res.json();
+      const product = data.product;
+      const variant = product.variants?.[0];
+      if (!product || !variant) {
+        alert("Product or variant missing in DB.");
+        setIsAdding(false);
+        return;
+      }
+      
+      const primaryImg = product.images?.find((img: any) => img.isPrimary) || product.images?.[0];
+      const imageVal = primaryImg ? primaryImg.imageUrl : slide.image;
+      
+      addToCart({
+        variantId: variant.id,
+        productId: product.id,
+        name: product.name,
+        variantName: variant.variantName || "Standard",
+        price: variant.priceOverride ?? product.price,
+        image: imageVal,
+      }, 1);
+      
+      router.push("/checkout");
+    } catch (err) {
+      console.error(err);
+      alert("Error adding to cart.");
+      setIsAdding(false);
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -234,16 +275,18 @@ function ProductBannerSlider({ onSearchChange }: { onSearchChange?: (q: string) 
 
         {/* CTA button */}
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            if (onSearchChange) onSearchChange(slide.slug);
-            const el = document.getElementById("catalog");
-            if (el) el.scrollIntoView({ behavior: "smooth" });
-          }}
-          className="flex items-center gap-2 bg-brand-orange hover:bg-brand-orange/90 text-white font-extrabold text-[11px] sm:text-sm px-6 py-3 rounded-2xl transition active:scale-95 shadow-lg shadow-brand-orange/30 w-max uppercase tracking-wider"
+          onClick={(e) => handleOrder(e, slide)}
+          disabled={isAdding}
+          className="flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange/90 text-white font-extrabold text-[11px] sm:text-sm px-6 py-3 rounded-2xl transition active:scale-95 shadow-lg shadow-brand-orange/30 min-w-[140px] uppercase tracking-wider disabled:opacity-70 disabled:cursor-not-allowed"
         >
-          <ShoppingBag size={15} />
-          অর্ডার করুন
+          {isAdding ? (
+            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+          ) : (
+            <>
+              <ShoppingBag size={15} />
+              অর্ডার করুন
+            </>
+          )}
         </button>
       </div>
 
