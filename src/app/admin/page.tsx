@@ -1176,7 +1176,7 @@ export default function AdminDashboard() {
 
                     <button
                       type="submit"
-                      className="w-full bg-indigo-650 hover:bg-zinc-800 text-white font-extrabold py-2.5 rounded-xl transition active:scale-98 text-xs"
+                      className="w-full bg-white text-black border border-black hover:bg-zinc-100 font-extrabold py-2.5 rounded-xl transition active:scale-98 text-xs"
                     >
                       Save Catalog Updates
                     </button>

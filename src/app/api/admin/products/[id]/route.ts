@@ -26,12 +26,12 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     // Build update payload
     const updateData: any = {};
     if (name !== undefined) updateData.name = name;
-    if (description !== undefined) updateData.description = description;
+    if (description !== undefined) updateData.description = description === "" ? null : description;
     if (price !== undefined) updateData.price = parseFloat(price);
     if (compareAtPrice !== undefined) {
       updateData.compareAtPrice = compareAtPrice ? parseFloat(compareAtPrice) : null;
     }
-    if (sku !== undefined) updateData.sku = sku;
+    if (sku !== undefined) updateData.sku = sku === "" ? null : sku;
     if (categoryId !== undefined) updateData.categoryId = categoryId;
     if (isActive !== undefined) updateData.isActive = isActive;
     if (stockQuantity !== undefined) updateData.stockQuantity = parseInt(stockQuantity);
