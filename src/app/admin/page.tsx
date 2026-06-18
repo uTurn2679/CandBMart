@@ -384,6 +384,8 @@ export default function AdminDashboard() {
           sku: editingProduct.sku,
           categoryId: editingProduct.categoryId,
           stockQuantity: editingProduct.stockQuantity,
+          additionalInfo: editingProduct.additionalInfo || null,
+          extraImages: editingProduct.extraImages || [],
         }),
       });
 
@@ -1171,6 +1173,39 @@ export default function AdminDashboard() {
                         onChange={(e) => setEditingProduct({ ...editingProduct, description: e.target.value })}
                         rows={3}
                         className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2 outline-none focus:border-brand-orange transition resize-none"
+                      />
+                    </div>
+
+                    {/* Additional Info for Show More */}
+                    <div>
+                      <label className="block text-[10px] font-bold text-zinc-500 mb-1 uppercase tracking-wider">Show More – অতিরিক্ত তথ্য</label>
+                      <textarea
+                        value={editingProduct.additionalInfo || ""}
+                        onChange={(e) => setEditingProduct({ ...editingProduct, additionalInfo: e.target.value })}
+                        rows={3}
+                        placeholder="যেমন: উপাদান, সাইজ চার্ট, যত্নের নির্দেশনা..."
+                        className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2 outline-none focus:border-brand-orange transition resize-none text-xs"
+                      />
+                    </div>
+
+                    {/* Extra Color Images for Show More */}
+                    <div>
+                      <label className="block text-[10px] font-bold text-zinc-500 mb-1 uppercase tracking-wider">Show More – অন্য কালারের ছবির URL</label>
+                      <p className="text-[9px] text-zinc-400 mb-1.5">প্রতিটি URL আলাদা লাইনে লিখুন</p>
+                      <textarea
+                        value={(editingProduct.extraImages || []).join("\n")}
+                        onChange={(e) =>
+                          setEditingProduct({
+                            ...editingProduct,
+                            extraImages: e.target.value
+                              .split("\n")
+                              .map((u: string) => u.trim())
+                              .filter((u: string) => u.length > 0),
+                          })
+                        }
+                        rows={4}
+                        placeholder={"https://example.com/red.jpg\nhttps://example.com/blue.jpg"}
+                        className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2 outline-none focus:border-brand-orange transition resize-none text-xs font-mono"
                       />
                     </div>
 

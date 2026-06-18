@@ -21,6 +21,8 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
       categoryId,
       isActive,
       stockQuantity,
+      additionalInfo,
+      extraImages,
     } = body;
 
     // Build update payload
@@ -35,6 +37,8 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     if (categoryId !== undefined) updateData.categoryId = categoryId;
     if (isActive !== undefined) updateData.isActive = isActive;
     if (stockQuantity !== undefined) updateData.stockQuantity = parseInt(stockQuantity);
+    if (additionalInfo !== undefined) updateData.additionalInfo = additionalInfo === "" ? null : additionalInfo;
+    if (extraImages !== undefined) updateData.extraImages = Array.isArray(extraImages) ? extraImages : [];
 
     const updatedProduct = await prisma.$transaction(async (tx) => {
       // Update main product

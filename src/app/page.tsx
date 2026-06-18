@@ -181,7 +181,10 @@ function ProductBannerSlider({ onSearchChange }: { onSearchChange?: (q: string) 
   const slide = PRODUCT_BANNERS[activeIndex];
 
   return (
-    <div className="relative w-full h-full min-h-[220px] md:min-h-0 rounded-3xl overflow-hidden shadow-xl border border-zinc-200/50 dark:border-zinc-800/80 group cursor-pointer">
+    <div
+      className="relative w-full h-full min-h-[220px] md:min-h-0 rounded-3xl overflow-hidden shadow-xl border border-zinc-200/50 dark:border-zinc-800/80 group cursor-pointer"
+      onClick={() => router.push(`/product/${slide.slug}`)}
+    >
       {/* Background image */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
