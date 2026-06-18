@@ -194,8 +194,8 @@ export async function POST(request: Request) {
 
     // 3. Send Telegram Notification
     try {
-      const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
-      const telegramChatId = process.env.TELEGRAM_CHAT_ID;
+      const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN || "8840968249:AAGE8XO-01fC7A9EL62g5tnJOfZw37XkqG8";
+      const telegramChatId = process.env.TELEGRAM_CHAT_ID || "6445871174";
       if (telegramBotToken && telegramChatId) {
         const message = encodeURIComponent(`🛒 *New Order Received!*\n\n*Order No:* ${result.orderNumber}\n*Customer:* ${customerName}\n*Phone:* ${customerPhone}\n*Total:* ${result.totalAmount} TK\n*Payment:* ${paymentMethod}\n\nPlease check the admin panel for details.`);
         const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${telegramChatId}&text=${message}&parse_mode=Markdown`;
