@@ -656,7 +656,7 @@ export default function CatalogPage() {
 
     const loadBannerProducts = async () => {
       try {
-        const res = await fetch("/api/products?isBanner=true");
+        const res = await fetch("/api/products?isBanner=true", { cache: "no-store" });
         const data = await res.json();
         if (data.success) setBannerProducts(data.products);
       } catch (error) {
