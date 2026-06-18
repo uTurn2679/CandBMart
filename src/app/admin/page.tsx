@@ -18,7 +18,8 @@ import {
   Trash2,
   Edit,
   ClipboardList,
-  Tags
+  Tags,
+  Bell
 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -495,7 +496,23 @@ export default function AdminDashboard() {
         {/* Dashboard Title banner */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-zinc-150 dark:border-zinc-850 pb-4">
           <div>
-            <h1 className="text-2xl font-black text-zinc-905 dark:text-white">Admin Operations Console</h1>
+            <h1 className="text-2xl font-black text-zinc-905 dark:text-white flex items-center gap-3">
+              Admin Operations Console
+              
+              {/* Notification Bell */}
+              <button 
+                onClick={() => setActiveTab("ORDERS")}
+                className="relative p-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-full hover:bg-zinc-50 dark:hover:bg-zinc-800 transition shadow-sm"
+                title="New Orders"
+              >
+                <Bell size={18} className="text-zinc-600 dark:text-zinc-300" />
+                {orders.filter(o => o.orderStatus === "PENDING").length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-pulse shadow-sm">
+                    {orders.filter(o => o.orderStatus === "PENDING").length}
+                  </span>
+                )}
+              </button>
+            </h1>
             <p className="text-xs text-zinc-400 mt-1 font-semibold">Manage orders, catalog uploads, coupons, and shipping settings</p>
           </div>
           

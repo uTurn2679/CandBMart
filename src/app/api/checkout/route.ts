@@ -192,6 +192,20 @@ export async function POST(request: Request) {
       return order;
     });
 
+    // 3. Send WhatsApp Notification via CallMeBot
+    try {
+      const apiKey = process.env.CALLMEBOT_API_KEY;
+      if (apiKey) {
+        const message = encodeURIComponent(`🛒 *New Order Received!*\n\n*Order No:* ${result.orderNumber}\n*Customer:* ${customerName}\n*Phone:* ${customerPhone}\n*Total:* ${result.totalAmount} TK\n*Payment:* ${paymentMethod}\n\nPlease check the admin panel for details.`);
+        const url = `https://api.callmebot.com/whatsapp.php?phone=+8801960927913&text=${message}&apikey=${apiKey}`;
+        
+        // Fire and forget (don't await so it doesn't block checkout)
+        fetch(url).catch(err => console.error("CallMeBot Fetch Error:", err));
+      }
+    } catch (e) {
+      console.error("Failed to trigger WhatsApp notification:", e);
+    }
+
     return NextResponse.json({
       success: true,
       message: "Order placed successfully.",
