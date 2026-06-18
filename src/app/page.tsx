@@ -234,7 +234,8 @@ function ProductBannerSlider({ onSearchChange }: { onSearchChange?: (q: string) 
           onClick={(e) => {
             e.stopPropagation();
             if (onSearchChange) onSearchChange(slide.slug);
-            router.push("/checkout");
+            const el = document.getElementById("catalog");
+            if (el) el.scrollIntoView({ behavior: "smooth" });
           }}
           className="flex items-center gap-2 bg-brand-orange hover:bg-brand-orange/90 text-white font-extrabold text-[11px] sm:text-sm px-6 py-3 rounded-2xl transition active:scale-95 shadow-lg shadow-brand-orange/30 w-max uppercase tracking-wider"
         >
@@ -731,7 +732,7 @@ export default function CatalogPage() {
       <ReviewMarquee onReviewClick={handleReviewClick} />
 
       {/* Main Product Catalog */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 flex flex-col gap-6">
+      <div id="catalog" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 flex flex-col gap-6">
 
         {/* Category Pills */}
         <div className="flex items-center justify-between border-b border-zinc-150 dark:border-zinc-850 pb-4 overflow-x-auto gap-4 scrollbar-none">
