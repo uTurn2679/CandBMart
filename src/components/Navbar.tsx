@@ -173,16 +173,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             )}
 
-            {/* Wishlist */}
-            <button 
-              onClick={() => alert("Wishlist is coming soon!")}
-              className="flex flex-col items-center cursor-pointer text-zinc-650 dark:text-zinc-350 hover:text-brand-orange transition"
-              title="Wishlist"
-            >
-              <Heart size={20} className="stroke-[1.8]" />
-              <span className="hidden sm:inline text-[10px] font-bold mt-1">Wishlist</span>
-            </button>
-
 
 
             {/* Shopping Cart Button */}
