@@ -96,63 +96,6 @@ type ReviewType = (typeof CUSTOMER_REVIEWS)[number];
 const ALL_REVIEWS_MARQUEE = [...CUSTOMER_REVIEWS, ...CUSTOMER_REVIEWS];
 
 // ─── Product Banner Slider (Hero) ─────────────────────────────────────────────
-const PRODUCT_BANNERS = [
-  {
-    name: "\u09ae\u09cd\u09af\u09be\u099c\u09bf\u0995 \u09b8\u09c1\u0987\u0982 \u09b9\u09cd\u09af\u09be\u09ae\u0995 \u099a\u09c1\u09af\u09bc\u09be\u09b0",
-    subtitle: "\u09ac\u09be\u09b0\u09be\u09a8\u09cd\u09a6\u09be \u09ac\u09be \u09ac\u09be\u0997\u09be\u09a8\u09c7\u09b0 \u099c\u09a8\u09cd\u09af \u09aa\u09be\u09b0\u09ab\u09c7\u0995\u09cd\u099f \u09b9\u09cd\u09af\u09be\u09a8\u09cd\u0997\u09bf\u0982 \u099a\u09c1\u09af\u09bc\u09be\u09b0",
-    image: "/products/swing-chair.jpg",
-    price: "৳৩,৫০০",
-    oldPrice: "৳৪,৫০০",
-    badge: "\u09a8\u09a4\u09c1\u09a8 \u09b8\u0982\u0997\u09cd\u09b0\u09b9",
-    badgeColor: "#7c3aed",
-    slug: "macrame-swing-hammock-chair",
-    accent: "#7c3aed",
-  },
-  {
-    name: "\u0993\u09af\u09bc\u09c7\u09ad \u09aa\u09cd\u09b0\u09bf\u09a8\u09cd\u099f \u09aa\u09b0\u09cd\u09a6\u09be — \u09a8\u09c0\u09b2 \u09b8\u09be\u09a6\u09be",
-    subtitle: "\u09b8\u09bf\u09b2\u0995\u09bf \u0995\u09be\u09aa\u09a1\u09bc\u09c7 \u0993\u09af\u09bc\u09c7\u09ad \u09a1\u09bf\u099c\u09be\u0987\u09a8 — \u09b0\u09c1\u09ae\u09c7\u09b0 \u09b8\u09cc\u09a8\u09cd\u09a6\u09b0\u09cd\u09af \u09ac\u09be\u09a1\u09bc\u09be\u09ac\u09c7",
-    image: "/products/curtain-wave-blue.jpg",
-    price: "৳৯৫০",
-    oldPrice: "৳১,৪০০",
-    badge: "৩২% ছাড়",
-    badgeColor: "#f48721",
-    slug: "wave-print-curtain-blue-white",
-    accent: "#1d4ed8",
-  },
-  {
-    name: "\u099c\u09bf\u0993\u09ae\u09c7\u099f\u09cd\u09b0\u09bf\u0995 \u09aa\u09b0\u09cd\u09a6\u09be — \u0997\u09cd\u09b0\u09c7",
-    subtitle: "\u0986\u09a7\u09c1\u09a8\u09bf\u0995 \u09aa\u09cd\u09af\u09be\u099f\u09be\u09b0\u09cd\u09a8\u09c7 \u09ac\u09c7\u09a1\u09b0\u09c1\u09ae \u09ac\u09be \u0985\u09ab\u09bf\u09b8\u09c7\u09b0 \u099c\u09a8\u09cd\u09af \u09aa\u09be\u09b0\u09ab\u09c7\u0995\u09cd\u099f",
-    image: "/products/curtain-geometric-grey.jpg",
-    price: "৳১,১০০",
-    oldPrice: "৳১,৬০০",
-    badge: "বেস্টসেলার",
-    badgeColor: "#059669",
-    slug: "geometric-design-curtain-grey",
-    accent: "#475569",
-  },
-  {
-    name: "\u09ab\u09cd\u09b2\u09cb\u09b0\u09be\u09b2 \u09b8\u09cd\u099f\u09cd\u09b0\u09be\u0987\u09aa \u09aa\u09b0\u09cd\u09a6\u09be — \u09a8\u09c7\u09ad\u09bf \u0995\u09cd\u09b0\u09bf\u09ae",
-    subtitle: "\u099a\u09be\u09b0\u09aa\u09be\u09b6\u09c7 \u0995\u09cd\u09b2\u09be\u09b8\u09bf\u0995 \u09b8\u09cc\u09a8\u09cd\u09a6\u09b0\u09cd\u09af — \u09a1\u09cd\u09b0\u0987\u0982\u09b0\u09c1\u09ae\u09c7\u09b0 \u099c\u09a8\u09cd\u09af \u0986\u09a6\u09b0\u09cd\u09b6",
-    image: "/products/curtain-floral-navy.jpg",
-    price: "৳১,২০০",
-    oldPrice: "৳১,৮০০",
-    badge: "জনপ্রিয়",
-    badgeColor: "#db2777",
-    slug: "floral-stripe-curtain-navy-cream",
-    accent: "#1e3a8a",
-  },
-  {
-    name: "\u09b0\u09af\u09bc\u09cd\u09af\u09be\u09b2 \u0997\u09cb\u09b2\u09cd\u09a1 \u09aa\u09b0\u09cd\u09a6\u09be",
-    subtitle: "\u09b8\u09cb\u09a8\u09be\u09b2\u09c0 \u098f\u09ae\u09cd\u09ac\u09cd\u09b0\u09af\u09bc\u09a1\u09be\u09b0\u09bf\u09a4\u09c7 \u09b2\u09be\u0995\u09cd\u09b8\u09be\u09b0\u09bf \u09aa\u09b0\u09cd\u09a6\u09be — \u09ac\u09bf\u09af\u09bc\u09c7\u09ac\u09be\u09a1\u09bc\u09bf\u09a4\u09c7 \u09aa\u09be\u09b0\u09ab\u09c7\u0995\u09cd\u099f",
-    image: "/products/curtain-royal-gold.jpg",
-    price: "৳১,৫০০",
-    oldPrice: "৳২,২০০",
-    badge: "প্রিমিয়াম",
-    badgeColor: "#b45309",
-    slug: "royal-gold-embroidery-curtain",
-    accent: "#1e40af",
-  },
-];
 
 function ProductBannerSlider({ onSearchChange, bannerProducts = [] }: { onSearchChange?: (q: string) => void, bannerProducts?: any[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -162,29 +105,26 @@ function ProductBannerSlider({ onSearchChange, bannerProducts = [] }: { onSearch
   const { addToCart } = useCart();
 
   const slides = React.useMemo(() => {
-    if (bannerProducts.length > 0) {
-      return bannerProducts.map((p, idx) => {
-        const colors = [
-          { badge: "#f48721", accent: "#1d4ed8", bg: "TOP SELLER" },
-          { badge: "#059669", accent: "#475569", bg: "NEW COLLECTION" },
-          { badge: "#db2777", accent: "#1e3a8a", bg: "POPULAR" },
-          { badge: "#7c3aed", accent: "#7c3aed", bg: "TRENDING" }
-        ];
-        const color = colors[idx % colors.length];
-        return {
-          name: p.name,
-          subtitle: p.description?.slice(0, 60) || "Discover our amazing collection.",
-          image: p.images?.find((img: any) => img.isPrimary)?.imageUrl || p.images?.[0]?.imageUrl || "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600",
-          price: `৳${p.price.toLocaleString()}`,
-          oldPrice: p.compareAtPrice ? `৳${p.compareAtPrice.toLocaleString()}` : "",
-          badge: color.bg,
-          badgeColor: color.badge,
-          slug: p.slug,
-          accent: color.accent,
-        };
-      });
-    }
-    return PRODUCT_BANNERS;
+    return bannerProducts.map((p, idx) => {
+      const colors = [
+        { badge: "#f48721", accent: "#1d4ed8", bg: "TOP SELLER" },
+        { badge: "#059669", accent: "#475569", bg: "NEW COLLECTION" },
+        { badge: "#db2777", accent: "#1e3a8a", bg: "POPULAR" },
+        { badge: "#7c3aed", accent: "#7c3aed", bg: "TRENDING" }
+      ];
+      const color = colors[idx % colors.length];
+      return {
+        name: p.name,
+        subtitle: p.description?.slice(0, 60) || "Discover our amazing collection.",
+        image: p.images?.find((img: any) => img.isPrimary)?.imageUrl || p.images?.[0]?.imageUrl || "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600",
+        price: `৳${p.price.toLocaleString()}`,
+        oldPrice: p.compareAtPrice ? `৳${p.compareAtPrice.toLocaleString()}` : "",
+        badge: color.bg,
+        badgeColor: color.badge,
+        slug: p.slug,
+        accent: color.accent,
+      };
+    });
   }, [bannerProducts]);
 
   const goTo = useCallback((idx: number) => {
@@ -235,6 +175,7 @@ function ProductBannerSlider({ onSearchChange, bannerProducts = [] }: { onSearch
   };
 
   useEffect(() => {
+    if (slides.length <= 1) return;
     const interval = setInterval(() => {
       setActiveIndex((prev) => {
         const next = (prev + 1) % slides.length;
@@ -244,6 +185,14 @@ function ProductBannerSlider({ onSearchChange, bannerProducts = [] }: { onSearch
     }, 4500);
     return () => clearInterval(interval);
   }, [slides.length, goTo]);
+
+  if (slides.length === 0) {
+    return (
+      <div className="w-full h-full min-h-[220px] md:min-h-0 rounded-3xl overflow-hidden shadow border border-zinc-200/50 dark:border-zinc-800/80 bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center">
+        <span className="text-zinc-400 font-bold text-sm">No banner products selected</span>
+      </div>
+    );
+  }
 
   const slide = slides[activeIndex] || slides[0];
   if (!slide) return null;
