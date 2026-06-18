@@ -903,7 +903,28 @@ export default function CatalogPage() {
             </p>
           </div>
           <div className="flex-1 w-full max-w-md">
-            <form className="flex flex-col gap-3" onSubmit={(e) => { e.preventDefault(); alert("আপনার মেসেজ পাঠানো হয়েছে! আমরা শীঘ্রই যোগাযোগ করবো।"); }}>
+            <form className="flex flex-col gap-3" onSubmit={async (e) => {
+              e.preventDefault();
+              const form = e.target as HTMLFormElement;
+              const name = (form.elements[0] as HTMLInputElement).value;
+              const phone = (form.elements[1] as HTMLInputElement).value;
+              const message = (form.elements[2] as HTMLTextAreaElement).value;
+              const btn = form.querySelector("button");
+              if (btn) btn.innerText = "পাঠানো হচ্ছে...";
+              try {
+                await fetch("/api/contact", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ name, phone, message }),
+                });
+                form.reset();
+                alert("আপনার মেসেজ পাঠানো হয়েছে! আমরা শীঘ্রই যোগাযোগ করবো।");
+              } catch (err) {
+                alert("মেসেজ পাঠাতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+              } finally {
+                if (btn) btn.innerText = "মেসেজ পাঠান";
+              }
+            }}>
               <input type="text" placeholder="আপনার নাম" className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-3 text-sm font-semibold outline-none focus:border-brand-orange text-zinc-900 dark:text-zinc-100" required />
               <input type="tel" placeholder="ফোন নাম্বার" className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-3 text-sm font-semibold outline-none focus:border-brand-orange text-zinc-900 dark:text-zinc-100" required />
               <textarea placeholder="আপনার প্রশ্ন..." rows={3} className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-3 text-sm font-semibold outline-none focus:border-brand-orange text-zinc-900 dark:text-zinc-100 resize-none" required></textarea>
