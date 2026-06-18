@@ -667,6 +667,7 @@ function ReviewMarquee({ onReviewClick }: { onReviewClick: (r: ReviewType) => vo
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function CatalogPage() {
   const [products, setProducts] = useState<ProductType[]>([]);
+  const [bannerProducts, setBannerProducts] = useState<ProductType[]>([]);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [loading, setLoading] = useState(true);
   const { cartCount, cartSubtotal } = useCart();
@@ -702,8 +703,21 @@ export default function CatalogPage() {
       } catch (error) {
         console.error("Failed to load categories:", error);
       }
-    }
+      }
+    };
+
+    const loadBannerProducts = async () => {
+      try {
+        const res = await fetch("/api/products?isBanner=true");
+        const data = await res.json();
+        if (data.success) setBannerProducts(data.products);
+      } catch (error) {
+        console.error("Failed to load banner products:", error);
+      }
+    };
+
     loadCategories();
+    loadBannerProducts();
   }, []);
 
   const loadProducts = async () => {
@@ -766,7 +780,7 @@ export default function CatalogPage() {
           <div className="lg:col-span-2 aspect-[4/3] sm:aspect-[21/9] md:aspect-[24/9]">
             <ProductBannerSlider 
               onSearchChange={setSearchQuery} 
-              bannerProducts={products.filter((p) => p.isBanner)}
+              bannerProducts={bannerProducts}
             />
           </div>
 

@@ -9,6 +9,7 @@ export async function GET(request: Request) {
     const minPrice = parseFloat(searchParams.get("minPrice") || "0");
     const maxPrice = parseFloat(searchParams.get("maxPrice") || "9999999");
     const sort = searchParams.get("sort") || "latest"; // latest, price_asc, price_desc
+    const isBanner = searchParams.get("isBanner") === "true";
 
     // Build Prisma query filters
     const whereClause: any = {
@@ -18,6 +19,10 @@ export async function GET(request: Request) {
         lte: maxPrice,
       },
     };
+
+    if (isBanner) {
+      whereClause.isBanner = true;
+    }
 
     // Filter by keyword query
     if (query) {
