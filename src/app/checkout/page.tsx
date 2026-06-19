@@ -31,10 +31,8 @@ export default function CheckoutPage() {
   const [couponLoading, setCouponLoading] = useState(false);
 
   // Dynamic delivery calculations
-  const [deliveryCharge, setDeliveryCharge] = useState(60);
-  const [freeThreshold, setFreeThreshold] = useState(2000);
-  const [insideRate, setInsideRate] = useState(60);
-  const [outsideRate, setOutsideRate] = useState(120);
+  const [deliveryCharge, setDeliveryCharge] = useState(80);
+  const [freeThreshold, setFreeThreshold] = useState(0);
 
   // General state
   const [submitting, setSubmitting] = useState(false);
@@ -56,12 +54,8 @@ export default function CheckoutPage() {
         const data = await res.json();
         if (data.success && data.settings) {
           const rates = {
-            inside: parseFloat(data.settings.DELIVERY_CHARGE_INSIDE_DHAKA || "60"),
-            outside: parseFloat(data.settings.DELIVERY_CHARGE_OUTSIDE_DHAKA || "120"),
-            threshold: parseFloat(data.settings.FREE_DELIVERY_THRESHOLD || "2000"),
+            threshold: parseFloat(data.settings.FREE_DELIVERY_THRESHOLD || "0"),
           };
-          setInsideRate(rates.inside);
-          setOutsideRate(rates.outside);
           setFreeThreshold(rates.threshold);
         }
       } catch (error) {
@@ -71,14 +65,25 @@ export default function CheckoutPage() {
     loadSettings();
   }, []);
 
-  // Recalculate shipping dynamically
+  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  // Recalculate shipping dynamically based on quantity
   useEffect(() => {
-    if (cartSubtotal >= freeThreshold) {
+    if (cartSubtotal >= freeThreshold && freeThreshold > 0) {
       setDeliveryCharge(0);
     } else {
-      setDeliveryCharge(deliveryZone === "INSIDE_DHAKA" ? insideRate : outsideRate);
+      // Base delivery rate for 1 to 3 items
+      const baseRate = deliveryZone === "INSIDE_DHAKA" ? 80 : 150;
+      
+      // Calculate extra charge for items > 3 (10 TK per extra item)
+      let extraCharge = 0;
+      if (totalQuantity > 3) {
+        extraCharge = (totalQuantity - 3) * 10;
+      }
+      
+      setDeliveryCharge(baseRate + extraCharge);
     }
-  }, [cartSubtotal, deliveryZone, freeThreshold, insideRate, outsideRate]);
+  }, [cartSubtotal, deliveryZone, freeThreshold, totalQuantity]);
 
   // Apply Coupon code
   const handleApplyCoupon = async (e: React.FormEvent) => {
@@ -276,8 +281,8 @@ export default function CheckoutPage() {
                       onChange={(e) => setDeliveryZone(e.target.value)}
                       className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2.5 text-xs font-semibold outline-none focus:border-brand-orange transition"
                     >
-                      <option value="INSIDE_DHAKA">Inside Dhaka (Rates: {insideRate} TK)</option>
-                      <option value="OUTSIDE_DHAKA">Outside Dhaka (Rates: {outsideRate} TK)</option>
+                      <option value="INSIDE_DHAKA">Inside Dhaka (Starts at 80 TK)</option>
+                      <option value="OUTSIDE_DHAKA">Outside Dhaka (Starts at 150 TK)</option>
                     </select>
                   </div>
                 </div>
