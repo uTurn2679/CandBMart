@@ -3,12 +3,14 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import { ShoppingCart, Check, Tag, ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
+import { useCompare } from "@/context/CompareContext";
+import { ShoppingCart, Check, Tag, ChevronLeft, ChevronRight, ArrowLeft, Scale } from "lucide-react";
 import { ProductType } from "@/components/ProductCard";
 
 export default function ProductDetailClient({ product }: { product: ProductType }) {
   const router = useRouter();
   const { addToCart } = useCart();
+  const { compareItems, addToCompare, removeFromCompare } = useCompare();
   const [selectedVariantId, setSelectedVariantId] = useState(
     product.variants.length > 0 ? product.variants[0].id : ""
   );
@@ -200,11 +202,11 @@ export default function ProductDetailClient({ product }: { product: ProductType 
             </div>
           )}
 
-          <div className="pt-4">
+          <div className="pt-4 flex flex-col sm:flex-row gap-3">
             <button
               disabled={isOutOfStock}
               onClick={handleAddToCart}
-              className={`w-full flex items-center justify-center gap-3 py-4 text-base font-extrabold rounded-2xl transition-all shadow-xl ${
+              className={`flex-1 flex items-center justify-center gap-3 py-4 text-base font-extrabold rounded-2xl transition-all shadow-xl ${
                 isOutOfStock
                   ? "bg-zinc-100 text-zinc-400 cursor-not-allowed shadow-none"
                   : added
@@ -223,6 +225,38 @@ export default function ProductDetailClient({ product }: { product: ProductType 
                   <ShoppingCart size={20} /> কার্টে যোগ করুন
                 </>
               )}
+            </button>
+
+            <button
+              onClick={() => {
+                const isCompared = compareItems.some((item) => item.id === product.id);
+                if (isCompared) {
+                  removeFromCompare(product.id);
+                } else {
+                  addToCompare({
+                    id: product.id,
+                    name: product.name,
+                    price: activePrice,
+                    compareAtPrice: originalPrice > activePrice ? originalPrice : undefined,
+                    image: product.images[0]?.imageUrl || "",
+                    category: product.category.name,
+                    slug: product.slug,
+                    description: product.description || undefined,
+                    additionalInfo: product.additionalInfo || undefined,
+                    stockQuantity: product.stockQuantity,
+                  });
+                }
+              }}
+              className={`flex items-center justify-center gap-2 py-4 px-6 text-base font-extrabold rounded-2xl transition-all border-2 ${
+                compareItems.some((item) => item.id === product.id)
+                  ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white border-zinc-200 dark:border-zinc-700"
+                  : "bg-white dark:bg-zinc-950 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700"
+              }`}
+            >
+              <Scale size={20} className={compareItems.some((item) => item.id === product.id) ? "fill-current" : ""} />
+              <span className="hidden sm:inline">
+                {compareItems.some((item) => item.id === product.id) ? "Remove" : "Compare"}
+              </span>
             </button>
           </div>
         </div>

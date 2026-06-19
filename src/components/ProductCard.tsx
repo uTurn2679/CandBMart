@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import { ShoppingCart, Check, Tag, Info, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useCompare } from "@/context/CompareContext";
+import { ShoppingCart, Check, Tag, Info, X, ChevronLeft, ChevronRight, Scale } from "lucide-react";
 
 export interface VariantType {
   id: string;
@@ -42,6 +43,7 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart();
+  const { compareItems, addToCompare, removeFromCompare } = useCompare();
   const router = useRouter();
   const [selectedVariantId, setSelectedVariantId] = useState(
     product.variants.length > 0 ? product.variants[0].id : ""
@@ -114,6 +116,38 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {discountPercent}% OFF
           </span>
         )}
+
+        {/* Compare Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            const isCompared = compareItems.some(item => item.id === product.id);
+            if (isCompared) {
+              removeFromCompare(product.id);
+            } else {
+              addToCompare({
+                id: product.id,
+                name: product.name,
+                price: activePrice,
+                compareAtPrice: originalPrice > activePrice ? originalPrice : undefined,
+                image: primaryImageUrl,
+                category: product.category.name,
+                slug: product.slug,
+                description: product.description || undefined,
+                additionalInfo: product.additionalInfo || undefined,
+                stockQuantity: product.stockQuantity,
+              });
+            }
+          }}
+          className={`absolute top-3 right-3 z-10 p-2 rounded-full shadow-md transition-all duration-300 ${
+            compareItems.some(item => item.id === product.id)
+              ? "bg-emerald-500 text-white hover:bg-rose-500"
+              : "bg-white/90 text-zinc-500 hover:text-emerald-500 hover:bg-white"
+          }`}
+          title={compareItems.some(item => item.id === product.id) ? "Remove from Compare" : "Add to Compare"}
+        >
+          <Scale size={14} className={compareItems.some(item => item.id === product.id) ? "fill-current" : ""} />
+        </button>
 
         {/* Product Image Cover */}
         <div className="aspect-square bg-zinc-50 dark:bg-zinc-900/50 overflow-hidden relative">

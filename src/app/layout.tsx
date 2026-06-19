@@ -4,6 +4,10 @@ import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 
+import { CompareProvider } from "@/context/CompareContext";
+import CompareFloatingBar from "@/components/CompareFloatingBar";
+import CompareModal from "@/components/CompareModal";
+
 const openSans = Open_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
@@ -27,7 +31,11 @@ export default function RootLayout({
       <body className={`${openSans.variable} font-sans bg-zinc-50 text-zinc-900 min-h-screen flex flex-col overflow-x-hidden`}>
         <AuthProvider>
           <CartProvider>
-            <main className="flex-1 flex flex-col">{children}</main>
+            <CompareProvider>
+              <main className="flex-1 flex flex-col">{children}</main>
+              <CompareFloatingBar />
+              <CompareModal />
+            </CompareProvider>
           </CartProvider>
         </AuthProvider>
       </body>
