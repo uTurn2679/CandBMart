@@ -5,9 +5,15 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useCompare } from "@/context/CompareContext";
 import { ShoppingCart, Check, Tag, ChevronLeft, ChevronRight, ArrowLeft, Scale } from "lucide-react";
-import { ProductType } from "@/components/ProductCard";
+import ProductCard, { ProductType } from "@/components/ProductCard";
 
-export default function ProductDetailClient({ product }: { product: ProductType }) {
+export default function ProductDetailClient({ 
+  product,
+  relatedProducts = []
+}: { 
+  product: ProductType;
+  relatedProducts?: ProductType[];
+}) {
   const router = useRouter();
   const { addToCart } = useCart();
   const { compareItems, addToCompare, removeFromCompare } = useCompare();
@@ -261,6 +267,20 @@ export default function ProductDetailClient({ product }: { product: ProductType 
           </div>
         </div>
       </div>
+
+      {/* Related Products Section */}
+      {relatedProducts.length > 0 && (
+        <div className="mt-20 border-t border-zinc-200 dark:border-zinc-800 pt-10">
+          <h2 className="text-xl md:text-2xl font-black text-zinc-900 dark:text-white mb-6 flex items-center gap-2">
+            <Tag className="text-brand-orange" /> একই ক্যাটাগরির অন্যান্য প্রোডাক্ট
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+            {relatedProducts.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
