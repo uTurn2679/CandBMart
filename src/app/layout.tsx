@@ -25,11 +25,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth overflow-x-hidden">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
       </head>
-      <body className={`${openSans.variable} font-sans bg-zinc-50 text-zinc-900 min-h-screen flex flex-col overflow-x-hidden`}>
+      <body className={`${openSans.variable} font-sans bg-zinc-50 text-zinc-900 min-h-screen flex flex-col overflow-x-hidden w-full max-w-[100vw]`}>
         <AuthProvider>
           <CartProvider>
             <CompareProvider>

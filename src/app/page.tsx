@@ -560,7 +560,7 @@ function ReviewSlider({ onReviewClick }: { onReviewClick: (r: ReviewType) => voi
 // ─── Review Marquee ───────────────────────────────────────────────────────────
 function ReviewMarquee({ onReviewClick }: { onReviewClick: (r: ReviewType) => void }) {
   return (
-    <section className="w-full py-4 overflow-hidden border-y border-zinc-100 dark:border-zinc-900 bg-white/60 dark:bg-zinc-950/60 backdrop-blur-sm">
+    <section className="w-full py-4 overflow-hidden border-y border-zinc-100 dark:border-zinc-900 bg-white/60 dark:bg-zinc-950/60 backdrop-blur-sm" style={{ maxWidth: '100vw' }}>
       <div className="flex items-center gap-4 mb-3 max-w-7xl mx-auto px-4">
         <span className="text-[11px] font-extrabold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest shrink-0 flex items-center gap-1.5">
           <span className="text-amber-400 text-base">★</span> সন্তুষ্ট গ্রাহকদের কথা
@@ -571,43 +571,45 @@ function ReviewMarquee({ onReviewClick }: { onReviewClick: (r: ReviewType) => vo
         </span>
       </div>
 
-      <div className="flex gap-4 review-marquee">
-        {ALL_REVIEWS_MARQUEE.map((r, idx) => (
-          <div
-            key={idx}
-            onClick={() => onReviewClick(r)}
-            className="shrink-0 flex items-start gap-3 bg-white dark:bg-zinc-900 border rounded-2xl px-5 py-3.5 shadow-sm w-[280px] md:w-[310px] cursor-pointer hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
-            style={{ borderColor: `${r.color}35` }}
-          >
+      <div className="review-marquee-wrapper">
+        <div className="flex gap-4 review-marquee">
+          {ALL_REVIEWS_MARQUEE.map((r, idx) => (
             <div
-              className="w-9 h-9 rounded-full flex items-center justify-center text-white font-black text-sm shrink-0 shadow"
-              style={{ background: r.color }}
+              key={idx}
+              onClick={() => onReviewClick(r)}
+              className="shrink-0 flex items-start gap-3 bg-white dark:bg-zinc-900 border rounded-2xl px-5 py-3.5 shadow-sm w-[260px] md:w-[310px] cursor-pointer hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+              style={{ borderColor: `${r.color}35` }}
             >
-              {r.avatar}
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-xs text-zinc-800 dark:text-zinc-200 truncate max-w-[110px]">
-                    {r.name}
-                  </span>
-                  <span className="text-[10px] shrink-0">{r.productEmoji}</span>
+              <div
+                className="w-9 h-9 rounded-full flex items-center justify-center text-white font-black text-sm shrink-0 shadow"
+                style={{ background: r.color }}
+              >
+                {r.avatar}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-extrabold text-xs text-zinc-800 dark:text-zinc-200 truncate max-w-[110px]">
+                      {r.name}
+                    </span>
+                    <span className="text-[10px] shrink-0">{r.productEmoji}</span>
+                  </div>
+                  <span className="text-[10px] text-zinc-400 shrink-0">📸</span>
                 </div>
-                <span className="text-[10px] text-zinc-400 shrink-0">📸</span>
+                <div className="flex gap-0.5 my-0.5">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <span key={i} className="text-[10px] text-amber-400">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <p className="text-[11px] text-zinc-600 dark:text-zinc-400 font-medium leading-snug line-clamp-2">
+                  &ldquo;{r.review}&rdquo;
+                </p>
               </div>
-              <div className="flex gap-0.5 my-0.5">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <span key={i} className="text-[10px] text-amber-400">
-                    ★
-                  </span>
-                ))}
-              </div>
-              <p className="text-[11px] text-zinc-600 dark:text-zinc-400 font-medium leading-snug line-clamp-2">
-                &ldquo;{r.review}&rdquo;
-              </p>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -713,7 +715,7 @@ export default function CatalogPage() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <div className="flex flex-col min-h-screen bg-zinc-50 dark:bg-zinc-950 overflow-x-hidden">
       {/* Header Navigation */}
       <Navbar
         onSearchChange={setSearchQuery}
@@ -995,7 +997,7 @@ export default function CatalogPage() {
           {/* Contact Info */}
           <div className="flex flex-col items-center md:items-start">
             <h3 className="text-lg font-black text-zinc-800 dark:text-zinc-100 mb-4">Contact & Support</h3>
-            <ul className="space-y-4 text-sm text-zinc-600 dark:text-zinc-400 font-medium w-max">
+            <ul className="space-y-4 text-sm text-zinc-600 dark:text-zinc-400 font-medium">
               <li className="flex items-start gap-3">
                 <MapPin size={20} className="text-brand-orange shrink-0 mt-0.5" />
                 <span>Mirpur 11, Dhaka, Bangladesh</span>
@@ -1013,7 +1015,7 @@ export default function CatalogPage() {
           {/* Social Links */}
           <div className="flex flex-col items-center md:items-start">
             <h3 className="text-lg font-black text-zinc-800 dark:text-zinc-100 mb-4">Follow Us</h3>
-            <ul className="space-y-4 text-sm text-zinc-600 dark:text-zinc-400 font-medium w-max">
+            <ul className="space-y-4 text-sm text-zinc-600 dark:text-zinc-400 font-medium">
               <li>
                 <a href="https://www.facebook.com/profile.php?id=61587776247110" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-brand-orange transition">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" className="shrink-0 text-[#1877F2]" fill="currentColor">
