@@ -69,6 +69,33 @@ export async function POST(request: Request) {
 
     // Execute product creation transaction
     const newProduct = await prisma.$transaction(async (tx) => {
+      // Fetch category to determine SKU prefix
+      const category = await tx.category.findUnique({ where: { id: categoryId } });
+      let prefix = "PR";
+      if (category) {
+        if (category.slug === "porda") prefix = "PO";
+        else if (category.slug === "bedding") prefix = "BE";
+        else if (category.slug === "dolna") prefix = "DO";
+        else if (category.slug === "moshari") prefix = "MO";
+        else prefix = category.slug.substring(0, 2).toUpperCase();
+      }
+
+      // Find highest existing SKU for this prefix
+      const lastProduct = await tx.product.findFirst({
+        where: { sku: { startsWith: `${prefix}-` } },
+        orderBy: { sku: "desc" },
+      });
+
+      let nextNum = 1;
+      if (lastProduct && lastProduct.sku) {
+        const parts = lastProduct.sku.split('-');
+        if (parts.length === 2) {
+          const parsed = parseInt(parts[1], 10);
+          if (!isNaN(parsed)) nextNum = parsed + 1;
+        }
+      }
+      const generatedSku = `${prefix}-${nextNum.toString().padStart(5, '0')}`;
+
       // Create product
       const product = await tx.product.create({
         data: {
@@ -78,7 +105,7 @@ export async function POST(request: Request) {
           description: description || null,
           price: parseFloat(price),
           compareAtPrice: compareAtPrice ? parseFloat(compareAtPrice) : null,
-          sku: sku || `${cleanSlug.toUpperCase()}-01`,
+          sku: generatedSku,
           stockQuantity: parseInt(stockQuantity),
           isActive: true,
         },
@@ -99,7 +126,7 @@ export async function POST(request: Request) {
         data: {
           productId: product.id,
           variantName,
-          sku: sku ? `${sku}-VAR` : `${cleanSlug.toUpperCase()}-VAR`,
+          sku: `${generatedSku}-VAR`,
           priceOverride: null,
           stockQuantity: parseInt(stockQuantity),
         },

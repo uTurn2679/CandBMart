@@ -1090,16 +1090,6 @@ export default function AdminDashboard() {
 
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-[10px] font-bold text-zinc-500 mb-1 uppercase tracking-wider">Product Code (SKU)</label>
-                        <input
-                          type="text"
-                          placeholder="e.g. HONEY-WILD-250"
-                          value={pSku}
-                          onChange={(e) => setPSku(e.target.value)}
-                          className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2 outline-none focus:border-brand-orange transition"
-                        />
-                      </div>
-                      <div>
                         <label className="block text-[10px] font-bold text-zinc-500 mb-1 uppercase tracking-wider">Initial Stock</label>
                         <input
                           type="number"
@@ -1247,8 +1237,8 @@ export default function AdminDashboard() {
                         <input
                           type="text"
                           value={editingProduct.sku || ""}
-                          onChange={(e) => setEditingProduct({ ...editingProduct, sku: e.target.value })}
-                          className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2 outline-none focus:border-brand-orange transition"
+                          disabled
+                          className="w-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2 outline-none text-zinc-500 cursor-not-allowed"
                         />
                       </div>
                       <div>

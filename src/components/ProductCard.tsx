@@ -169,6 +169,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <h3 className="font-bold text-[10px] sm:text-sm text-zinc-800 dark:text-zinc-200 line-clamp-2 leading-snug">
               {product.name}
             </h3>
+            {product.sku && (
+              <span className="text-[8px] sm:text-[9px] text-zinc-500 font-medium mt-0.5 block">
+                Code: {product.sku}
+              </span>
+            )}
           </div>
 
           {/* Variant Picker — desktop only */}
