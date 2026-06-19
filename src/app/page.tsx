@@ -215,7 +215,7 @@ function ProductBannerSlider({ onSearchChange, bannerProducts = [] }: { onSearch
 
       {/* Clear Product Image (right aligned) */}
       <div 
-        className="absolute inset-y-0 right-0 w-[60%] md:w-[65%] p-2 sm:p-4 flex items-center justify-end md:justify-center transition-all duration-700 z-0"
+        className="absolute inset-y-0 right-0 w-[70%] md:w-[75%] p-0 flex items-center justify-end md:justify-center transition-all duration-700 z-0"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "scale(1)" : "scale(0.95)",
@@ -225,7 +225,7 @@ function ProductBannerSlider({ onSearchChange, bannerProducts = [] }: { onSearch
         <img
           src={slide.image}
           alt={slide.name}
-          className="max-h-[95%] max-w-full object-contain drop-shadow-[0_25px_25px_rgba(0,0,0,0.6)] rounded-2xl"
+          className="h-full w-full object-contain drop-shadow-[0_25px_25px_rgba(0,0,0,0.6)] sm:p-2"
         />
       </div>
 
