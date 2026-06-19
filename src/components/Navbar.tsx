@@ -266,6 +266,56 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
+        {/* Mobile Search Bar Row (Always visible on mobile) */}
+        <div className="md:hidden px-4 pb-3">
+          <form 
+            onSubmit={handleSearchSubmit} 
+            className="relative w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                if (onSearchChange) onSearchChange(e.target.value);
+              }}
+              onFocus={() => {
+                if (suggestions.length > 0) setShowSuggestions(true);
+              }}
+              className="w-full pl-4 pr-10 py-2 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 outline-none text-sm text-zinc-900 dark:text-white focus:bg-white focus:ring-2 focus:ring-brand-orange/15 focus:border-brand-orange transition"
+            />
+            <button 
+              type="submit"
+              className="absolute right-0 inset-y-0 pr-3 flex items-center text-zinc-400 hover:text-brand-orange transition"
+            >
+              <Search size={16} />
+            </button>
+
+            {/* Mobile Suggestions Dropdown */}
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-2xl overflow-hidden z-50">
+                {suggestions.map(p => (
+                  <Link 
+                    key={p.id} 
+                    href={`/product/${p.slug}`}
+                    onClick={() => { setShowSuggestions(false); setMobileMenuOpen(false); }}
+                    className="flex items-center gap-3 p-3 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition border-b border-zinc-100 dark:border-zinc-800 last:border-0"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={p.images?.[0]?.imageUrl || "/placeholder.jpg"} className="w-10 h-10 object-cover rounded-md shrink-0" alt="" />
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-xs font-bold text-zinc-900 dark:text-white line-clamp-1">{p.name}</span>
+                      <span className="text-[10px] font-black text-brand-orange mt-0.5">{p.price} TK</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </form>
+        </div>
+
         {/* Deep Green Category Navigation Bar (Secondary Row) */}
         <div className="w-full bg-[#041f1e] dark:bg-zinc-900 border-t border-brand-orange/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -292,52 +342,6 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Mobile menu panel */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-zinc-150 dark:border-zinc-855 bg-white dark:bg-zinc-950 p-4 space-y-4 animate-in slide-in-from-top-4 duration-200">
-            <form 
-              onSubmit={handleSearchSubmit} 
-              className="relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  if (onSearchChange) onSearchChange(e.target.value);
-                }}
-                onFocus={() => {
-                  if (suggestions.length > 0) setShowSuggestions(true);
-                }}
-                className="w-full pl-5 pr-12 py-2 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50 dark:bg-zinc-905 outline-none text-sm text-zinc-900 dark:text-white"
-              />
-              <button 
-                type="submit"
-                className="absolute right-0 inset-y-0 pr-4 flex items-center text-zinc-400"
-              >
-                <Search size={16} />
-              </button>
-
-              {/* Mobile Suggestions Dropdown */}
-              {showSuggestions && suggestions.length > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-2xl overflow-hidden z-50">
-                  {suggestions.map(p => (
-                    <Link 
-                      key={p.id} 
-                      href={`/product/${p.slug}`}
-                      onClick={() => { setShowSuggestions(false); setMobileMenuOpen(false); }}
-                      className="flex items-center gap-3 p-3 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition border-b border-zinc-100 dark:border-zinc-800 last:border-0"
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={p.images?.[0]?.imageUrl || "/placeholder.jpg"} className="w-10 h-10 object-cover rounded-md shrink-0" alt="" />
-                      <div className="flex flex-col min-w-0">
-                        <span className="text-xs font-bold text-zinc-900 dark:text-white line-clamp-1">{p.name}</span>
-                        <span className="text-[10px] font-black text-brand-orange mt-0.5">{p.price} TK</span>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </form>
             <div className="flex flex-col gap-2.5 text-sm font-bold text-zinc-700 dark:text-zinc-300">
               <Link
                 href="/"
