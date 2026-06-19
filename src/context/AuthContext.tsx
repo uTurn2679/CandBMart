@@ -28,7 +28,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   // Modal specific state
-  const [authMethod, setAuthMethod] = useState<"PASSWORD" | "OTP">("OTP"); // OTP or PASSWORD
+  const [authMethod, setAuthMethod] = useState<"PASSWORD" | "OTP">("PASSWORD"); // OTP or PASSWORD
   const [authMode, setAuthMode] = useState<"LOGIN" | "REGISTER">("LOGIN"); // LOGIN or REGISTER
   const [identifier, setIdentifier] = useState(""); // email or phone
   const [password, setPassword] = useState("");
@@ -278,119 +278,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 </div>
               )}
 
-              {/* Method Switcher for Login */}
-              {authMode === "LOGIN" && !otpSent && (
-                <div className="grid grid-cols-2 gap-2 p-1 bg-zinc-100 dark:bg-zinc-900 rounded-lg mb-6 text-xs font-semibold">
-                  <button
-                    onClick={() => setAuthMethod("OTP")}
-                    className={`py-1.5 rounded-md text-center transition ${
-                      authMethod === "OTP" ? "bg-white dark:bg-zinc-800 shadow text-indigo-600 dark:text-indigo-400" : "text-zinc-500"
-                    }`}
-                  >
-                    OTP Sign In (SMS/Email)
-                  </button>
-                  <button
-                    onClick={() => setAuthMethod("PASSWORD")}
-                    className={`py-1.5 rounded-md text-center transition ${
-                      authMethod === "PASSWORD" ? "bg-white dark:bg-zinc-800 shadow text-indigo-600 dark:text-indigo-400" : "text-zinc-500"
-                    }`}
-                  >
-                    Password Login
-                  </button>
-                </div>
-              )}
 
-              {/* OTP Login Form */}
-              {authMode === "LOGIN" && authMethod === "OTP" && (
-                <div>
-                  {!otpSent ? (
-                    <form onSubmit={handleSendOtp} className="space-y-4">
-                      <div>
-                        <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
-                          Mobile Number or Email
-                        </label>
-                        <div className="relative">
-                          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-zinc-400">
-                            <Phone size={16} />
-                          </span>
-                          <input
-                            type="text"
-                            placeholder="e.g. +88017XXXXXXXX or user@example.com"
-                            value={identifier}
-                            onChange={(e) => setIdentifier(e.target.value)}
-                            required
-                            className="w-full pl-10 pr-4 py-2 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-transparent focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none text-sm text-zinc-900 dark:text-white transition"
-                          />
-                        </div>
-                      </div>
-                      <button
-                        type="submit"
-                        disabled={actionLoading}
-                        className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-semibold py-2.5 rounded-xl text-sm transition shadow-lg shadow-indigo-600/10 active:scale-98"
-                      >
-                        {actionLoading ? "Sending OTP..." : "Send OTP Verification Code"}
-                      </button>
-                    </form>
-                  ) : (
-                    <form onSubmit={handleVerifyOtp} className="space-y-4">
-                      <div>
-                        <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
-                          Enter 6-Digit OTP Code
-                        </label>
-                        <div className="relative">
-                          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-zinc-400">
-                            <Key size={16} />
-                          </span>
-                          <input
-                            type="text"
-                            maxLength={6}
-                            placeholder=""
-                            value={otpCode}
-                            onChange={(e) => setOtpCode(e.target.value)}
-                            required
-                            className="w-full pl-10 pr-4 py-2 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-transparent tracking-widest text-center font-bold text-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none text-zinc-900 dark:text-white transition"
-                          />
-                        </div>
-                      </div>
-                      <button
-                        type="submit"
-                        disabled={actionLoading}
-                        className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white font-semibold py-2.5 rounded-xl text-sm transition shadow-lg shadow-emerald-600/10 active:scale-98"
-                      >
-                        {actionLoading ? "Verifying..." : "Verify & Log In"}
-                      </button>
-                      <div className="flex justify-between items-center text-xs">
-                        <button
-                          type="button"
-                          onClick={() => setOtpSent(false)}
-                          className="text-indigo-600 dark:text-indigo-400 hover:underline"
-                        >
-                          Change Phone/Email
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleSendOtp}
-                          disabled={countdown > 0}
-                          className={`transition ${
-                            countdown > 0
-                              ? "text-zinc-400 cursor-not-allowed"
-                              : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
-                          }`}
-                        >
-                          {countdown > 0
-                            ? `Resend in ${Math.floor(countdown / 60)}:${(countdown % 60)
-                                .toString()
-                                .padStart(2, "0")}`
-                            : "Resend Code"}
-                        </button>
-                      </div>
-                    </form>
-                  )}
-                </div>
-              )}
+
+
 
               {/* Password Login Form */}
-              {authMode === "LOGIN" && authMethod === "PASSWORD" && (
+              {authMode === "LOGIN" && (
                 <form onSubmit={handlePasswordLogin} className="space-y-4">
                   <div>
                     <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
