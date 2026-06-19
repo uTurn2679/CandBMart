@@ -59,8 +59,8 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       message: `OTP sent successfully to ${cleanIdentifier}`,
-      // Avoid sending OTP code to frontend in production unless it's for testing.
-      otpCode: process.env.NODE_ENV === "development" ? otpCode : undefined, 
+      // TEMPORARILY returning otpCode to frontend so the user can log in without an SMS API
+      otpCode: otpCode, 
     });
   } catch (error) {
     console.error("Error in OTP send route:", error);
