@@ -161,13 +161,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               });
             }
           }}
-          className={`absolute top-2 right-2 z-10 p-1.5 rounded-full shadow transition-all duration-300 ${
+          className={`absolute top-2 right-2 z-10 flex items-center gap-1 px-2 py-1 rounded-full shadow-sm hover:shadow-md transition-all duration-300 ${
             compareItems.some(item => item.id === product.id)
               ? "bg-emerald-500 text-white"
-              : "bg-white/90 text-zinc-400"
+              : "bg-white/90 dark:bg-zinc-900/90 text-zinc-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-800"
           }`}
         >
           <Scale size={11} />
+          <span className="text-[9px] font-bold tracking-wide">
+            {compareItems.some(item => item.id === product.id) ? "Added" : "Add to Compare"}
+          </span>
         </button>
 
         {/* Product Image — fixed height on mobile */}
