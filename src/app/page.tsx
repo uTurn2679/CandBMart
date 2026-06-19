@@ -926,7 +926,7 @@ export default function CatalogPage() {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/8809642922922?text=Hello%20C%26B%20Mart!%20I'm%20interested%20in%20your%20products."
+        href="https://wa.me/8801804914606?text=Hello%20C%26B%20Mart!%20I'm%20interested%20in%20your%20products."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white p-3 sm:p-4 rounded-full shadow-2xl flex items-center justify-center transition hover:-translate-y-1 active:translate-y-0 duration-300 group"
