@@ -326,7 +326,9 @@ export default function CheckoutPage() {
                         onChange={() => setPaymentMethod("BKASH_MANUAL")}
                         className="sr-only"
                       />
-                      <span className="text-xs font-extrabold text-pink-600">bKash</span>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src="https://freelogopng.com/images/all_img/1656227518bkash-logo-png.png" alt="bKash" className="h-6 object-contain mb-1" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling?.classList.remove('hidden'); }} />
+                      <span className="hidden text-xs font-extrabold text-[#e2136e]">bKash</span>
                       <span className="text-[9px] text-zinc-400 mt-1 font-medium">Manual Transfer</span>
                     </label>
 
@@ -346,7 +348,9 @@ export default function CheckoutPage() {
                         onChange={() => setPaymentMethod("NAGAD_MANUAL")}
                         className="sr-only"
                       />
-                      <span className="text-xs font-extrabold text-orange-500">Nagad</span>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src="https://download.logo.wine/logo/Nagad/Nagad-Logo.wine.png" alt="Nagad" className="h-6 object-contain mb-1 scale-150" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling?.classList.remove('hidden'); }} />
+                      <span className="hidden text-xs font-extrabold text-[#ed1c24]">Nagad</span>
                       <span className="text-[9px] text-zinc-400 mt-1 font-medium">Manual Transfer</span>
                     </label>
 
@@ -366,7 +370,9 @@ export default function CheckoutPage() {
                         onChange={() => setPaymentMethod("ROCKET_MANUAL")}
                         className="sr-only"
                       />
-                      <span className="text-xs font-extrabold text-purple-650">Rocket</span>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src="https://seeklogo.com/images/D/dutch-bangla-rocket-logo-B4D104E752-seeklogo.com.png" alt="Rocket" className="h-6 object-contain mb-1" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling?.classList.remove('hidden'); }} />
+                      <span className="hidden text-xs font-extrabold text-[#8c1515]">Rocket</span>
                       <span className="text-[9px] text-zinc-400 mt-1 font-medium">Manual Transfer</span>
                     </label>
                   </div>

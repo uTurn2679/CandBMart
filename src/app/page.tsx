@@ -776,12 +776,13 @@ export default function CatalogPage() {
       {/* Main Product Catalog */}
       <div id="catalog" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pr-3 sm:pr-6 lg:pr-8 py-6 sm:py-8 flex-1 flex flex-col gap-4 sm:gap-6">
 
-        {/* Category Pills */}
-        <div className="flex items-center justify-between border-b border-zinc-150 dark:border-zinc-850 pb-4 overflow-x-auto gap-4 scrollbar-none">
-          <div className="flex gap-2 shrink-0">
+        {/* Category Pills & Filters */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-zinc-150 dark:border-zinc-850 pb-4 gap-3">
+          {/* Categories */}
+          <div className="flex gap-2 overflow-x-auto scrollbar-none pb-1 w-full max-w-full">
             <button
               onClick={() => setSelectedCategory("")}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition whitespace-nowrap ${
                 selectedCategory === ""
                   ? "bg-brand-orange text-white"
                   : "bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
@@ -804,7 +805,8 @@ export default function CatalogPage() {
             ))}
           </div>
 
-          <div className="flex gap-2 shrink-0">
+          {/* Filter and Sort */}
+          <div className="flex items-center justify-between md:justify-end gap-2 shrink-0">
             <button
               onClick={() => setShowFilters(!showFilters)}
               className={`flex items-center gap-1.5 px-4 py-1.5 border rounded-xl text-xs font-bold transition ${
@@ -821,7 +823,7 @@ export default function CatalogPage() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="bg-transparent border-none text-xs font-bold text-zinc-655 dark:text-zinc-345 outline-none py-1.5 pr-2"
+                className="bg-transparent border-none text-xs font-bold text-zinc-655 dark:text-zinc-345 outline-none py-1.5 pr-2 appearance-none"
               >
                 <option value="latest">Latest</option>
                 <option value="price_asc">Price: Low to High</option>
