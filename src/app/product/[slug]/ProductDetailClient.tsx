@@ -56,6 +56,28 @@ export default function ProductDetailClient({
     setTimeout(() => setAdded(false), 2000);
   };
 
+  const handleBuyNow = () => {
+    if (product.stockQuantity <= 0) return;
+    
+    const primaryImg = product.images.find((img) => img.isPrimary) || product.images[0];
+    const imageVal = primaryImg
+      ? primaryImg.imageUrl
+      : "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400";
+
+    addToCart(
+      {
+        variantId: selectedVariantId || product.id,
+        productId: product.id,
+        name: product.name,
+        variantName: activeVariant ? activeVariant.variantName : "Standard",
+        price: activePrice,
+        image: imageVal,
+      },
+      1
+    );
+    router.push("/checkout");
+  };
+
   const isOutOfStock = activeVariant
     ? activeVariant.stockQuantity <= 0
     : product.stockQuantity <= 0;
@@ -212,12 +234,12 @@ export default function ProductDetailClient({
             <button
               disabled={isOutOfStock}
               onClick={handleAddToCart}
-              className={`flex-1 flex items-center justify-center gap-3 py-4 text-base font-extrabold rounded-2xl transition-all shadow-xl ${
+              className={`flex-1 flex items-center justify-center gap-2 py-4 text-sm md:text-base font-extrabold rounded-2xl transition-all shadow-md ${
                 isOutOfStock
                   ? "bg-zinc-100 text-zinc-400 cursor-not-allowed shadow-none"
                   : added
                   ? "bg-emerald-500 text-white shadow-emerald-500/20"
-                  : "bg-brand-orange hover:bg-brand-orange/90 text-white shadow-brand-orange/30 hover:shadow-brand-orange/40 active:scale-95"
+                  : "bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-900 dark:text-white active:scale-95"
               }`}
             >
               {isOutOfStock ? (
@@ -228,9 +250,21 @@ export default function ProductDetailClient({
                 </>
               ) : (
                 <>
-                  <ShoppingCart size={20} /> কার্টে যোগ করুন
+                  <ShoppingCart size={20} /> Add to Cart
                 </>
               )}
+            </button>
+
+            <button
+              disabled={isOutOfStock}
+              onClick={handleBuyNow}
+              className={`flex-1 flex items-center justify-center gap-2 py-4 text-sm md:text-base font-extrabold rounded-2xl transition-all shadow-xl ${
+                isOutOfStock
+                  ? "hidden"
+                  : "bg-brand-orange hover:bg-brand-orange/90 text-white shadow-brand-orange/30 hover:shadow-brand-orange/40 active:scale-95"
+              }`}
+            >
+              Buy Now
             </button>
 
             <button
@@ -253,16 +287,14 @@ export default function ProductDetailClient({
                   });
                 }
               }}
-              className={`flex items-center justify-center gap-2 py-4 px-6 text-base font-extrabold rounded-2xl transition-all border-2 ${
+              className={`flex items-center justify-center p-4 rounded-2xl transition-all border-2 shrink-0 ${
                 compareItems.some((item) => item.id === product.id)
                   ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white border-zinc-200 dark:border-zinc-700"
                   : "bg-white dark:bg-zinc-950 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700"
               }`}
+              title={compareItems.some((item) => item.id === product.id) ? "Remove from Compare" : "Compare"}
             >
               <Scale size={20} className={compareItems.some((item) => item.id === product.id) ? "fill-current" : ""} />
-              <span className="hidden sm:inline">
-                {compareItems.some((item) => item.id === product.id) ? "Remove" : "Compare"}
-              </span>
             </button>
           </div>
         </div>

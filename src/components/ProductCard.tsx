@@ -81,10 +81,32 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         price: activePrice,
         image: imageVal,
       },
-      1
     );
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
+  };
+
+  const handleBuyNow = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (product.stockQuantity <= 0) return;
+    
+    const primaryImg = product.images.find((img) => img.isPrimary) || product.images[0];
+    const imageVal = primaryImg
+      ? primaryImg.imageUrl
+      : "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400";
+
+    addToCart(
+      {
+        variantId: selectedVariantId || product.id,
+        productId: product.id,
+        name: product.name,
+        variantName: activeVariant ? activeVariant.variantName : "Standard",
+        price: activePrice,
+        image: imageVal,
+      },
+      1
+    );
+    router.push("/checkout");
   };
 
   const isOutOfStock = activeVariant
@@ -194,49 +216,59 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           )}
 
           {/* Price + Buttons */}
-          <div className="flex items-center justify-between pt-1 border-t border-zinc-100 dark:border-zinc-900 mt-auto gap-1">
-            <div className="flex flex-col min-w-0 flex-1">
-              <span className="text-[11px] sm:text-sm font-black text-zinc-900 dark:text-white truncate">
-                {activePrice.toLocaleString()} TK
-              </span>
-              {originalPrice > activePrice && (
-                <span className="text-[9px] text-zinc-400 line-through">
-                  {originalPrice.toLocaleString()} TK
+          <div className="flex flex-col gap-2 pt-1.5 border-t border-zinc-100 dark:border-zinc-900 mt-auto">
+            <div className="flex items-center justify-between gap-1">
+              <div className="flex flex-col min-w-0 flex-1">
+                <span className="text-[11px] sm:text-sm font-black text-zinc-900 dark:text-white truncate">
+                  {activePrice.toLocaleString()} TK
                 </span>
-              )}
-            </div>
-
-            <div className="flex items-center gap-1 shrink-0">
-              {/* Info icon */}
-              <button
-                type="button"
-                onClick={(e) => { e.stopPropagation(); setActiveImgIdx(0); setShowDetail(true); }}
-                className="p-1 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition"
-              >
-                <Info size={11} />
-              </button>
-
-              {/* Order button */}
-              <button
-                onClick={handleAddToCart}
-                disabled={isOutOfStock}
-                className={`flex items-center gap-0.5 px-2 py-1 text-[9px] sm:text-xs font-bold rounded-md transition-all ${
-                  isOutOfStock
-                    ? "bg-zinc-100 text-zinc-400 cursor-not-allowed dark:bg-zinc-800"
-                    : added
-                    ? "bg-emerald-500 text-white"
-                    : "bg-brand-orange text-white active:scale-95"
-                }`}
-              >
-                {isOutOfStock ? (
-                  <span>শেষ</span>
-                ) : added ? (
-                  <><Check size={10} /><span>✓</span></>
-                ) : (
-                  <><ShoppingCart size={10} /><span>অর্ডার</span></>
+                {originalPrice > activePrice && (
+                  <span className="text-[9px] text-zinc-400 line-through">
+                    {originalPrice.toLocaleString()} TK
+                  </span>
                 )}
-              </button>
+              </div>
+
+              <div className="flex items-center gap-1 shrink-0">
+                {/* Info icon */}
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setActiveImgIdx(0); setShowDetail(true); }}
+                  className="p-1.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition"
+                >
+                  <Info size={12} />
+                </button>
+
+                {/* Add to Cart button (Icon only) */}
+                <button
+                  onClick={handleAddToCart}
+                  disabled={isOutOfStock}
+                  className={`p-1.5 rounded-md transition-all flex items-center justify-center ${
+                    isOutOfStock
+                      ? "bg-zinc-100 text-zinc-400 cursor-not-allowed dark:bg-zinc-800"
+                      : added
+                      ? "bg-emerald-500 text-white"
+                      : "bg-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-600 active:scale-95"
+                  }`}
+                  title="Add to Cart"
+                >
+                  {added ? <Check size={12} /> : <ShoppingCart size={12} />}
+                </button>
+              </div>
             </div>
+
+            {/* Buy Now Full Width Button */}
+            <button
+              onClick={handleBuyNow}
+              disabled={isOutOfStock}
+              className={`w-full py-1.5 flex items-center justify-center gap-1 text-[10px] sm:text-xs font-black uppercase tracking-wider rounded-md transition-all shadow-sm ${
+                isOutOfStock
+                  ? "bg-zinc-100 text-zinc-400 cursor-not-allowed dark:bg-zinc-800 shadow-none"
+                  : "bg-brand-orange text-white hover:bg-brand-orange/90 hover:shadow-md active:scale-95 shadow-brand-orange/20"
+              }`}
+            >
+              {isOutOfStock ? "Out of Stock" : "Buy Now"}
+            </button>
           </div>
         </div>
       </div>
@@ -406,16 +438,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               )}
 
               {/* CTA */}
-              <div className="flex gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row gap-2 pt-2">
                 <button
                   disabled={isOutOfStock}
                   onClick={() => { handleAddToCart(); }}
-                  className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-extrabold rounded-2xl transition-all shadow-lg ${
+                  className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-extrabold rounded-xl transition-all shadow-md ${
                     isOutOfStock
                       ? "bg-zinc-100 text-zinc-400 cursor-not-allowed shadow-none"
                       : added
                       ? "bg-emerald-500 text-white shadow-emerald-500/20"
-                      : "bg-brand-orange hover:bg-brand-orange/90 text-white shadow-brand-orange/20 active:scale-95"
+                      : "bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white active:scale-95"
                   }`}
                 >
                   {isOutOfStock ? (
@@ -426,9 +458,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     </>
                   ) : (
                     <>
-                      <ShoppingCart size={16} /> কার্টে যোগ করুন
+                      <ShoppingCart size={16} /> Add to Cart
                     </>
                   )}
+                </button>
+                <button
+                  disabled={isOutOfStock}
+                  onClick={() => { handleBuyNow(); }}
+                  className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-extrabold rounded-xl transition-all shadow-md ${
+                    isOutOfStock
+                      ? "hidden"
+                      : "bg-brand-orange hover:bg-brand-orange/90 text-white active:scale-95 shadow-brand-orange/20 hover:shadow-brand-orange/40"
+                  }`}
+                >
+                  Buy Now
                 </button>
               </div>
             </div>
