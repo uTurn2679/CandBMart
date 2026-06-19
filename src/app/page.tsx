@@ -202,25 +202,40 @@ function ProductBannerSlider({ onSearchChange, bannerProducts = [] }: { onSearch
       className="relative w-full h-full min-h-[220px] md:min-h-0 rounded-3xl overflow-hidden shadow-xl border border-zinc-200/50 dark:border-zinc-800/80 group cursor-pointer"
       onClick={() => router.push(`/product/${slide.slug}`)}
     >
-      {/* Background image */}
+      {/* Background image (blurred) */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={slide.image}
-        alt={slide.name}
-        className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover blur-2xl scale-110 transition-all duration-700"
         style={{
-          opacity: visible ? 1 : 0,
-          transform: visible ? "scale(1)" : "scale(1.04)",
+          opacity: visible ? 0.4 : 0,
         }}
       />
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+      {/* Clear Product Image (right aligned) */}
+      <div 
+        className="absolute inset-y-0 right-0 w-[55%] md:w-3/5 p-4 sm:p-8 flex items-center justify-end md:justify-center transition-all duration-700 z-0"
+        style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? "scale(1)" : "scale(0.95)",
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={slide.image}
+          alt={slide.name}
+          className="max-h-[90%] max-w-full object-contain drop-shadow-[0_25px_25px_rgba(0,0,0,0.5)] rounded-2xl"
+        />
+      </div>
+
+      {/* Gradient overlay for text legibility */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent z-0" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent sm:hidden z-0" />
 
       {/* Slide content */}
       <div
-        className="absolute inset-y-0 left-0 flex flex-col justify-center px-6 sm:px-10 py-6 max-w-lg"
+        className="absolute inset-y-0 left-0 flex flex-col justify-center px-6 sm:px-10 py-6 max-w-lg z-10"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(-20px)",
