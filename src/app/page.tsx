@@ -774,7 +774,7 @@ export default function CatalogPage() {
       <ReviewMarquee onReviewClick={handleReviewClick} />
 
       {/* Main Product Catalog */}
-      <div id="catalog" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 flex-1 flex flex-col gap-4 sm:gap-6">
+      <div id="catalog" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pr-3 sm:pr-6 lg:pr-8 py-6 sm:py-8 flex-1 flex flex-col gap-4 sm:gap-6">
 
         {/* Category Pills */}
         <div className="flex items-center justify-between border-b border-zinc-150 dark:border-zinc-850 pb-4 overflow-x-auto gap-4 scrollbar-none">
@@ -914,7 +914,7 @@ export default function CatalogPage() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6">
             {products.map((prod) => (
               <ProductCard key={prod.id} product={prod} />
             ))}
@@ -1051,19 +1051,19 @@ export default function CatalogPage() {
         </div>
       </footer>
 
-      {/* Floating Cart Widget */}
+      {/* Floating Cart Widget - hidden on mobile (use navbar cart icon) */}
       <div
         onClick={() => setCartOpen(true)}
-        className="fixed right-0 top-[40%] z-[45] bg-brand-orange text-white py-2.5 sm:py-3.5 px-2 sm:px-3 rounded-l-2xl shadow-2xl flex flex-col items-center gap-1 sm:gap-1.5 cursor-pointer hover:bg-brand-orange/95 active:scale-95 transition-all group border-y border-l border-white/20 select-none"
+        className="hidden sm:flex fixed right-0 top-[40%] z-[45] bg-brand-orange text-white py-3.5 px-3 rounded-l-2xl shadow-2xl flex-col items-center gap-1.5 cursor-pointer hover:bg-brand-orange/95 active:scale-95 transition-all group border-y border-l border-white/20 select-none"
       >
-        <div className="bg-white/20 p-1.5 sm:p-2 rounded-xl group-hover:scale-110 transition-transform">
+        <div className="bg-white/20 p-2 rounded-xl group-hover:scale-110 transition-transform">
           <ShoppingBag size={18} className="text-white" />
         </div>
         <div className="flex flex-col items-center">
-          <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-amber-100">
+          <span className="text-[10px] font-black uppercase tracking-wider text-amber-100">
             {cartCount} Items
           </span>
-          <span className="text-[10px] sm:text-xs font-black mt-0.5 whitespace-nowrap">
+          <span className="text-xs font-black mt-0.5 whitespace-nowrap">
             ৳{cartSubtotal.toLocaleString()}
           </span>
         </div>

@@ -106,7 +106,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <>
       {/* ── Card ── */}
       <div
-        className="group bg-white dark:bg-zinc-950 rounded-3xl border border-zinc-100 dark:border-zinc-900 shadow-xs hover:shadow-xl dark:hover:shadow-orange-950/10 hover:border-zinc-200 dark:hover:border-zinc-800 transition-all duration-300 flex flex-col justify-between overflow-hidden relative cursor-pointer"
+        className="group bg-white dark:bg-zinc-950 rounded-2xl sm:rounded-3xl border border-zinc-100 dark:border-zinc-900 shadow-xs hover:shadow-xl dark:hover:shadow-orange-950/10 hover:border-zinc-200 dark:hover:border-zinc-800 transition-all duration-300 flex flex-col justify-between overflow-hidden relative cursor-pointer"
         onClick={() => router.push(`/product/${product.slug}`)}
       >
         {/* Discount Badge */}
@@ -161,24 +161,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Info Content */}
-        <div className="p-2.5 sm:p-4 flex-1 flex flex-col justify-between space-y-2 sm:space-y-3">
-          <div className="space-y-0.5 sm:space-y-1">
-            <span className="text-[8px] sm:text-[9px] font-black text-brand-orange bg-orange-50 dark:bg-orange-950/30 px-2 sm:px-2.5 py-0.5 rounded-full inline-block">
+        <div className="p-2 sm:p-4 flex-1 flex flex-col justify-between gap-1.5 sm:gap-3">
+          <div className="space-y-0.5">
+            <span className="text-[8px] sm:text-[9px] font-black text-brand-orange bg-orange-50 dark:bg-orange-950/30 px-1.5 sm:px-2.5 py-0.5 rounded-full inline-block">
               {product.category.name}
             </span>
-            <h3 className="font-extrabold text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 line-clamp-2 min-h-8 sm:min-h-10">
+            <h3 className="font-extrabold text-[11px] sm:text-sm text-zinc-800 dark:text-zinc-200 line-clamp-2 leading-tight">
               {product.name}
             </h3>
-            {product.description && (
-              <p className="hidden sm:block text-[10px] text-zinc-450 dark:text-zinc-500 line-clamp-1 font-medium">
-                {product.description}
-              </p>
-            )}
           </div>
 
-          {/* Variant Picker */}
+          {/* Variant Picker - hidden on mobile, shown in modal */}
           {product.variants.length > 1 && (
-            <div className="space-y-1" onClick={(e) => e.stopPropagation()}>
+            <div className="hidden sm:block space-y-1" onClick={(e) => e.stopPropagation()}>
               <label className="text-[9px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">
                 Select Options
               </label>
@@ -197,20 +192,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           )}
 
           {/* Pricing & Buttons */}
-          <div className="flex justify-between items-center pt-1.5 sm:pt-2 border-t border-zinc-100 dark:border-zinc-900">
-            <div className="flex flex-col">
-              <span className="text-xs sm:text-sm font-black text-zinc-900 dark:text-white">
+          <div className="flex justify-between items-center pt-1 sm:pt-2 border-t border-zinc-100 dark:border-zinc-900 mt-auto">
+            <div className="flex flex-col min-w-0">
+              <span className="text-[11px] sm:text-sm font-black text-zinc-900 dark:text-white">
                 {activePrice.toLocaleString()} TK
               </span>
               {originalPrice > activePrice && (
-                <span className="text-[9px] sm:text-[10px] text-zinc-400 line-through">
+                <span className="text-[9px] text-zinc-400 line-through">
                   {originalPrice.toLocaleString()} TK
                 </span>
               )}
             </div>
 
-            <div className="flex items-center gap-1">
-              {/* Show More button */}
+            <div className="flex items-center gap-1 shrink-0">
+              {/* Info button */}
               <button
                 type="button"
                 onClick={(e) => {
@@ -218,35 +213,34 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                   setActiveImgIdx(0);
                   setShowDetail(true);
                 }}
-                className="flex items-center gap-0.5 sm:gap-1 px-2 sm:px-2.5 py-1.5 text-[9px] sm:text-[10px] font-bold rounded-xl transition bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200"
+                className="p-1.5 rounded-lg transition bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-300"
+                title="Info"
               >
-                <Info size={10} />
-                <span className="hidden sm:inline">Show More</span>
-                <span className="sm:hidden">Info</span>
+                <Info size={12} />
               </button>
 
-              {/* Add to Cart button */}
+              {/* Order button */}
               <button
                 onClick={handleAddToCart}
                 disabled={isOutOfStock}
-                className={`flex items-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-1.5 text-[9px] sm:text-xs font-bold rounded-xl transition-all duration-200 shadow-md ${
+                className={`flex items-center gap-0.5 px-2 sm:px-3 py-1.5 text-[10px] sm:text-xs font-bold rounded-lg transition-all duration-200 shadow-sm ${
                   isOutOfStock
-                    ? "bg-zinc-100 text-zinc-400 cursor-not-allowed dark:bg-zinc-800 dark:text-zinc-600 shadow-none"
+                    ? "bg-zinc-100 text-zinc-400 cursor-not-allowed dark:bg-zinc-800 dark:text-zinc-600"
                     : added
-                    ? "bg-emerald-500 text-white shadow-emerald-500/20"
-                    : "bg-brand-orange hover:bg-brand-orange/90 text-white shadow-brand-orange/20 active:scale-95"
+                    ? "bg-emerald-500 text-white"
+                    : "bg-brand-orange hover:bg-brand-orange/90 text-white active:scale-95"
                 }`}
               >
                 {isOutOfStock ? (
-                  <span>স্টক নেই</span>
+                  <span>শেষ</span>
                 ) : added ? (
                   <>
-                    <Check size={13} />
+                    <Check size={12} />
                     <span>Added</span>
                   </>
                 ) : (
                   <>
-                    <ShoppingCart size={13} />
+                    <ShoppingCart size={12} />
                     <span>Order</span>
                   </>
                 )}
