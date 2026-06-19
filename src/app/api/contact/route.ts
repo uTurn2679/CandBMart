@@ -14,8 +14,8 @@ export async function POST(request: Request) {
       const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN || "8840968249:AAGE8XO-01fC7A9EL62g5tnJOfZw37XkqG8";
       const telegramChatId = process.env.TELEGRAM_CHAT_ID || "6445871174";
       if (telegramBotToken && telegramChatId) {
-        const textMessage = encodeURIComponent(`❓ *New Customer Question!*\n\n*Name:* ${name}\n*Phone:* ${phone}\n\n*Message:*\n${message}`);
-        const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${telegramChatId}&text=${textMessage}&parse_mode=Markdown`;
+        const textMessage = encodeURIComponent(`❓ New Customer Question!\n\nName: ${name}\nPhone: ${phone}\n\nMessage:\n${message}`);
+        const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${telegramChatId}&text=${textMessage}`;
         
         // Await the fetch so Vercel does not terminate the lambda early
         await fetch(url).catch(err => console.error("Telegram Fetch Error:", err));
