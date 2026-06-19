@@ -161,16 +161,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Info Content */}
-        <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
-          <div className="space-y-1">
-            <span className="text-[9px] font-black text-brand-orange bg-orange-50 dark:bg-orange-950/30 px-2.5 py-0.5 rounded-full inline-block">
+        <div className="p-2.5 sm:p-4 flex-1 flex flex-col justify-between space-y-2 sm:space-y-3">
+          <div className="space-y-0.5 sm:space-y-1">
+            <span className="text-[8px] sm:text-[9px] font-black text-brand-orange bg-orange-50 dark:bg-orange-950/30 px-2 sm:px-2.5 py-0.5 rounded-full inline-block">
               {product.category.name}
             </span>
-            <h3 className="font-extrabold text-sm text-zinc-800 dark:text-zinc-200 line-clamp-2 min-h-10">
+            <h3 className="font-extrabold text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 line-clamp-2 min-h-8 sm:min-h-10">
               {product.name}
             </h3>
             {product.description && (
-              <p className="text-[10px] text-zinc-450 dark:text-zinc-500 line-clamp-1 font-medium">
+              <p className="hidden sm:block text-[10px] text-zinc-450 dark:text-zinc-500 line-clamp-1 font-medium">
                 {product.description}
               </p>
             )}
@@ -197,19 +197,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           )}
 
           {/* Pricing & Buttons */}
-          <div className="flex justify-between items-center pt-2 border-t border-zinc-100 dark:border-zinc-900">
+          <div className="flex justify-between items-center pt-1.5 sm:pt-2 border-t border-zinc-100 dark:border-zinc-900">
             <div className="flex flex-col">
-              <span className="text-sm font-black text-zinc-900 dark:text-white">
+              <span className="text-xs sm:text-sm font-black text-zinc-900 dark:text-white">
                 {activePrice.toLocaleString()} TK
               </span>
               {originalPrice > activePrice && (
-                <span className="text-[10px] text-zinc-400 line-through">
+                <span className="text-[9px] sm:text-[10px] text-zinc-400 line-through">
                   {originalPrice.toLocaleString()} TK
                 </span>
               )}
             </div>
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1">
               {/* Show More button */}
               <button
                 type="button"
@@ -218,17 +218,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                   setActiveImgIdx(0);
                   setShowDetail(true);
                 }}
-                className="flex items-center gap-1 px-2.5 py-1.5 text-[10px] font-bold rounded-xl transition bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200"
+                className="flex items-center gap-0.5 sm:gap-1 px-2 sm:px-2.5 py-1.5 text-[9px] sm:text-[10px] font-bold rounded-xl transition bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200"
               >
-                <Info size={11} />
-                Show More
+                <Info size={10} />
+                <span className="hidden sm:inline">Show More</span>
+                <span className="sm:hidden">Info</span>
               </button>
 
               {/* Add to Cart button */}
               <button
                 onClick={handleAddToCart}
                 disabled={isOutOfStock}
-                className={`flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-xl transition-all duration-200 shadow-md ${
+                className={`flex items-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-1.5 text-[9px] sm:text-xs font-bold rounded-xl transition-all duration-200 shadow-md ${
                   isOutOfStock
                     ? "bg-zinc-100 text-zinc-400 cursor-not-allowed dark:bg-zinc-800 dark:text-zinc-600 shadow-none"
                     : added

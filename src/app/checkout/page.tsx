@@ -177,7 +177,7 @@ export default function CheckoutPage() {
     <div className="flex flex-col min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <Navbar />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-6">
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 flex-1 w-full space-y-4 sm:space-y-6">
         {/* Back Link */}
         <Link
           href="/"
@@ -188,11 +188,11 @@ export default function CheckoutPage() {
         </Link>
 
         {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-8 items-start">
           
           {/* Left Side Checkout Form (7 cols) */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-900 p-6 rounded-3xl shadow-xs space-y-6">
+          <div className="lg:col-span-7 space-y-4 sm:space-y-6">
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-900 p-4 sm:p-6 rounded-2xl sm:rounded-3xl shadow-xs space-y-5 sm:space-y-6">
               
               <div className="border-b border-zinc-100 dark:border-zinc-900 pb-4 flex justify-between items-center">
                 <div>
@@ -423,10 +423,10 @@ export default function CheckoutPage() {
           </div>
 
           {/* Right Side Order Summary (5 cols) */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="lg:col-span-5 space-y-4 sm:space-y-6">
             
             {/* Summary details */}
-            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-900 p-6 rounded-3xl shadow-xs space-y-4">
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-900 p-4 sm:p-6 rounded-2xl sm:rounded-3xl shadow-xs space-y-4">
               <h3 className="font-extrabold text-sm text-zinc-900 dark:text-white border-b border-zinc-100 dark:border-zinc-900 pb-3">
                 Order Summary ({cart.reduce((sum, item) => sum + item.quantity, 0)})
               </h3>

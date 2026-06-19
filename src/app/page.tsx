@@ -722,18 +722,20 @@ export default function CatalogPage() {
       />
 
       {/* Review Slider + Trust Card */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+      <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-2 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-6">
           {/* Product Banner Slider — 2 cols */}
-          <div className="lg:col-span-2 aspect-[4/3] sm:aspect-[21/9] md:aspect-[24/9]">
-            <ProductBannerSlider 
-              onSearchChange={setSearchQuery} 
-              bannerProducts={bannerProducts}
-            />
+          <div className="lg:col-span-2 w-full" style={{ aspectRatio: 'auto', minHeight: '220px' }}>
+            <div className="w-full h-[220px] sm:h-[280px] md:h-[320px] lg:h-full lg:min-h-[300px]">
+              <ProductBannerSlider 
+                onSearchChange={setSearchQuery} 
+                bannerProducts={bannerProducts}
+              />
+            </div>
           </div>
 
           {/* Trust & Promise card — 1 col */}
-          <div className="lg:col-span-1 relative rounded-3xl overflow-hidden border border-zinc-200/50 dark:border-zinc-800/80 shadow-xl min-h-[200px] lg:min-h-0 bg-gradient-to-br from-brand-orange/10 via-amber-50/80 to-white dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-900 flex flex-col justify-center p-7">
+          <div className="lg:col-span-1 relative rounded-3xl overflow-hidden border border-zinc-200/50 dark:border-zinc-800/80 shadow-xl min-h-[160px] lg:min-h-0 bg-gradient-to-br from-brand-orange/10 via-amber-50/80 to-white dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-900 flex flex-col justify-center p-5 sm:p-7">
             <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-brand-orange/10 blur-2xl pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-amber-400/10 blur-2xl pointer-events-none" />
             <div className="relative">
@@ -770,7 +772,7 @@ export default function CatalogPage() {
       <ReviewMarquee onReviewClick={handleReviewClick} />
 
       {/* Main Product Catalog */}
-      <div id="catalog" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 flex flex-col gap-6">
+      <div id="catalog" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 flex-1 flex flex-col gap-4 sm:gap-6">
 
         {/* Category Pills */}
         <div className="flex items-center justify-between border-b border-zinc-150 dark:border-zinc-850 pb-4 overflow-x-auto gap-4 scrollbar-none">
@@ -878,7 +880,7 @@ export default function CatalogPage() {
 
         {/* Product Grid */}
         {loading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 flex-1">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 flex-1">
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
@@ -910,7 +912,7 @@ export default function CatalogPage() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
             {products.map((prod) => (
               <ProductCard key={prod.id} product={prod} />
             ))}
@@ -923,18 +925,18 @@ export default function CatalogPage() {
         href="https://wa.me/8809642922922?text=Hello%20C%26B%20Mart!%20I'm%20interested%20in%20your%20products."
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl flex items-center justify-center transition hover:-translate-y-1 active:translate-y-0 duration-300 group"
+        className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white p-3 sm:p-4 rounded-full shadow-2xl flex items-center justify-center transition hover:-translate-y-1 active:translate-y-0 duration-300 group"
         title="Chat on WhatsApp"
       >
-        <MessageSquare className="animate-wiggle" size={24} />
+        <MessageSquare className="animate-wiggle" size={22} />
         <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-2 font-bold text-xs whitespace-nowrap transition-all duration-300">
           WhatsApp Order
         </span>
       </a>
 
       {/* Ask a Question Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-6 w-full">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800 rounded-3xl p-8 md:p-12 shadow-xl flex flex-col md:flex-row items-center gap-8">
+      <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 mt-8 sm:mt-12 mb-6 w-full">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800 rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-12 shadow-xl flex flex-col md:flex-row items-center gap-6 sm:gap-8">
           <div className="flex-1 space-y-4 text-center md:text-left">
             <h2 className="text-2xl md:text-3xl font-black text-zinc-800 dark:text-zinc-100">কোনো প্রশ্ন আছে?</h2>
             <p className="text-zinc-500 dark:text-zinc-400 font-medium max-w-sm mx-auto md:mx-0">
@@ -1050,16 +1052,16 @@ export default function CatalogPage() {
       {/* Floating Cart Widget */}
       <div
         onClick={() => setCartOpen(true)}
-        className="fixed right-0 top-[40%] z-45 bg-brand-orange text-white py-3.5 px-3 rounded-l-2xl shadow-2xl flex flex-col items-center gap-1.5 cursor-pointer hover:bg-brand-orange/95 active:scale-95 transition-all group border-y border-l border-white/20 select-none"
+        className="fixed right-0 top-[40%] z-[45] bg-brand-orange text-white py-2.5 sm:py-3.5 px-2 sm:px-3 rounded-l-2xl shadow-2xl flex flex-col items-center gap-1 sm:gap-1.5 cursor-pointer hover:bg-brand-orange/95 active:scale-95 transition-all group border-y border-l border-white/20 select-none"
       >
-        <div className="bg-white/20 p-2 rounded-xl group-hover:scale-110 transition-transform">
-          <ShoppingBag size={20} className="text-white" />
+        <div className="bg-white/20 p-1.5 sm:p-2 rounded-xl group-hover:scale-110 transition-transform">
+          <ShoppingBag size={18} className="text-white" />
         </div>
         <div className="flex flex-col items-center">
-          <span className="text-[10px] font-black uppercase tracking-wider text-amber-100">
+          <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-amber-100">
             {cartCount} Items
           </span>
-          <span className="text-xs font-black mt-0.5 whitespace-nowrap">
+          <span className="text-[10px] sm:text-xs font-black mt-0.5 whitespace-nowrap">
             ৳{cartSubtotal.toLocaleString()}
           </span>
         </div>
