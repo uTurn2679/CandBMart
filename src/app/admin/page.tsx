@@ -80,6 +80,51 @@ export default function AdminDashboard() {
   const [productError, setProductError] = useState("");
   const [productSuccess, setProductSuccess] = useState("");
 
+  // Helper to read image file and convert to Base64 for database storage
+  const handleImageFileSelect = (e: React.ChangeEvent<HTMLInputElement>, setter: (val: string) => void) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    // Quick size validation (> 5MB warn)
+    if (file.size > 5 * 1024 * 1024) {
+      alert("ছবি ৫ মেগাবাইটের থেকে ছোট হতে হবে।");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let { width, height } = img;
+        const MAX_DIM = 1000;
+
+        if (width > MAX_DIM || height > MAX_DIM) {
+          if (width > height) {
+            height = Math.round((height * MAX_DIM) / width);
+            width = MAX_DIM;
+          } else {
+            width = Math.round((width * MAX_DIM) / height);
+            height = MAX_DIM;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx?.drawImage(img, 0, 0, width, height);
+        
+        // Compress and convert to Base64 string
+        const base64String = canvas.toDataURL("image/webp", 0.8);
+        setter(base64String);
+      };
+      if (event.target?.result) {
+        img.src = event.target.result as string;
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   // Edit product form states
   const [editingProduct, setEditingProduct] = useState<any>(null);
 
@@ -1068,15 +1113,29 @@ export default function AdminDashboard() {
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-bold text-zinc-500 mb-1 uppercase tracking-wider">Image URL</label>
-                      <input
-                        type="url"
-                        placeholder="https://images.unsplash.com/photo-..."
-                        value={pImageUrl}
-                        onChange={(e) => setPImageUrl(e.target.value)}
-                        required
-                        className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2 outline-none focus:border-brand-orange text-[10px] transition"
-                      />
+                      <label className="block text-[10px] font-bold text-zinc-500 mb-1 uppercase tracking-wider">Product Image (Upload or URL)</label>
+                      <div className="flex gap-2 items-center">
+                        <label className="shrink-0 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 cursor-pointer p-2 rounded-xl text-xs font-bold transition">
+                          Upload Image
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            className="hidden" 
+                            onChange={(e) => handleImageFileSelect(e, setPImageUrl)}
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Or paste image URL"
+                          value={pImageUrl}
+                          onChange={(e) => setPImageUrl(e.target.value)}
+                          required
+                          className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2 outline-none focus:border-brand-orange text-[10px] transition"
+                        />
+                      </div>
+                      {pImageUrl && pImageUrl.startsWith("data:image") && (
+                        <div className="mt-2 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">✓ Image loaded from memory</div>
+                      )}
                     </div>
 
                     <div>
@@ -1228,8 +1287,24 @@ export default function AdminDashboard() {
 
                     {/* Extra Color Images for Show More */}
                     <div>
-                      <label className="block text-[10px] font-bold text-zinc-500 mb-1 uppercase tracking-wider">Show More – অন্য কালারের ছবির URL</label>
-                      <p className="text-[9px] text-zinc-400 mb-1.5">প্রতিটি URL আলাদা লাইনে লিখুন</p>
+                      <div className="flex justify-between items-end mb-1">
+                        <div>
+                          <label className="block text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Show More – অন্য কালারের ছবি (Upload or URL)</label>
+                          <p className="text-[9px] text-zinc-400 mt-0.5">প্রতিটি URL আলাদা লাইনে লিখুন, অথবা সরাসরি আপলোড করুন</p>
+                        </div>
+                        <label className="shrink-0 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 cursor-pointer px-2 py-1 rounded-lg text-[9px] font-bold transition">
+                          + Upload Image
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            className="hidden" 
+                            onChange={(e) => handleImageFileSelect(e, (base64) => {
+                              const current = editingProduct.extraImages || [];
+                              setEditingProduct({ ...editingProduct, extraImages: [...current, base64] });
+                            })}
+                          />
+                        </label>
+                      </div>
                       <textarea
                         value={(editingProduct.extraImages || []).join("\n")}
                         onChange={(e) =>
@@ -1243,7 +1318,7 @@ export default function AdminDashboard() {
                         }
                         rows={4}
                         placeholder={"https://example.com/red.jpg\nhttps://example.com/blue.jpg"}
-                        className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2 outline-none focus:border-brand-orange transition resize-none text-xs font-mono"
+                        className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2 outline-none focus:border-brand-orange transition resize-none text-[10px] font-mono leading-tight whitespace-pre"
                       />
                     </div>
 
