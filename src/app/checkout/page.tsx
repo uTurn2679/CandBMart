@@ -517,19 +517,19 @@ export default function CheckoutPage() {
 
             {/* Total Billing Math */}
             <div className="bg-brand-dark text-white p-6 rounded-3xl shadow-lg border border-orange-900/10 space-y-4">
-              <h3 className="font-extrabold text-xs uppercase tracking-widest text-zinc-450">Cost Breakdown</h3>
+              <h3 className="font-extrabold text-xs uppercase tracking-widest text-white">Cost Breakdown</h3>
               
-              <div className="space-y-2.5 text-xs font-bold border-b border-zinc-800 pb-3">
-                <div className="flex justify-between items-center text-zinc-300">
+              <div className="space-y-2.5 text-xs font-bold border-b border-zinc-100/20 pb-3">
+                <div className="flex justify-between items-center text-white">
                   <span>Cart Subtotal</span>
                   <span>{cartSubtotal.toLocaleString()} TK</span>
                 </div>
 
-                <div className="flex justify-between items-center text-zinc-300">
+                <div className="flex justify-between items-center text-white">
                   <span>Delivery Charge</span>
                   <span>
                     {deliveryCharge === 0 ? (
-                      <span className="text-emerald-400 font-bold">FREE</span>
+                      <span className="text-white font-bold">FREE</span>
                     ) : (
                       `${deliveryCharge.toLocaleString()} TK`
                     )}
@@ -537,7 +537,7 @@ export default function CheckoutPage() {
                 </div>
 
                 {couponDiscount > 0 && (
-                  <div className="flex justify-between items-center text-brand-orange">
+                  <div className="flex justify-between items-center text-white">
                     <span>Coupon Discount</span>
                     <span>-{couponDiscount.toLocaleString()} TK</span>
                   </div>
@@ -545,8 +545,8 @@ export default function CheckoutPage() {
               </div>
 
               <div className="flex justify-between items-center">
-                <span className="text-xs font-extrabold text-zinc-400 uppercase tracking-widest">Total Payable</span>
-                <span className="text-2xl font-black text-brand-orange">
+                <span className="text-xs font-extrabold text-white uppercase tracking-widest">Total Payable</span>
+                <span className="text-2xl font-black text-white">
                   {totalPayable.toLocaleString()} TK
                 </span>
               </div>
