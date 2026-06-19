@@ -106,13 +106,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <>
       {/* ── Card ── */}
       <div
-        className="group bg-white dark:bg-zinc-950 rounded-2xl sm:rounded-3xl border border-zinc-100 dark:border-zinc-900 shadow-xs hover:shadow-xl dark:hover:shadow-orange-950/10 hover:border-zinc-200 dark:hover:border-zinc-800 transition-all duration-300 flex flex-col justify-between overflow-hidden relative cursor-pointer"
+        className="group bg-white dark:bg-zinc-950 rounded-xl sm:rounded-3xl border border-zinc-100 dark:border-zinc-900 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden relative cursor-pointer w-full"
         onClick={() => router.push(`/product/${product.slug}`)}
       >
         {/* Discount Badge */}
         {discountPercent > 0 && (
-          <span className="absolute top-3 left-3 z-10 bg-brand-orange text-white font-black text-[10px] tracking-wide px-2.5 py-1 rounded-full flex items-center gap-0.5 shadow-md shadow-brand-orange/10 animate-pulse">
-            <Tag size={10} />
+          <span className="absolute top-2 left-2 z-10 bg-brand-orange text-white font-black text-[9px] px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+            <Tag size={8} />
             {discountPercent}% OFF
           </span>
         )}
@@ -139,48 +139,45 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               });
             }
           }}
-          className={`absolute top-3 right-3 z-10 p-2 rounded-full shadow-md transition-all duration-300 ${
+          className={`absolute top-2 right-2 z-10 p-1.5 rounded-full shadow transition-all duration-300 ${
             compareItems.some(item => item.id === product.id)
-              ? "bg-emerald-500 text-white hover:bg-rose-500"
-              : "bg-white/90 text-zinc-500 hover:text-emerald-500 hover:bg-white"
+              ? "bg-emerald-500 text-white"
+              : "bg-white/90 text-zinc-400"
           }`}
-          title={compareItems.some(item => item.id === product.id) ? "Remove from Compare" : "Add to Compare"}
         >
-          <Scale size={14} className={compareItems.some(item => item.id === product.id) ? "fill-current" : ""} />
+          <Scale size={11} />
         </button>
 
-        {/* Product Image Cover */}
-        <div className="aspect-square bg-zinc-50 dark:bg-zinc-900/50 overflow-hidden relative">
+        {/* Product Image — fixed height on mobile */}
+        <div className="h-[130px] sm:aspect-square sm:h-auto bg-zinc-50 dark:bg-zinc-900/50 overflow-hidden relative flex-shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={primaryImageUrl}
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
         </div>
 
         {/* Info Content */}
-        <div className="p-2 sm:p-4 flex-1 flex flex-col justify-between gap-1.5 sm:gap-3">
-          <div className="space-y-0.5">
-            <span className="text-[8px] sm:text-[9px] font-black text-brand-orange bg-orange-50 dark:bg-orange-950/30 px-1.5 sm:px-2.5 py-0.5 rounded-full inline-block">
+        <div className="p-2 sm:p-4 flex flex-col gap-1 sm:gap-3 flex-1">
+
+          {/* Category + Name */}
+          <div>
+            <span className="text-[8px] font-black text-brand-orange bg-orange-50 dark:bg-orange-950/30 px-1.5 py-0.5 rounded-full inline-block mb-0.5">
               {product.category.name}
             </span>
-            <h3 className="font-extrabold text-[11px] sm:text-sm text-zinc-800 dark:text-zinc-200 line-clamp-2 leading-tight">
+            <h3 className="font-bold text-[10px] sm:text-sm text-zinc-800 dark:text-zinc-200 line-clamp-2 leading-snug">
               {product.name}
             </h3>
           </div>
 
-          {/* Variant Picker - hidden on mobile, shown in modal */}
+          {/* Variant Picker — desktop only */}
           {product.variants.length > 1 && (
-            <div className="hidden sm:block space-y-1" onClick={(e) => e.stopPropagation()}>
-              <label className="text-[9px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">
-                Select Options
-              </label>
+            <div className="hidden sm:block" onClick={(e) => e.stopPropagation()}>
               <select
                 value={selectedVariantId}
                 onChange={(e) => setSelectedVariantId(e.target.value)}
-                className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 outline-none focus:border-brand-orange transition"
+                className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-1.5 text-xs font-semibold outline-none focus:border-brand-orange transition"
               >
                 {product.variants.map((v) => (
                   <option key={v.id} value={v.id}>
@@ -191,10 +188,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </div>
           )}
 
-          {/* Pricing & Buttons */}
-          <div className="flex justify-between items-center pt-1 sm:pt-2 border-t border-zinc-100 dark:border-zinc-900 mt-auto">
-            <div className="flex flex-col min-w-0">
-              <span className="text-[11px] sm:text-sm font-black text-zinc-900 dark:text-white">
+          {/* Price + Buttons */}
+          <div className="flex items-center justify-between pt-1 border-t border-zinc-100 dark:border-zinc-900 mt-auto gap-1">
+            <div className="flex flex-col min-w-0 flex-1">
+              <span className="text-[11px] sm:text-sm font-black text-zinc-900 dark:text-white truncate">
                 {activePrice.toLocaleString()} TK
               </span>
               {originalPrice > activePrice && (
@@ -205,44 +202,33 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </div>
 
             <div className="flex items-center gap-1 shrink-0">
-              {/* Info button */}
+              {/* Info icon */}
               <button
                 type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActiveImgIdx(0);
-                  setShowDetail(true);
-                }}
-                className="p-1.5 rounded-lg transition bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-300"
-                title="Info"
+                onClick={(e) => { e.stopPropagation(); setActiveImgIdx(0); setShowDetail(true); }}
+                className="p-1 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition"
               >
-                <Info size={12} />
+                <Info size={11} />
               </button>
 
               {/* Order button */}
               <button
                 onClick={handleAddToCart}
                 disabled={isOutOfStock}
-                className={`flex items-center gap-0.5 px-2 sm:px-3 py-1.5 text-[10px] sm:text-xs font-bold rounded-lg transition-all duration-200 shadow-sm ${
+                className={`flex items-center gap-0.5 px-2 py-1 text-[9px] sm:text-xs font-bold rounded-md transition-all ${
                   isOutOfStock
-                    ? "bg-zinc-100 text-zinc-400 cursor-not-allowed dark:bg-zinc-800 dark:text-zinc-600"
+                    ? "bg-zinc-100 text-zinc-400 cursor-not-allowed dark:bg-zinc-800"
                     : added
                     ? "bg-emerald-500 text-white"
-                    : "bg-brand-orange hover:bg-brand-orange/90 text-white active:scale-95"
+                    : "bg-brand-orange text-white active:scale-95"
                 }`}
               >
                 {isOutOfStock ? (
                   <span>শেষ</span>
                 ) : added ? (
-                  <>
-                    <Check size={12} />
-                    <span>Added</span>
-                  </>
+                  <><Check size={10} /><span>✓</span></>
                 ) : (
-                  <>
-                    <ShoppingCart size={12} />
-                    <span>Order</span>
-                  </>
+                  <><ShoppingCart size={10} /><span>অর্ডার</span></>
                 )}
               </button>
             </div>
