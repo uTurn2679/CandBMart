@@ -10,24 +10,57 @@ const prisma = new PrismaClient({ adapter });
 
 async function main() {
   const pordaCat = await prisma.category.findFirst({ where: { slug: 'porda' } });
-  const beddingCat = await prisma.category.findFirst({ where: { slug: 'bedding' } });
-  const furnitureCat = await prisma.category.findFirst({ where: { slug: 'furniture' } });
-
-  if (!pordaCat || !beddingCat || !furnitureCat) throw new Error("Categories not found");
+  if (!pordaCat) throw new Error("Category not found");
 
   await prisma.product.create({
     data: {
-      name: "সানফ্লাওয়ার বেডশিট",
-      slug: "sunflower-bedsheet",
-      description: "আকর্ষণীয় সূর্যমুখী ফুলের ডিজাইনের আরামদায়ক বেডশিট।",
-      categoryId: beddingCat.id,
-      price: 1250,
+      name: "গোলাপী ফ্লোরাল প্রিমিয়াম পর্দা",
+      slug: "pink-floral-premium-curtain",
+      description: "আকর্ষণীয় গোলাপী ও মেরুন ফ্লোরাল ডিজাইনের পর্দা।",
+      categoryId: pordaCat.id,
+      price: 850,
+      stockQuantity: 30,
+      isActive: true,
+      images: { create: [{ imageUrl: "/products/curtain_pink_floral.jpg", isPrimary: true }] },
+      variants: {
+        create: [
+          { variantName: "Standard Size", stockQuantity: 30, priceOverride: 850 }
+        ]
+      }
+    }
+  });
+
+  await prisma.product.create({
+    data: {
+      name: "নিল গোলাপ ডিজাইনের পর্দা",
+      slug: "blue-roses-design-curtain",
+      description: "সাদা ব্যাকগ্রাউন্ডে চমৎকার নীল রঙের গোলাপ ডিজাইনের পর্দা।",
+      categoryId: pordaCat.id,
+      price: 900,
+      stockQuantity: 25,
+      isActive: true,
+      images: { create: [{ imageUrl: "/products/curtain_blue_roses.jpg", isPrimary: true }] },
+      variants: {
+        create: [
+          { variantName: "Standard Size", stockQuantity: 25, priceOverride: 900 }
+        ]
+      }
+    }
+  });
+
+  await prisma.product.create({
+    data: {
+      name: "লাল ফ্লোরাল স্টাইলিশ পর্দা",
+      slug: "red-floral-stylish-curtain",
+      description: "লাল ও মেরুন রঙের মিশেলে স্টাইলিশ ফ্লোরাল ডিজাইনের পর্দা।",
+      categoryId: pordaCat.id,
+      price: 880,
       stockQuantity: 20,
       isActive: true,
-      images: { create: [{ imageUrl: "/products/bedsheet_sunflower.jpg", isPrimary: true }] },
+      images: { create: [{ imageUrl: "/products/curtain_red_floral.jpg", isPrimary: true }] },
       variants: {
         create: [
-          { variantName: "King Size", stockQuantity: 20, priceOverride: 1250 }
+          { variantName: "Standard Size", stockQuantity: 20, priceOverride: 880 }
         ]
       }
     }
@@ -35,53 +68,17 @@ async function main() {
 
   await prisma.product.create({
     data: {
-      name: "সাদা-গোলাপী ফ্লোরাল পর্দা",
-      slug: "white-pink-floral-curtain",
-      description: "সাদা জমিনের ওপর সুন্দর গোলাপী ফুলের ডিজাইনের পর্দা।",
+      name: "সবুজ পাতা ডিজাইনের গর্জিয়াস পর্দা",
+      slug: "green-leaf-gorgeous-curtain",
+      description: "সবুজ রঙের মধ্যে চমৎকার পাতা ডিজাইনের গর্জিয়াস পর্দা।",
       categoryId: pordaCat.id,
-      price: 800,
-      stockQuantity: 40,
-      isActive: true,
-      images: { create: [{ imageUrl: "/products/curtain_white_pink.jpg", isPrimary: true }] },
-      variants: {
-        create: [
-          { variantName: "Standard Size", stockQuantity: 40, priceOverride: 800 }
-        ]
-      }
-    }
-  });
-
-  await prisma.product.create({
-    data: {
-      name: "সবুজ পাতার ডিজাইনের পর্দা",
-      slug: "green-leaf-design-curtain",
-      description: "গাঢ় সবুজ রঙের মাঝে পাতার মনোরম ডিজাইনের পর্দা।",
-      categoryId: pordaCat.id,
-      price: 780,
-      stockQuantity: 35,
-      isActive: true,
-      images: { create: [{ imageUrl: "/products/curtain_green_leaf.jpg", isPrimary: true }] },
-      variants: {
-        create: [
-          { variantName: "Standard Size", stockQuantity: 35, priceOverride: 780 }
-        ]
-      }
-    }
-  });
-
-  await prisma.product.create({
-    data: {
-      name: "রিলাক্সিং ম্যাক্রামে হ্যামক (নীল)",
-      slug: "relaxing-macrame-hammock-blue",
-      description: "বারান্দা বা বাগানে বিশ্রামের জন্য চমৎকার নীল রঙের হ্যামক।",
-      categoryId: furnitureCat.id,
-      price: 1500,
+      price: 920,
       stockQuantity: 15,
       isActive: true,
-      images: { create: [{ imageUrl: "/products/hammock_man.jpg", isPrimary: true }] },
+      images: { create: [{ imageUrl: "/products/curtain_green_leaf_new.jpg", isPrimary: true }] },
       variants: {
         create: [
-          { variantName: "Standard Size", stockQuantity: 15, priceOverride: 1500 }
+          { variantName: "Standard Size", stockQuantity: 15, priceOverride: 920 }
         ]
       }
     }
@@ -89,23 +86,23 @@ async function main() {
 
   await prisma.product.create({
     data: {
-      name: "রিলাক্সিং ম্যাক্রামে হ্যামক (সাদা-নীল)",
-      slug: "relaxing-macrame-hammock-white-blue",
-      description: "বাচ্চা থেকে বয়স্ক সবার জন্য আরামদায়ক সাদা ও নীল রঙের ম্যাক্রামে হ্যামক।",
-      categoryId: furnitureCat.id,
-      price: 1600,
-      stockQuantity: 10,
+      name: "নীল প্যাটার্ন ডিজাইনের পর্দা",
+      slug: "blue-pattern-design-curtain",
+      description: "সাদা ও নীল রঙের মিশেলে নান্দনিক প্যাটার্ন ডিজাইনের পর্দা।",
+      categoryId: pordaCat.id,
+      price: 860,
+      stockQuantity: 30,
       isActive: true,
-      images: { create: [{ imageUrl: "/products/hammock_girl.jpg", isPrimary: true }] },
+      images: { create: [{ imageUrl: "/products/curtain_blue_patterns.jpg", isPrimary: true }] },
       variants: {
         create: [
-          { variantName: "Standard Size", stockQuantity: 10, priceOverride: 1600 }
+          { variantName: "Standard Size", stockQuantity: 30, priceOverride: 860 }
         ]
       }
     }
   });
 
-  console.log("Added 5 new products");
+  console.log("Added 5 new curtain products");
 }
 
 main().catch(console.error).finally(() => prisma.$disconnect());

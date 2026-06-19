@@ -40,6 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [actionLoading, setActionLoading] = useState(false);
+  const [countdown, setCountdown] = useState(0);
 
   const refreshUser = async () => {
     try {
@@ -60,6 +61,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     refreshUser();
   }, []);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (otpSent && countdown > 0) {
+      timer = setTimeout(() => setCountdown((c) => c - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [otpSent, countdown]);
 
   const logout = async () => {
     try {
@@ -88,8 +97,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const data = await res.json();
       if (res.ok) {
         setOtpSent(true);
-        // For local testing convenience, show the code
-        setSuccessMsg(`OTP Code generated: ${data.otpCode} (Logged to server console)`);
+        setCountdown(120);
+        // If in dev mode, code might be returned
+        setSuccessMsg(`OTP sent to your mobile. You have 2 minutes to enter it. ${data.otpCode ? `(Dev Code: ${data.otpCode})` : ""}`);
       } else {
         setErrorMsg(data.error || "Failed to send OTP.");
       }
@@ -360,9 +370,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                         <button
                           type="button"
                           onClick={handleSendOtp}
-                          className="text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
+                          disabled={countdown > 0}
+                          className={`transition ${
+                            countdown > 0
+                              ? "text-zinc-400 cursor-not-allowed"
+                              : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
+                          }`}
                         >
-                          Resend Code
+                          {countdown > 0
+                            ? `Resend in ${Math.floor(countdown / 60)}:${(countdown % 60)
+                                .toString()
+                                .padStart(2, "0")}`
+                            : "Resend Code"}
                         </button>
                       </div>
                     </form>
