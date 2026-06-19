@@ -149,7 +149,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </button>
 
         {/* Product Image — fixed height on mobile */}
-        <div className="h-[130px] sm:aspect-square sm:h-auto bg-zinc-50 dark:bg-zinc-900/50 overflow-hidden relative flex-shrink-0">
+        <div className="w-full h-[130px] sm:aspect-square sm:h-auto bg-zinc-50 dark:bg-zinc-900/50 overflow-hidden relative flex-shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={primaryImageUrl}
