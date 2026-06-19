@@ -31,8 +31,9 @@ interface NavbarProps {
 const C_AND_B_MART_CATEGORIES = [
   { name: "Home", slug: "home", query: "", isHome: true },
   { name: "পর্দা (Curtains)", slug: "porda", query: "porda" },
-  { name: "ফার্নিচার (Furniture)", slug: "furniture", query: "furniture" },
+  { name: "দোলনা", slug: "dolna", query: "dolna" },
   { name: "বেডিং (Bedding)", slug: "bedding", query: "bedding" },
+  { name: "মশারি", slug: "moshari", query: "moshari" },
   { name: "Offer Zone", slug: "offers", query: "offer" }
 ];
 

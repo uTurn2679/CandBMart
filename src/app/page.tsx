@@ -990,7 +990,7 @@ export default function CatalogPage() {
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <h3 className="text-2xl font-black text-brand-orange mb-4">C&B Mart</h3>
             <p className="text-sm text-zinc-500 dark:text-zinc-400 font-medium mb-4">
-              ঘর সাজাতে আপনার সাথে। প্রিমিয়াম পর্দা, বেডিং এবং ফার্নিচারের বিশ্বস্ত প্রতিষ্ঠান। ১০০% অরিজিনাল পণ্য ও দ্রুত হোম ডেলিভারি।
+              ঘর সাজাতে আপনার সাথে। প্রিমিয়াম পর্দা, বেডিং এবং দোলনার বিশ্বস্ত প্রতিষ্ঠান। ১০০% অরিজিনাল পণ্য ও দ্রুত হোম ডেলিভারি।
             </p>
             <div className="bg-orange-50 dark:bg-brand-orange/10 border border-brand-orange/20 rounded-xl p-3 inline-block text-left shadow-sm">
               <p className="text-xs font-bold text-zinc-700 dark:text-zinc-300 leading-relaxed">
