@@ -192,19 +192,30 @@ export async function POST(request: Request) {
       return order;
     });
 
-    // 3. Send Telegram Notification
+    // 3. Send Telegram + WhatsApp Notification
     try {
       const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN || "8840968249:AAGE8XO-01fC7A9EL62g5tnJOfZw37XkqG8";
       const telegramChatId = process.env.TELEGRAM_CHAT_ID || "6445871174";
       if (telegramBotToken && telegramChatId) {
         const message = encodeURIComponent(`🛒 New Order Received!\n\nOrder No: ${result.orderNumber}\nCustomer: ${customerName}\nPhone: ${customerPhone}\nTotal: ${result.totalAmount} TK\nPayment: ${paymentMethod}\n\nPlease check the admin panel for details.`);
         const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${telegramChatId}&text=${message}`;
-        
-        // Await the fetch so Vercel does not terminate the lambda early
         await fetch(url).catch(err => console.error("Telegram Fetch Error:", err));
       }
     } catch (e) {
       console.error("Failed to trigger Telegram notification:", e);
+    }
+
+    // 4. Send WhatsApp Notification via CallMeBot
+    try {
+      const waPhone = process.env.WHATSAPP_PHONE || "8801743690402";
+      const waApiKey = process.env.WHATSAPP_CALLMEBOT_APIKEY || "";
+      if (waPhone && waApiKey) {
+        const waMsg = encodeURIComponent(`🛒 নতুন অর্ডার!\n\nঅর্ডার নং: ${result.orderNumber}\nনাম: ${customerName}\nফোন: ${customerPhone}\nমোট: ${result.totalAmount} TK\nপেমেন্ট: ${paymentMethod}\nঠিকানা: ${deliveryAddress}`);
+        const waUrl = `https://api.callmebot.com/whatsapp.php?phone=${waPhone}&text=${waMsg}&apikey=${waApiKey}`;
+        await fetch(waUrl).catch(err => console.error("WhatsApp Fetch Error:", err));
+      }
+    } catch (e) {
+      console.error("Failed to trigger WhatsApp notification:", e);
     }
 
     return NextResponse.json({
