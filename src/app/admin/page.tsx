@@ -128,13 +128,6 @@ export default function AdminDashboard() {
   // Edit product form states
   const [editingProduct, setEditingProduct] = useState<any>(null);
 
-  // Offer Zone states
-  const [offerProductId, setOfferProductId] = useState("");
-  const [offerSalePrice, setOfferSalePrice] = useState("");
-  const [offerOriginalPrice, setOfferOriginalPrice] = useState("");
-  const [offerError, setOfferError] = useState("");
-  const [offerSuccess, setOfferSuccess] = useState("");
-
   // Initial redirect if not authorized
   useEffect(() => {
     if (!authLoading) {
@@ -471,64 +464,6 @@ export default function AdminDashboard() {
     }
   };
 
-  // Add/Update Offer
-  const handleUpdateOffer = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setOfferError("");
-    setOfferSuccess("");
-
-    if (!offerProductId) {
-      setOfferError("Please select a product.");
-      return;
-    }
-
-    try {
-      const res = await fetch(`/api/admin/products/${offerProductId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          price: parseFloat(offerSalePrice),
-          compareAtPrice: parseFloat(offerOriginalPrice),
-        }),
-      });
-
-      if (res.ok) {
-        setOfferSuccess("Offer added successfully!");
-        setOfferProductId("");
-        setOfferSalePrice("");
-        setOfferOriginalPrice("");
-        loadAdminProducts();
-      } else {
-        const data = await res.json();
-        setOfferError(data.error || "Failed to update offer.");
-      }
-    } catch (err) {
-      setOfferError("Failed to save offer.");
-    }
-  };
-
-  // Remove Offer
-  const handleRemoveOffer = async (prodId: string, currentPrice: number, comparePrice: number) => {
-    if (!window.confirm("Are you sure you want to remove this offer? The product price will revert to its original value.")) return;
-    try {
-      // If compareAtPrice is the original price, we set price to compareAtPrice and compareAtPrice to null
-      const res = await fetch(`/api/admin/products/${prodId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          price: comparePrice > 0 ? comparePrice : currentPrice,
-          compareAtPrice: null,
-        }),
-      });
-
-      if (res.ok) {
-        loadAdminProducts();
-      }
-    } catch (e) {
-      console.error("Failed to remove offer");
-    }
-  };
-
   // Delete product completely
   const handleDeleteProduct = async (prodId: string) => {
     if (!window.confirm("Are you sure you want to permanently delete this product? This action cannot be undone.")) return;
@@ -646,17 +581,6 @@ export default function AdminDashboard() {
             <span>Shipping Settings</span>
           </button>
           
-          <button
-            onClick={() => setActiveTab("OFFER_ZONE")}
-            className={`pb-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition whitespace-nowrap ${
-              activeTab === "OFFER_ZONE"
-                ? "border-brand-orange text-brand-orange"
-                : "border-transparent text-zinc-400 hover:text-zinc-600"
-            }`}
-          >
-            <Tags size={16} />
-            <span>Offer Zone</span>
-          </button>
         </div>
 
         {/* ================================== TAB 1: ORDERS LISTINGS ================================== */}
@@ -1599,143 +1523,6 @@ export default function AdminDashboard() {
                 </button>
               </form>
             )}
-          </div>
-        )}
-
-        {/* ================================== TAB 5: OFFER ZONE ================================== */}
-        {activeTab === "OFFER_ZONE" && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            {/* Create Offer Form */}
-            <div className="lg:col-span-4 bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-900 rounded-3xl p-6 shadow-xs space-y-6">
-              <div>
-                <h2 className="text-sm font-extrabold text-zinc-805 dark:text-zinc-200">Create New Offer</h2>
-                <p className="text-[10px] text-zinc-400 mt-1 font-semibold">Select a product to place it in the Offer Zone</p>
-              </div>
-
-              {offerError && (
-                <div className="bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 text-xs p-3 rounded-lg font-bold">
-                  {offerError}
-                </div>
-              )}
-              {offerSuccess && (
-                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/50 text-emerald-600 dark:text-emerald-400 text-xs p-3 rounded-lg font-bold">
-                  {offerSuccess}
-                </div>
-              )}
-
-              <form onSubmit={handleUpdateOffer} className="space-y-4 text-xs font-bold">
-                <div>
-                  <label className="block text-[10px] font-bold text-zinc-500 mb-1.5 uppercase tracking-wider">Select Product</label>
-                  <select
-                    value={offerProductId}
-                    onChange={(e) => setOfferProductId(e.target.value)}
-                    required
-                    className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2.5 outline-none focus:border-brand-orange transition"
-                  >
-                    <option value="">-- Choose an active product --</option>
-                    {adminProducts.filter(p => p.isActive).map(p => (
-                      <option key={p.id} value={p.id}>{p.name} ({p.price} TK)</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-bold text-zinc-500 mb-1.5 uppercase tracking-wider">Sale Price (TK)</label>
-                    <input
-                      type="number"
-                      placeholder="e.g. 800"
-                      value={offerSalePrice}
-                      onChange={(e) => setOfferSalePrice(e.target.value)}
-                      required
-                      className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2.5 outline-none focus:border-brand-orange transition"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-zinc-500 mb-1.5 uppercase tracking-wider">Original Price</label>
-                    <input
-                      type="number"
-                      placeholder="e.g. 1000"
-                      value={offerOriginalPrice}
-                      onChange={(e) => setOfferOriginalPrice(e.target.value)}
-                      required
-                      className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2.5 outline-none focus:border-brand-orange transition"
-                    />
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-brand-orange hover:bg-brand-orange/95 text-white font-extrabold py-2.5 px-4 rounded-xl transition flex items-center justify-center gap-1 shadow-lg shadow-brand-orange/10 active:scale-98"
-                >
-                  <Plus size={14} />
-                  <span>Place in Offer Zone</span>
-                </button>
-              </form>
-            </div>
-
-            {/* Active Offers List */}
-            <div className="lg:col-span-8 bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-900 rounded-3xl p-6 shadow-xs space-y-4">
-              <div className="flex justify-between items-center">
-                <h2 className="text-sm font-extrabold text-zinc-805 dark:text-zinc-200">Current Products in Offer Zone</h2>
-                <button
-                  onClick={loadAdminProducts}
-                  className="p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-400 rounded-xl transition"
-                >
-                  <RefreshCw size={14} className={adminProductLoading ? "animate-spin" : ""} />
-                </button>
-              </div>
-
-              {adminProductLoading ? (
-                <div className="py-20 text-center text-xs text-zinc-400 font-bold animate-pulse">Loading offers...</div>
-              ) : adminProducts.filter(p => p.compareAtPrice > 0).length === 0 ? (
-                <div className="py-20 text-center text-xs text-zinc-400 font-medium border border-dashed border-zinc-100 dark:border-zinc-900 rounded-2xl">
-                  No products are currently in the Offer Zone.
-                </div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs font-semibold text-zinc-655 dark:text-zinc-345 border-collapse">
-                    <thead>
-                      <tr className="border-b border-zinc-100 dark:border-zinc-900 text-[10px] text-zinc-400 font-bold uppercase tracking-wider">
-                        <th className="pb-3 pr-2">Product Name</th>
-                        <th className="pb-3 pr-2">Original Price</th>
-                        <th className="pb-3 pr-2">Sale Price</th>
-                        <th className="pb-3 pr-2">Discount</th>
-                        <th className="pb-3 pr-2 text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-zinc-100 dark:divide-zinc-900">
-                      {adminProducts.filter(p => p.compareAtPrice > 0).map((p) => {
-                        const discount = p.compareAtPrice ? Math.round(((p.compareAtPrice - p.price) / p.compareAtPrice) * 100) : 0;
-                        return (
-                          <tr key={p.id} className="hover:bg-zinc-50/50 dark:hover:bg-zinc-900/30 transition">
-                            <td className="py-3 font-bold text-zinc-808 dark:text-zinc-200 flex items-center gap-2">
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img src={p.images?.[0]?.imageUrl || "https://placehold.co/100x100?text=No+Image"} alt="" className="w-6 h-6 rounded-md object-cover" />
-                              <span className="truncate max-w-[150px]">{p.name}</span>
-                            </td>
-                            <td className="py-3 text-zinc-400 line-through">{p.compareAtPrice} TK</td>
-                            <td className="py-3 text-brand-orange font-black">{p.price} TK</td>
-                            <td className="py-3">
-                              <span className="bg-rose-100 text-rose-600 px-1.5 py-0.5 rounded-md text-[9px] font-black">-{discount}%</span>
-                            </td>
-                            <td className="py-3 text-right">
-                              <button
-                                onClick={() => handleRemoveOffer(p.id, p.price, p.compareAtPrice)}
-                                className="text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 p-1.5 rounded-lg transition"
-                                title="Remove from Offer Zone"
-                              >
-                                <Trash2 size={14} />
-                              </button>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
           </div>
         )}
 

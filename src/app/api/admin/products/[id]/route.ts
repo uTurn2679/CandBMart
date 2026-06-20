@@ -49,17 +49,21 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
         data: updateData,
       });
 
-      // If stockQuantity updated, sync it with the default variant
-      if (stockQuantity !== undefined) {
+      // If stockQuantity or price updated, sync it with the default variant
+      if (stockQuantity !== undefined || price !== undefined) {
         const variants = await tx.productVariant.findMany({
           where: { productId: id },
         });
         
         if (variants.length > 0) {
           // Update the first variant (usually standard)
+          const variantUpdateData: any = {};
+          if (stockQuantity !== undefined) variantUpdateData.stockQuantity = parseInt(stockQuantity);
+          if (price !== undefined) variantUpdateData.priceOverride = parseFloat(price);
+          
           await tx.productVariant.update({
             where: { id: variants[0].id },
-            data: { stockQuantity: parseInt(stockQuantity) },
+            data: variantUpdateData,
           });
         }
       }
