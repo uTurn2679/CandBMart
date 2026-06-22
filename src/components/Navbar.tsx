@@ -21,6 +21,7 @@ import {
   Heart 
 } from "lucide-react";
 import CartDrawer from "./CartDrawer";
+import { ProductCard, ProductType } from "./ProductCard";
 
 interface NavbarProps {
   onSearchChange?: (val: string) => void;
@@ -46,7 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [cartOpen, setCartOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [suggestions, setSuggestions] = useState<ProductType[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
@@ -60,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         .then(res => res.json())
         .then(data => {
           if (data.success && data.products) {
-            setSuggestions(data.products.slice(0, 5));
+            setSuggestions(data.products.slice(0, 24)); // Show up to 24 products in the instant search grid
             setShowSuggestions(true);
           }
         })
@@ -111,9 +112,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
+      {/* Overlay Backdrop for Search */}
+      {showSuggestions && suggestions.length > 0 && (
+        <div className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm transition-opacity" onClick={() => setShowSuggestions(false)} />
+      )}
 
-
-      <header className="sticky top-0 z-40 w-full bg-white dark:bg-zinc-950 transition shadow-xs border-b border-zinc-100 dark:border-zinc-900">
+      <header className={`sticky top-0 w-full bg-white dark:bg-zinc-950 transition shadow-xs border-b border-zinc-100 dark:border-zinc-900 ${showSuggestions ? "z-50" : "z-40"}`}>
         {/* Main Navbar Row */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
           
@@ -138,7 +142,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Centered Search Bar */}
           <form 
             onSubmit={handleSearchSubmit} 
-            className="hidden md:flex flex-1 max-w-lg relative mx-4"
+            className="hidden md:flex flex-1 max-w-2xl relative mx-4"
             onClick={(e) => e.stopPropagation()} // Prevent document click from closing immediately when clicking inside
           >
             <input
@@ -161,29 +165,26 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Search size={18} />
             </button>
 
-            {/* Suggestions Dropdown */}
+            {/* Suggestions Mega Dropdown */}
             {showSuggestions && suggestions.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                {suggestions.map(p => (
-                  <Link 
-                    key={p.id} 
-                    href={`/product/${p.slug}`}
-                    onClick={() => setShowSuggestions(false)}
-                    className="flex items-center gap-3 p-3 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition border-b border-zinc-100 dark:border-zinc-800 last:border-0"
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={p.images?.[0]?.imageUrl || "/placeholder.jpg"} className="w-12 h-12 object-cover rounded-lg shrink-0" alt="" />
-                    <div className="flex flex-col flex-1 min-w-0">
-                      <span className="text-sm font-bold text-zinc-900 dark:text-white line-clamp-1">{p.name}</span>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-xs font-black text-brand-orange">{p.price} TK</span>
-                        {p.compareAtPrice > p.price && (
-                          <span className="text-[10px] text-zinc-400 line-through">{p.compareAtPrice} TK</span>
-                        )}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[90vw] max-w-5xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] overflow-hidden z-50 animate-in fade-in slide-in-from-top-4 duration-300">
+                <div className="p-4 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between bg-white dark:bg-zinc-900">
+                  <h3 className="font-extrabold text-zinc-800 dark:text-zinc-200 text-sm">
+                    Search Results <span className="text-brand-orange">({suggestions.length})</span>
+                  </h3>
+                  <button type="button" onClick={() => setShowSuggestions(false)} className="p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full text-zinc-500 transition">
+                    <X size={18} />
+                  </button>
+                </div>
+                <div className="p-4 sm:p-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-5">
+                    {suggestions.map(p => (
+                      <div key={p.id} onClick={() => setShowSuggestions(false)}>
+                        <ProductCard product={p} />
                       </div>
-                    </div>
-                  </Link>
-                ))}
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
           </form>
