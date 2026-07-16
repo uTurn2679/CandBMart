@@ -1022,7 +1022,7 @@ export default function CatalogPage() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={20} className="text-brand-orange shrink-0" />
-                <span>Grihokathon@gmail.com</span>
+                <a href="mailto:grihokathon@gmail.com" className="hover:text-brand-orange transition-colors">grihokathon@gmail.com</a>
               </li>
             </ul>
           </div>
