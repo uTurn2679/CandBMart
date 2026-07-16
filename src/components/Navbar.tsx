@@ -121,17 +121,17 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Main Navbar Row */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
           
-          {/* C&B Mart Logo */}
+          {/* Grihokathon Logo */}
           <Link href="/" className="flex items-center gap-3 shrink-0 group">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="/logo.jpg" 
-              alt="C&B Mart Logo" 
+              alt="Grihokathon Logo" 
               className="w-11 h-11 object-contain rounded-xl border border-zinc-200/50 dark:border-zinc-800/80 shadow-md group-hover:scale-105 transition-transform duration-300 bg-white"
             />
             <div className="flex flex-col">
               <span className="font-black text-base sm:text-lg leading-none uppercase tracking-tight text-zinc-900 dark:text-white group-hover:text-brand-orange transition-colors">
-                C&B Mart
+                Grihokathon
               </span>
               <span className="text-[9px] font-bold text-brand-orange mt-0.5 whitespace-nowrap">
                 ঘর সাজাতে আপনার সাথে

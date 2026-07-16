@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       const smsApiToken = process.env.SMS_API_TOKEN;
       if (smsApiToken) {
         try {
-          const smsText = `Your C&B Mart OTP is ${otpCode}. It is valid for 2 minutes.`;
+          const smsText = `Your Grihokathon OTP is ${otpCode}. It is valid for 2 minutes.`;
           await fetch("http://api.greenweb.com.bd/api.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },

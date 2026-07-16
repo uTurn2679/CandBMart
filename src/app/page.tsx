@@ -998,7 +998,7 @@ export default function CatalogPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
           {/* Shop Info */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <h3 className="text-2xl font-black text-brand-orange mb-4">C&B Mart</h3>
+            <h3 className="text-2xl font-black text-brand-orange mb-4">Grihokathon</h3>
             <p className="text-sm text-zinc-500 dark:text-zinc-400 font-medium mb-4">
               ঘর সাজাতে আপনার সাথে। প্রিমিয়াম পর্দা, বেডিং এবং দোলনার বিশ্বস্ত প্রতিষ্ঠান। ১০০% অরিজিনাল পণ্য ও দ্রুত হোম ডেলিভারি।
             </p>
@@ -1060,7 +1060,7 @@ export default function CatalogPage() {
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-zinc-200 dark:border-zinc-800 pt-6">
           <p className="text-center text-xs font-bold text-zinc-400 dark:text-zinc-600">
-            © 2026 C&B Mart. All rights reserved.
+            © 2026 Grihokathon. All rights reserved.
           </p>
         </div>
       </footer>

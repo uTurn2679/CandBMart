@@ -31,7 +31,7 @@ export default function TermsAndConditions() {
             <section>
               <h2 className="text-xl font-bold text-zinc-800 dark:text-zinc-200 mb-3">১. সাধারণ নিয়মাবলি (General Terms)</h2>
               <p>
-                C&B Mart ওয়েবসাইট ব্যবহার বা এখান থেকে পণ্য ক্রয়ের মাধ্যমে আপনি আমাদের সব নিয়ম ও শর্তাবলিতে সম্মতি জানাচ্ছেন। আমরা যেকোনো সময় এই শর্তাবলি পরিবর্তন বা সংশোধন করার অধিকার রাখি, যা ওয়েবসাইটে প্রকাশের সাথে সাথে কার্যকর হবে।
+                Grihokathon ওয়েবসাইট ব্যবহার বা এখান থেকে পণ্য ক্রয়ের মাধ্যমে আপনি আমাদের সব নিয়ম ও শর্তাবলিতে সম্মতি জানাচ্ছেন। আমরা যেকোনো সময় এই শর্তাবলি পরিবর্তন বা সংশোধন করার অধিকার রাখি, যা ওয়েবসাইটে প্রকাশের সাথে সাথে কার্যকর হবে।
               </p>
             </section>
 
@@ -40,7 +40,7 @@ export default function TermsAndConditions() {
               <ul className="list-disc pl-5 space-y-2">
                 <li>আমাদের ওয়েবসাইটে প্রদর্শিত সব পণ্যের মূল্য বাংলাদেশি টাকা (BDT) তে দেওয়া আছে।</li>
                 <li>আমরা পণ্যের সঠিক ছবি ও বিবরণ দেওয়ার সর্বোচ্চ চেষ্টা করি, তবে আপনার ডিভাইসের স্ক্রিনের কারণে পণ্যের আসল রঙের সামান্য তারতম্য হতে পারে।</li>
-                <li>যেকোনো সময় কোনো নোটিশ ছাড়াই পণ্যের মূল্য পরিবর্তন করার অধিকার C&B Mart সংরক্ষণ করে।</li>
+                <li>যেকোনো সময় কোনো নোটিশ ছাড়াই পণ্যের মূল্য পরিবর্তন করার অধিকার Grihokathon সংরক্ষণ করে।</li>
               </ul>
             </section>
 
@@ -80,7 +80,7 @@ export default function TermsAndConditions() {
 
       {/* Footer minimal */}
       <footer className="py-6 border-t border-zinc-200 dark:border-zinc-800 text-center text-xs font-bold text-zinc-500">
-        © 2026 C&B Mart. All rights reserved.
+        © 2026 Grihokathon. All rights reserved.
       </footer>
     </div>
   );

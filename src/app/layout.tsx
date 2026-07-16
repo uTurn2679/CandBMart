@@ -15,8 +15,8 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "C&B Mart | ঘর সাজাতে আপনার সাথে",
-  description: "Shop premium home decor, luxury bedding, and essentials at C&B Mart. ঘর সাজাতে আপনার সাথে। Express shipping, Cash on Delivery, and 100% security guaranteed.",
+  title: "Grihokathon | ঘর সাজাতে আপনার সাথে",
+  description: "Shop premium home decor, luxury bedding, and essentials at Grihokathon. ঘর সাজাতে আপনার সাথে। Express shipping, Cash on Delivery, and 100% security guaranteed.",
 };
 
 export default function RootLayout({
