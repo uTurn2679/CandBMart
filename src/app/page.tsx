@@ -1022,7 +1022,7 @@ export default function CatalogPage() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={20} className="text-brand-orange shrink-0" />
-                <span>curtain&bedsheetmart@gmail.com</span>
+                <span>Grihokathon@gmail.com</span>
               </li>
             </ul>
           </div>

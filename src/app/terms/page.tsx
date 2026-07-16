@@ -71,7 +71,7 @@ export default function TermsAndConditions() {
             
             <section className="pt-6 border-t border-zinc-200 dark:border-zinc-800">
               <p className="text-sm">
-                যোগাযোগ: যেকোনো প্রয়োজনে আমাদের ইমেইল করুন <span className="font-bold text-brand-orange">curtain&bedsheetmart@gmail.com</span> এ অথবা কল করুন <span className="font-bold text-brand-orange">01804-914606</span> নম্বরে।
+                যোগাযোগ: যেকোনো প্রয়োজনে আমাদের ইমেইল করুন <span className="font-bold text-brand-orange">Grihokathon@gmail.com</span> এ অথবা কল করুন <span className="font-bold text-brand-orange">01804-914606</span> নম্বরে।
               </p>
             </section>
           </div>
