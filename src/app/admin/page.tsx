@@ -39,6 +39,7 @@ export default function AdminDashboard() {
   const [statusUpdateLoading, setStatusUpdateLoading] = useState(false);
   const [orderStatusFilter, setOrderStatusFilter] = useState("");
   const [statusNotes, setStatusNotes] = useState("");
+  const [sendingToSteadfast, setSendingToSteadfast] = useState(false);
 
   // Coupon Tab states
   const [coupons, setCoupons] = useState<any[]>([]);
@@ -59,6 +60,8 @@ export default function AdminDashboard() {
   const [insideDhaka, setInsideDhaka] = useState("");
   const [outsideDhaka, setOutsideDhaka] = useState("");
   const [freeThreshold, setFreeThreshold] = useState("");
+  const [steadfastApiKey, setSteadfastApiKey] = useState("");
+  const [steadfastSecretKey, setSteadfastSecretKey] = useState("");
   const [settingsError, setSettingsError] = useState("");
   const [settingsSuccess, setSettingsSuccess] = useState("");
 
@@ -201,6 +204,8 @@ export default function AdminDashboard() {
         setInsideDhaka(data.settings.DELIVERY_CHARGE_INSIDE_DHAKA || "");
         setOutsideDhaka(data.settings.DELIVERY_CHARGE_OUTSIDE_DHAKA || "");
         setFreeThreshold(data.settings.FREE_DELIVERY_THRESHOLD || "");
+        setSteadfastApiKey(data.settings.STEADFAST_API_KEY || "");
+        setSteadfastSecretKey(data.settings.STEADFAST_SECRET_KEY || "");
       }
     } catch (e) {
       console.error("Failed to load settings");
@@ -252,6 +257,27 @@ export default function AdminDashboard() {
       alert("Error occurred while updating order");
     } finally {
       setStatusUpdateLoading(false);
+    }
+  };
+
+  const handleSendToSteadfast = async (orderId: string) => {
+    setSendingToSteadfast(true);
+    try {
+      const res = await fetch(`/api/orders/${orderId}/steadfast`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert(`Order successfully sent to Steadfast Courier!\nTracking Code: ${data.trackingCode}`);
+        loadOrders();
+        // optionally update the selected order context if needed, or close modal
+      } else {
+        alert(data.error || "Failed to send to Steadfast");
+      }
+    } catch (error) {
+      alert("Error occurred while sending to Steadfast");
+    } finally {
+      setSendingToSteadfast(false);
     }
   };
 
@@ -327,6 +353,8 @@ export default function AdminDashboard() {
           DELIVERY_CHARGE_INSIDE_DHAKA: insideDhaka,
           DELIVERY_CHARGE_OUTSIDE_DHAKA: outsideDhaka,
           FREE_DELIVERY_THRESHOLD: freeThreshold,
+          STEADFAST_API_KEY: steadfastApiKey,
+          STEADFAST_SECRET_KEY: steadfastSecretKey,
         }),
       });
       const data = await res.json();
@@ -778,6 +806,17 @@ export default function AdminDashboard() {
                           className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white p-2 rounded-xl text-[10px] font-bold transition shadow-lg shadow-emerald-600/10"
                         >
                           Deliver
+                        </button>
+                      </div>
+                      
+                      {/* Steadfast Courier Button */}
+                      <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800">
+                        <button
+                          onClick={() => handleSendToSteadfast(selectedOrder.id)}
+                          disabled={sendingToSteadfast}
+                          className="w-full bg-[#1da086] hover:bg-[#16856f] text-white p-2 rounded-xl text-[10px] font-bold transition shadow-lg shadow-[#1da086]/20 flex items-center justify-center gap-2"
+                        >
+                          {sendingToSteadfast ? "Sending..." : "Send to Steadfast Courier"}
                         </button>
                       </div>
 
@@ -1513,6 +1552,35 @@ export default function AdminDashboard() {
                     className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 rounded-xl p-2.5 outline-none focus:border-brand-orange transition"
                   />
                   <p className="text-[10px] text-zinc-400 mt-1 font-semibold leading-normal">Orders with subtotal values higher or equal to this amount will automatically receive 0 TK shipping fees.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+                  <div>
+                    <label className="block text-[10px] font-bold text-zinc-500 mb-1.5 uppercase tracking-wider flex items-center gap-1">
+                      <ShieldCheck size={12} className="text-brand-orange" />
+                      <span>Steadfast API Key</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={steadfastApiKey}
+                      onChange={(e) => setSteadfastApiKey(e.target.value)}
+                      placeholder="e.g. qczyor8sv4rlo..."
+                      className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2.5 outline-none focus:border-brand-orange transition"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-zinc-500 mb-1.5 uppercase tracking-wider flex items-center gap-1">
+                      <ShieldCheck size={12} className="text-brand-orange" />
+                      <span>Steadfast Secret Key</span>
+                    </label>
+                    <input
+                      type="password"
+                      value={steadfastSecretKey}
+                      onChange={(e) => setSteadfastSecretKey(e.target.value)}
+                      placeholder="e.g. mxmaz9jl3dn..."
+                      className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2.5 outline-none focus:border-brand-orange transition"
+                    />
+                  </div>
                 </div>
 
                 <button
