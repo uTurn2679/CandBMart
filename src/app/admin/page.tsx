@@ -19,8 +19,7 @@ import {
   Edit,
   ClipboardList,
   Tags,
-  Bell,
-  Globe
+  Bell
 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -60,7 +59,6 @@ export default function AdminDashboard() {
   const [insideDhaka, setInsideDhaka] = useState("");
   const [outsideDhaka, setOutsideDhaka] = useState("");
   const [freeThreshold, setFreeThreshold] = useState("");
-  const [bannerVideoUrl, setBannerVideoUrl] = useState("");
   const [settingsError, setSettingsError] = useState("");
   const [settingsSuccess, setSettingsSuccess] = useState("");
 
@@ -203,7 +201,6 @@ export default function AdminDashboard() {
         setInsideDhaka(data.settings.DELIVERY_CHARGE_INSIDE_DHAKA || "");
         setOutsideDhaka(data.settings.DELIVERY_CHARGE_OUTSIDE_DHAKA || "");
         setFreeThreshold(data.settings.FREE_DELIVERY_THRESHOLD || "");
-        setBannerVideoUrl(data.settings.FACEBOOK_BANNER_VIDEO_URL || "");
       }
     } catch (e) {
       console.error("Failed to load settings");
@@ -330,7 +327,6 @@ export default function AdminDashboard() {
           DELIVERY_CHARGE_INSIDE_DHAKA: insideDhaka,
           DELIVERY_CHARGE_OUTSIDE_DHAKA: outsideDhaka,
           FREE_DELIVERY_THRESHOLD: freeThreshold,
-          FACEBOOK_BANNER_VIDEO_URL: bannerVideoUrl,
         }),
       });
       const data = await res.json();
@@ -1517,21 +1513,6 @@ export default function AdminDashboard() {
                     className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 rounded-xl p-2.5 outline-none focus:border-brand-orange transition"
                   />
                   <p className="text-[10px] text-zinc-400 mt-1 font-semibold leading-normal">Orders with subtotal values higher or equal to this amount will automatically receive 0 TK shipping fees.</p>
-                </div>
-
-                <div>
-                  <label className="block text-[10px] font-bold text-zinc-500 mb-1.5 uppercase tracking-wider flex items-center gap-1">
-                    <Globe size={12} className="text-brand-orange" />
-                    <span>Banner Facebook Video Link</span>
-                  </label>
-                  <input
-                    type="url"
-                    value={bannerVideoUrl}
-                    onChange={(e) => setBannerVideoUrl(e.target.value)}
-                    placeholder="https://www.facebook.com/watch/?v=123456789"
-                    className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 rounded-xl p-2.5 outline-none focus:border-brand-orange transition"
-                  />
-                  <p className="text-[10px] text-zinc-400 mt-1 font-semibold leading-normal">Paste the Facebook video link here. It will be shown in the homepage banner.</p>
                 </div>
 
                 <button

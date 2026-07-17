@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import ProductCard, { ProductType } from "@/components/ProductCard";
 import CartDrawer from "@/components/CartDrawer";
-import FacebookVideoPlayer from "@/components/FacebookVideoPlayer";
 import { useCart } from "@/context/CartContext";
 import {
   MessageSquare,
@@ -640,7 +639,6 @@ export default function CatalogPage() {
   const { cartCount, cartSubtotal } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
   const [selectedReview, setSelectedReview] = useState<ReviewType | null>(null);
-  const [bannerVideoUrl, setBannerVideoUrl] = useState("");
 
   // Filter & Search states
   const [searchQuery, setSearchQuery] = useState("");
@@ -683,21 +681,8 @@ export default function CatalogPage() {
       }
     };
 
-    const loadBannerSettings = async () => {
-      try {
-        const res = await fetch("/api/admin/settings");
-        const data = await res.json();
-        if (data.success && data.settings) {
-          setBannerVideoUrl(data.settings.FACEBOOK_BANNER_VIDEO_URL || "");
-        }
-      } catch (error) {
-        console.error("Failed to load settings:", error);
-      }
-    };
-
     loadCategories();
     loadBannerProducts();
-    loadBannerSettings();
   }, []);
 
   const loadProducts = async () => {
@@ -756,21 +741,14 @@ export default function CatalogPage() {
       {/* Review Slider + Trust Card */}
       <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-2 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-6">
-          {/* Banner Video & Products */}
-          <div className="lg:col-span-2 w-full flex flex-col gap-4">
-            {/* 1. Video Player */}
-            <div className="w-full">
-              <FacebookVideoPlayer url={bannerVideoUrl} />
+          {/* Product Banner Slider — 2 cols */}
+          <div className="lg:col-span-2 w-full" style={{ aspectRatio: 'auto', minHeight: '220px' }}>
+            <div className="w-full h-[220px] sm:h-[280px] md:h-[320px] lg:h-full lg:min-h-[300px]">
+              <ProductBannerSlider 
+                onSearchChange={setSearchQuery} 
+                bannerProducts={bannerProducts}
+              />
             </div>
-            
-            {/* 2. Four Suggested Products */}
-            {bannerProducts.length > 0 && (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-                {bannerProducts.slice(0, 4).map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Trust & Promise card — 1 col */}
