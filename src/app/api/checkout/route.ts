@@ -194,8 +194,8 @@ export async function POST(request: Request) {
 
     // 3. Send Telegram + WhatsApp Notification
     try {
-      const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN || "8840968249:AAGE8XO-01fC7A9EL62g5tnJOfZw37XkqG8";
-      const telegramChatId = process.env.TELEGRAM_CHAT_ID || "6445871174";
+      const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN || "8790672203:AAESKrieWtqUf22QevTM9ARLai5qyLXbc5M";
+      const telegramChatId = process.env.TELEGRAM_CHAT_ID || "7020994515";
       if (telegramBotToken && telegramChatId) {
         const message = encodeURIComponent(`🛒 New Order Received!\n\nOrder No: ${result.orderNumber}\nCustomer: ${customerName}\nPhone: ${customerPhone}\nTotal: ${result.totalAmount} TK\nPayment: ${paymentMethod}\n\nPlease check the admin panel for details.`);
         const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${telegramChatId}&text=${message}`;

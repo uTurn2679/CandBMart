@@ -11,8 +11,8 @@ export async function POST(request: Request) {
 
     // Send Telegram Notification
     try {
-      const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN || "8840968249:AAGE8XO-01fC7A9EL62g5tnJOfZw37XkqG8";
-      const telegramChatId = process.env.TELEGRAM_CHAT_ID || "6445871174";
+      const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN || "8790672203:AAESKrieWtqUf22QevTM9ARLai5qyLXbc5M";
+      const telegramChatId = process.env.TELEGRAM_CHAT_ID || "7020994515";
       if (telegramBotToken && telegramChatId) {
         const textMessage = encodeURIComponent(`❓ New Customer Question!\n\nName: ${name}\nPhone: ${phone}\n\nMessage:\n${message}`);
         const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${telegramChatId}&text=${textMessage}`;
