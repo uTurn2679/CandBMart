@@ -3,10 +3,11 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const orderId = params.id;
+    const { id } = await params;
+    const orderId = id;
     if (!orderId) {
       return NextResponse.json({ success: false, error: "Order ID missing" }, { status: 400 });
     }
