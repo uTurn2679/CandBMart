@@ -47,7 +47,7 @@ export async function POST(
       cod_amount: order.totalAmount
     };
 
-    const response = await fetch("https://portal.steadfast.com.bd/api/v1/create_order", {
+    const response = await fetch("https://portal.packzy.com/api/v1/create_order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
