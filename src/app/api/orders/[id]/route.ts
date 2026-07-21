@@ -129,3 +129,30 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
+
+// 3. DELETE: Remove order completely from database
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const { id } = await params;
+    const user = await getCurrentUser();
+
+    // Authorization check
+    if (!user || user.role !== "ADMIN") {
+      return NextResponse.json({ error: "Unauthorized access." }, { status: 403 });
+    }
+
+    // Since onDelete: Cascade is configured for OrderItem, Payment, and OrderTracking,
+    // deleting the order will automatically clean up the related records.
+    await prisma.order.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: "Order deleted successfully.",
+    });
+  } catch (error) {
+    console.error("Error deleting order:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}

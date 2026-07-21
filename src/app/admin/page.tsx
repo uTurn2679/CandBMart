@@ -185,6 +185,25 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleDeleteOrder = async (orderId: string) => {
+    if (!window.confirm("Are you sure you want to permanently delete this order? This action cannot be undone.")) return;
+    try {
+      const res = await fetch(`/api/orders/${orderId}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        if (selectedOrder?.id === orderId) {
+          setSelectedOrder(null);
+        }
+        loadOrders();
+      } else {
+        alert("Failed to delete order");
+      }
+    } catch (e) {
+      console.error("Failed to delete order", e);
+    }
+  };
+
   const loadCoupons = async () => {
     setCouponLoading(true);
     try {
@@ -697,7 +716,7 @@ export default function AdminDashboard() {
                               {o.orderStatus}
                             </span>
                           </td>
-                          <td className="py-3 text-right">
+                          <td className="py-3 text-right space-x-1 whitespace-nowrap">
                             <button
                               onClick={() => {
                                 setSelectedOrder(o);
@@ -707,6 +726,14 @@ export default function AdminDashboard() {
                             >
                               <Eye size={12} />
                               <span>Manage</span>
+                            </button>
+                            <button
+                              onClick={() => handleDeleteOrder(o.id)}
+                              className="inline-flex items-center gap-0.5 bg-rose-50 hover:bg-rose-100 text-rose-600 p-1.5 px-3 rounded-lg text-[10px] font-bold transition"
+                              title="Delete Order"
+                            >
+                              <Trash2 size={12} />
+                              <span>Delete</span>
                             </button>
                           </td>
                         </tr>
