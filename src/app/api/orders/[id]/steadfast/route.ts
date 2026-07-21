@@ -43,13 +43,19 @@ export async function POST(
     const customerNoteEntry = order.trackingHistory.find(t => t.status === "NOTE");
     const customerNote = customerNoteEntry ? customerNoteEntry.notes : "";
 
+    const addressParts = order.deliveryAddress.split(",").map(s => s.trim());
+    const thana = addressParts.length >= 3 ? addressParts[1] : "";
+
+    const finalNote = customerNote ? `Police Station: ${thana} - ${customerNote}` : (thana ? `Police Station: ${thana}` : "N/A");
+
     const steadfastPayload = {
       invoice: order.orderNumber,
       recipient_name: order.customerName,
       recipient_phone: order.customerPhone.replace(/\D/g, '').slice(-11),
       recipient_address: order.deliveryAddress,
       cod_amount: Number(order.totalAmount),
-      note: customerNote || "N/A"
+      note: finalNote,
+      nearest_police_station: thana
     };
 
     const response = await fetch("https://portal.packzy.com/api/v1/create_order", {
