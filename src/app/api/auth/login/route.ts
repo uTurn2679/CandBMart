@@ -39,6 +39,7 @@ export async function POST(request: Request) {
         name: user.name,
         email: user.email,
         phone_number: user.phone_number,
+        address: user.address,
         role: user.role,
       },
     });

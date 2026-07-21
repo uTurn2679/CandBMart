@@ -16,6 +16,7 @@ export async function GET() {
         name: user.name,
         email: user.email,
         phone_number: user.phone_number,
+        address: user.address,
         role: user.role,
       },
     });
