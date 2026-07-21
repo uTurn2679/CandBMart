@@ -71,7 +71,7 @@ export default function TermsAndConditions() {
             
             <section className="pt-6 border-t border-zinc-200 dark:border-zinc-800">
               <p className="text-sm">
-                যোগাযোগ: যেকোনো প্রয়োজনে আমাদের ইমেইল করুন <a href="mailto:grihokathon@gmail.com" className="font-bold text-brand-orange hover:underline">grihokathon@gmail.com</a> এ অথবা কল করুন <span className="font-bold text-brand-orange">01804-914606</span> নম্বরে।
+                যোগাযোগ: যেকোনো প্রয়োজনে আমাদের ইমেইল করুন <a href="mailto:grihokathon@gmail.com" className="font-bold text-brand-orange hover:underline">grihokathon@gmail.com</a> এ অথবা কল করুন <a href="tel:01804914606" className="font-bold text-brand-orange hover:underline">01804-914606</a> নম্বরে।
               </p>
             </section>
           </div>

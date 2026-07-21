@@ -763,7 +763,7 @@ export default function CatalogPage() {
                 ঘর সাজাতে <span className="text-brand-orange">আপনার সাথে</span>
               </h3>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 font-semibold mb-5">
-                C&amp;B Mart — বিশ্বস্ত পণ্য, দ্রুত ডেলিভারি
+                Grihokathon — বিশ্বস্ত পণ্য, দ্রুত ডেলিভারি
               </p>
               <div className="flex flex-col gap-3">
                 {[
@@ -1018,7 +1018,7 @@ export default function CatalogPage() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={20} className="text-brand-orange shrink-0" />
-                <span>01804-914606</span>
+                <a href="tel:01804914606" className="hover:underline">01804-914606</a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={20} className="text-brand-orange shrink-0" />
