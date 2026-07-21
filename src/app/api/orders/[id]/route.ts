@@ -7,11 +7,12 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
   try {
     const { id } = await params;
 
-    // Search by UUID or orderNumber (e.g. BD-XXXXXX-XXXX)
+    // Search by UUID, orderNumber, or customerPhone
     const order = await prisma.order.findFirst({
       where: {
-        OR: [{ id: id }, { orderNumber: id }],
+        OR: [{ id: id }, { orderNumber: id }, { customerPhone: id }],
       },
+      orderBy: { createdAt: "desc" },
       include: {
         items: true,
         payment: true,

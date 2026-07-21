@@ -34,7 +34,7 @@ export default function TrackOrderPage() {
             Track Your Order
           </h1>
           <p className="text-xs sm:text-sm text-zinc-500 font-medium mb-8">
-            Enter your order number below to check its current status and delivery progress.
+            Enter your order number or mobile number below to check its current status and delivery progress.
           </p>
 
           <form onSubmit={handleSearch} className="space-y-4">
@@ -46,7 +46,7 @@ export default function TrackOrderPage() {
                 type="text"
                 value={orderNumber}
                 onChange={(e) => setOrderNumber(e.target.value)}
-                placeholder="e.g. BD-123456-7890"
+                placeholder="e.g. BD-123456 or 017XXXXXX"
                 className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl py-3.5 pl-11 pr-4 text-sm font-bold text-zinc-800 dark:text-zinc-200 outline-none focus:border-brand-orange transition shadow-inner placeholder:font-medium placeholder:text-zinc-400"
                 required
               />
