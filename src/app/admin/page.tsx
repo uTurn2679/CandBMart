@@ -587,7 +587,7 @@ export default function AdminDashboard() {
         <div className="flex gap-4 border-b border-zinc-150 dark:border-zinc-850 overflow-x-auto scrollbar-none shrink-0">
           <button
             onClick={() => setActiveTab("ORDERS")}
-            className={`pb-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition whitespace-nowrap ${
+            className={`pb-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition whitespace-nowrap shrink-0 ${
               activeTab === "ORDERS"
                 ? "border-brand-orange text-brand-orange"
                 : "border-transparent text-zinc-400 hover:text-zinc-600"
@@ -599,7 +599,7 @@ export default function AdminDashboard() {
           
           <button
             onClick={() => setActiveTab("PRODUCTS")}
-            className={`pb-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition whitespace-nowrap ${
+            className={`pb-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition whitespace-nowrap shrink-0 ${
               activeTab === "PRODUCTS"
                 ? "border-brand-orange text-brand-orange"
                 : "border-transparent text-zinc-400 hover:text-zinc-600"
@@ -611,7 +611,7 @@ export default function AdminDashboard() {
 
           <button
             onClick={() => setActiveTab("COUPONS")}
-            className={`pb-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition whitespace-nowrap ${
+            className={`pb-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition whitespace-nowrap shrink-0 ${
               activeTab === "COUPONS"
                 ? "border-brand-orange text-brand-orange"
                 : "border-transparent text-zinc-400 hover:text-zinc-600"
@@ -623,7 +623,7 @@ export default function AdminDashboard() {
           
           <button
             onClick={() => setActiveTab("SETTINGS")}
-            className={`pb-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition whitespace-nowrap ${
+            className={`pb-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition whitespace-nowrap shrink-0 ${
               activeTab === "SETTINGS"
                 ? "border-brand-orange text-brand-orange"
                 : "border-transparent text-zinc-400 hover:text-zinc-600"
@@ -673,7 +673,7 @@ export default function AdminDashboard() {
                 </div>
               ) : (
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs font-semibold text-zinc-600 dark:text-zinc-300 border-collapse">
+                  <table className="w-full text-left text-xs font-semibold text-zinc-600 dark:text-zinc-300 border-collapse min-w-[650px]">
                     <thead>
                       <tr className="border-b border-zinc-100 dark:border-zinc-900 text-[10px] text-zinc-400 font-bold uppercase tracking-wider">
                         <th className="pb-3 pr-2">Order Info</th>
@@ -937,7 +937,7 @@ export default function AdminDashboard() {
                 </div>
               ) : (
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs font-semibold text-zinc-655 dark:text-zinc-345 border-collapse">
+                  <table className="w-full text-left text-xs font-semibold text-zinc-655 dark:text-zinc-345 border-collapse min-w-[700px]">
                     <thead>
                       <tr className="border-b border-zinc-100 dark:border-zinc-900 text-[10px] text-zinc-400 font-bold uppercase tracking-wider">
                         <th className="pb-3 pr-2">Product</th>
@@ -1481,7 +1481,7 @@ export default function AdminDashboard() {
                 </div>
               ) : (
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs font-semibold text-zinc-655 dark:text-zinc-345 border-collapse">
+                  <table className="w-full text-left text-xs font-semibold text-zinc-655 dark:text-zinc-345 border-collapse min-w-[650px]">
                     <thead>
                       <tr className="border-b border-zinc-100 dark:border-zinc-900 text-[10px] text-zinc-400 font-bold uppercase tracking-wider">
                         <th className="pb-3 pr-2">Code</th>
