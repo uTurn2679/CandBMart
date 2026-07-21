@@ -45,6 +45,7 @@ export async function POST(
 
     const addressParts = order.deliveryAddress.split(",").map(s => s.trim());
     const thana = addressParts.length >= 3 ? addressParts[addressParts.length - 2] : "";
+    const district = addressParts.length >= 3 ? addressParts[addressParts.length - 1] : "";
 
     const finalNote = customerNote ? `Police Station: ${thana} - ${customerNote}` : (thana ? `Police Station: ${thana}` : "N/A");
 
@@ -55,7 +56,10 @@ export async function POST(
       recipient_address: order.deliveryAddress,
       cod_amount: Number(order.totalAmount),
       note: finalNote,
-      nearest_police_station: thana
+      nearest_police_station: thana,
+      recipient_city: district,
+      recipient_zone: thana,
+      recipient_area: thana
     };
 
     const response = await fetch("https://portal.packzy.com/api/v1/create_order", {
