@@ -44,7 +44,7 @@ export async function POST(
     const customerNote = customerNoteEntry ? customerNoteEntry.notes : "";
 
     const addressParts = order.deliveryAddress.split(",").map(s => s.trim());
-    const thana = addressParts.length >= 3 ? addressParts[1] : "";
+    const thana = addressParts.length >= 3 ? addressParts[addressParts.length - 2] : "";
 
     const finalNote = customerNote ? `Police Station: ${thana} - ${customerNote}` : (thana ? `Police Station: ${thana}` : "N/A");
 
