@@ -394,19 +394,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                       />
                     </div>
                   </div>
-                  <div className="flex justify-end mt-1 mb-3">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setAuthMode("FORGOT_PASSWORD");
-                        setErrorMsg("");
-                        setSuccessMsg("");
-                      }}
-                      className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
-                    >
-                      Forgot Password?
-                    </button>
-                  </div>
                   <button
                     type="submit"
                     disabled={actionLoading}
