@@ -744,6 +744,11 @@ export default function AdminDashboard() {
                       <p><strong>Customer:</strong> {selectedOrder.customerName} ({selectedOrder.customerPhone})</p>
                       <p><strong>Zone:</strong> {selectedOrder.deliveryZone}</p>
                       <p><strong>Address:</strong> {selectedOrder.deliveryAddress}</p>
+                      {selectedOrder.trackingHistory?.find((t: any) => t.status === "NOTE") && (
+                        <div className="mt-2 p-2 bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-500 rounded border border-amber-200 dark:border-amber-900/50">
+                          <strong>Order Notes:</strong> {selectedOrder.trackingHistory.find((t: any) => t.status === "NOTE").notes.replace("Customer Note: ", "")}
+                        </div>
+                      )}
                     </div>
                   </div>
 

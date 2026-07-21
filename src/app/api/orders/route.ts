@@ -42,6 +42,7 @@ export async function GET(request: Request) {
           },
         },
         payment: true,
+        trackingHistory: true,
       },
       orderBy: { createdAt: "desc" },
     });
