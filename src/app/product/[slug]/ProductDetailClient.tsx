@@ -206,29 +206,7 @@ export default function ProductDetailClient({
             </div>
           )}
 
-          {product.variants.length > 0 && (
-            <div>
-              <h3 className="text-sm font-black text-zinc-900 dark:text-white uppercase tracking-widest mb-3">
-                ভেরিয়েন্ট নির্বাচন করুন
-              </h3>
-              <div className="flex flex-wrap gap-2.5">
-                {product.variants.map((v) => (
-                  <button
-                    key={v.id}
-                    onClick={() => setSelectedVariantId(v.id)}
-                    className={`px-4 py-2.5 text-sm font-bold rounded-xl border-2 transition-all ${
-                      selectedVariantId === v.id
-                        ? "bg-brand-orange text-white border-brand-orange shadow-md shadow-brand-orange/20"
-                        : "bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700 hover:border-brand-orange hover:text-brand-orange"
-                    }`}
-                  >
-                    {v.variantName}
-                    {v.priceOverride ? ` — ${v.priceOverride.toLocaleString()} TK` : ""}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+
 
           <div className="pt-4 flex flex-col sm:flex-row gap-3">
             <button
