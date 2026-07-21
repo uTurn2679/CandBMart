@@ -46,9 +46,9 @@ export async function POST(
     const steadfastPayload = {
       invoice: order.orderNumber,
       recipient_name: order.customerName,
-      recipient_phone: order.customerPhone,
+      recipient_phone: order.customerPhone.replace(/\D/g, '').slice(-11),
       recipient_address: order.deliveryAddress,
-      cod_amount: order.totalAmount,
+      cod_amount: Number(order.totalAmount),
       note: customerNote || "N/A"
     };
 
