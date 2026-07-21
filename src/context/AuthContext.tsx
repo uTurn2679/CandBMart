@@ -33,6 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [authMode, setAuthMode] = useState<"LOGIN" | "REGISTER" | "FORGOT_PASSWORD">("LOGIN"); // LOGIN, REGISTER, FORGOT_PASSWORD
   const [identifier, setIdentifier] = useState(""); // phone
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -240,8 +241,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const handlePasswordRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !phone || !password || !address) {
-      setErrorMsg("Name, Phone, Address, and Password are required.");
+    if (!name || !phone || !password || !address || !confirmPassword) {
+      setErrorMsg("All fields are required.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setErrorMsg("Passwords do not match.");
       return;
     }
     setErrorMsg("");
@@ -260,6 +265,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setAddress("");
         setPhone("");
         setPassword("");
+        setConfirmPassword("");
       } else {
         setErrorMsg(data.error || "Registration failed.");
       }
@@ -317,6 +323,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                       setAuthMode("LOGIN");
                       setErrorMsg("");
                       setSuccessMsg("");
+                      setConfirmPassword("");
                     }}
                     className={`flex-1 pb-3 text-sm font-semibold border-b-2 text-center transition ${
                       authMode === "LOGIN"
@@ -331,6 +338,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                       setAuthMode("REGISTER");
                       setErrorMsg("");
                       setSuccessMsg("");
+                      setConfirmPassword("");
                     }}
                     className={`flex-1 pb-3 text-sm font-semibold border-b-2 text-center transition ${
                       authMode === "REGISTER"
@@ -591,6 +599,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                         placeholder="••••••••"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
+                        className="w-full pl-10 pr-4 py-2 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-transparent focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none text-sm text-zinc-900 dark:text-white transition"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
+                      Confirm Password
+                    </label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-zinc-400">
+                        <Lock size={16} />
+                      </span>
+                      <input
+                        type="password"
+                        placeholder="••••••••"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                         className="w-full pl-10 pr-4 py-2 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-transparent focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none text-sm text-zinc-900 dark:text-white transition"
                       />
