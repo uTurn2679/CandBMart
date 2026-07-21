@@ -101,7 +101,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setOtpSent(true);
         setCountdown(120);
         // Show code in UI so user can test without SMS API
-        setSuccessMsg(`OTP sent to your mobile. You have 2 minutes to enter it. ${data.otpCode ? `(Code: ${data.otpCode})` : ""}`);
+        setSuccessMsg(`OTP sent to your mobile. You have 2 minutes to enter it.`);
       } else {
         setErrorMsg(data.error || "Failed to send OTP.");
       }
@@ -163,7 +163,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (res.ok) {
         setOtpSent(true);
         setCountdown(120);
-        setSuccessMsg(`Reset OTP sent to your mobile. You have 2 minutes to enter it. ${data.otpCode ? `(Code: ${data.otpCode})` : ""}`);
+        setSuccessMsg(`Reset OTP sent to your mobile. You have 2 minutes to enter it.`);
       } else {
         setErrorMsg(data.error || "Failed to send reset OTP.");
       }
