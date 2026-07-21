@@ -691,6 +691,21 @@ export const bdLocations = [
         "bn_name": "আদাবর"
       },
       {
+        "id": "dhaka-area-aftabnagar",
+        "name": "Aftabnagar",
+        "bn_name": "আফতাবনগর"
+      },
+      {
+        "id": "dhaka-area-agargaon",
+        "name": "Agargaon",
+        "bn_name": "আগারগাঁও"
+      },
+      {
+        "id": "dhaka-area-azimpur",
+        "name": "Azimpur",
+        "bn_name": "আজিমপুর"
+      },
+      {
         "id": "dhaka-area-1",
         "name": "Badda",
         "bn_name": "বাড্ডা"
@@ -709,6 +724,16 @@ export const bdLocations = [
         "id": "dhaka-area-4",
         "name": "Bangshal",
         "bn_name": "বংশাল"
+      },
+      {
+        "id": "dhaka-area-baridhara",
+        "name": "Baridhara",
+        "bn_name": "বারিধারা"
+      },
+      {
+        "id": "dhaka-area-bashabo",
+        "name": "Bashabo",
+        "bn_name": "বাসাবো"
       },
       {
         "id": "dhaka-area-5",
@@ -756,9 +781,19 @@ export const bdLocations = [
         "bn_name": "ধানমন্ডি"
       },
       {
+        "id": "dhaka-area-diabari",
+        "name": "Diabari",
+        "bn_name": "দিয়াবাড়ী"
+      },
+      {
         "id": "dhaka-area-59",
         "name": "Dohar",
         "bn_name": "দোহার"
+      },
+      {
+        "id": "dhaka-area-elephant-road",
+        "name": "Elephant Road",
+        "bn_name": "এলিফ্যান্ট রোড"
       },
       {
         "id": "dhaka-area-13",
@@ -771,14 +806,29 @@ export const bdLocations = [
         "bn_name": "ফার্মগেট"
       },
       {
+        "id": "dhaka-area-gabtoli",
+        "name": "Gabtoli",
+        "bn_name": "গাবতলী"
+      },
+      {
         "id": "dhaka-area-15",
         "name": "Gendaria",
         "bn_name": "গেন্ডারিয়া"
       },
       {
+        "id": "dhaka-area-green-road",
+        "name": "Green Road",
+        "bn_name": "গ্রীন রোড"
+      },
+      {
         "id": "dhaka-area-16",
         "name": "Gulshan",
         "bn_name": "গুলশান"
+      },
+      {
+        "id": "dhaka-area-hatirpool",
+        "name": "Hatirpool",
+        "bn_name": "হাতিরপুল"
       },
       {
         "id": "dhaka-area-17",
@@ -791,6 +841,21 @@ export const bdLocations = [
         "bn_name": "যাত্রাবাড়ী"
       },
       {
+        "id": "dhaka-area-jigatola",
+        "name": "Jigatola",
+        "bn_name": "জিগাতলা"
+      },
+      {
+        "id": "dhaka-area-joar-sahara",
+        "name": "Joar Sahara",
+        "bn_name": "জোয়ার সাহারা"
+      },
+      {
+        "id": "dhaka-area-jurain",
+        "name": "Jurain",
+        "bn_name": "জুরাইন"
+      },
+      {
         "id": "dhaka-area-19",
         "name": "Kadamtali",
         "bn_name": "কদমতলী"
@@ -801,8 +866,8 @@ export const bdLocations = [
         "bn_name": "কাফরুল"
       },
       {
-        "id": "dhaka-area-21",
-        "name": "Kakrali",
+        "id": "dhaka-area-kakrail",
+        "name": "Kakrail",
         "bn_name": "কাকরাইল"
       },
       {
@@ -811,9 +876,19 @@ export const bdLocations = [
         "bn_name": "কলাবাগান"
       },
       {
+        "id": "dhaka-area-kalyanpur",
+        "name": "Kalyanpur",
+        "bn_name": "কল্যাণপুর"
+      },
+      {
         "id": "dhaka-area-23",
         "name": "Kamrangirchar",
         "bn_name": "কামরাঙ্গীরচর"
+      },
+      {
+        "id": "dhaka-area-kazipara",
+        "name": "Kazipara",
+        "bn_name": "কাজীপাড়া"
       },
       {
         "id": "dhaka-area-56",
@@ -836,6 +911,11 @@ export const bdLocations = [
         "bn_name": "কোতোয়ালী"
       },
       {
+        "id": "dhaka-area-kuril",
+        "name": "Kuril",
+        "bn_name": "কুড়িল"
+      },
+      {
         "id": "dhaka-area-27",
         "name": "Lalbagh",
         "bn_name": "লালবাগ"
@@ -844,6 +924,11 @@ export const bdLocations = [
         "id": "dhaka-area-28",
         "name": "Malibagh",
         "bn_name": "মালিবাগ"
+      },
+      {
+        "id": "dhaka-area-maniknagar",
+        "name": "Maniknagar",
+        "bn_name": "মানিকনগর"
       },
       {
         "id": "dhaka-area-29",
@@ -871,6 +956,11 @@ export const bdLocations = [
         "bn_name": "মতিঝিল"
       },
       {
+        "id": "dhaka-area-mouchak",
+        "name": "Mouchak",
+        "bn_name": "মৌচাক"
+      },
+      {
         "id": "dhaka-area-34",
         "name": "Mugda",
         "bn_name": "মুগদা"
@@ -886,6 +976,11 @@ export const bdLocations = [
         "bn_name": "নিউ মার্কেট"
       },
       {
+        "id": "dhaka-area-niketan",
+        "name": "Niketan",
+        "bn_name": "নিকেতন"
+      },
+      {
         "id": "dhaka-area-36",
         "name": "Pallabi",
         "bn_name": "পল্লবী"
@@ -896,6 +991,16 @@ export const bdLocations = [
         "bn_name": "পল্টন"
       },
       {
+        "id": "dhaka-area-panthapath",
+        "name": "Panthapath",
+        "bn_name": "পান্থপথ"
+      },
+      {
+        "id": "dhaka-area-purbachal",
+        "name": "Purbachal",
+        "bn_name": "পূর্বাচল"
+      },
+      {
         "id": "dhaka-area-38",
         "name": "Ramna",
         "bn_name": "রমনা"
@@ -904,6 +1009,11 @@ export const bdLocations = [
         "id": "dhaka-area-39",
         "name": "Rampura",
         "bn_name": "রামপুরা"
+      },
+      {
+        "id": "dhaka-area-rayerbazar",
+        "name": "Rayerbazar",
+        "bn_name": "রায়েরবাজার"
       },
       {
         "id": "dhaka-area-40",
@@ -941,6 +1051,16 @@ export const bdLocations = [
         "bn_name": "শেরেবাংলা নগর"
       },
       {
+        "id": "dhaka-area-shewrapara",
+        "name": "Shewrapara",
+        "bn_name": "শেওড়াপাড়া"
+      },
+      {
+        "id": "dhaka-area-shyamoli",
+        "name": "Shyamoli",
+        "bn_name": "শ্যামলী"
+      },
+      {
         "id": "dhaka-area-47",
         "name": "Shyampur",
         "bn_name": "শ্যামপুর"
@@ -949,6 +1069,11 @@ export const bdLocations = [
         "id": "dhaka-area-48",
         "name": "Sutrapur",
         "bn_name": "সূত্রাপুর"
+      },
+      {
+        "id": "dhaka-area-taltola",
+        "name": "Taltola",
+        "bn_name": "তালতলা"
       },
       {
         "id": "dhaka-area-49",
