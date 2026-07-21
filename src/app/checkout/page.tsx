@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { ShieldCheck, Truck, Percent, Gift, MapPin, Phone, CreditCard, ChevronLeft } from "lucide-react";
+import { bdLocations } from "@/lib/bd-locations";
 
 export default function CheckoutPage() {
   const { cart, cartSubtotal, clearCart } = useCart();
@@ -16,7 +17,9 @@ export default function CheckoutPage() {
   // Form states
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
-  const [deliveryAddress, setDeliveryAddress] = useState("");
+  const [roadArea, setRoadArea] = useState("");
+  const [thana, setThana] = useState("");
+  const [district, setDistrict] = useState("");
   const [deliveryZone, setDeliveryZone] = useState("INSIDE_DHAKA");
   const [orderNotes, setOrderNotes] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("COD");
@@ -44,9 +47,16 @@ export default function CheckoutPage() {
     if (user) {
       setCustomerName(user.name || "");
       setCustomerPhone(user.phone_number || "");
-      if (user.address) {
-        setDeliveryAddress(user.address);
-      }
+        if (user.address) {
+          const parts = user.address.split(',').map((s: string) => s.trim());
+          if (parts.length === 3) {
+            setRoadArea(parts[0]);
+            setThana(parts[1]);
+            setDistrict(parts[2]);
+          } else {
+            setRoadArea(user.address);
+          }
+        }
     }
   }, [user]);
 
@@ -147,6 +157,7 @@ export default function CheckoutPage() {
       quantity: item.quantity,
     }));
 
+    const deliveryAddress = `${roadArea.trim()}, ${thana.trim()}, ${district.trim()}`;
     const payload = {
       customerName,
       customerPhone,
@@ -263,18 +274,72 @@ export default function CheckoutPage() {
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase tracking-wider">
-                      Full Delivery Address
-                    </label>
-                    <textarea
-                      placeholder="House No, Road No, Area, City/District"
-                      value={deliveryAddress}
-                      onChange={(e) => setDeliveryAddress(e.target.value)}
-                      required
-                      rows={3}
-                      className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2.5 text-xs font-semibold outline-none focus:border-brand-orange transition resize-none"
-                    />
+                  <div className="bg-zinc-50/50 dark:bg-zinc-900/50 p-4 rounded-2xl border border-zinc-100 dark:border-zinc-800/50 space-y-4">
+                    <h4 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+                      <div className="w-1 h-3 bg-brand-orange rounded-full"></div>
+                      Delivery Address Details
+                    </h4>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase tracking-wider">
+                          1. District / জেলা
+                        </label>
+                        <select
+                          value={district}
+                          onChange={(e) => {
+                            setDistrict(e.target.value);
+                            setThana(""); // Reset thana when district changes
+                          }}
+                          required
+                          className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2.5 text-xs font-semibold outline-none focus:border-brand-orange transition"
+                        >
+                          <option value="">Select District</option>
+                          {bdLocations.map((d) => (
+                            <option key={d.id} value={d.name}>
+                              {d.name} ({d.bn_name})
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase tracking-wider">
+                          2. Thana / Upazila / থানা
+                        </label>
+                        <select
+                          value={thana}
+                          onChange={(e) => setThana(e.target.value)}
+                          required
+                          disabled={!district}
+                          className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2.5 text-xs font-semibold outline-none focus:border-brand-orange transition disabled:opacity-50 cursor-pointer"
+                        >
+                          <option value="">Select Thana/Upazila</option>
+                          {district &&
+                            bdLocations
+                              .find((d) => d.name === district)
+                              ?.upazilas.map((u) => (
+                                <option key={u.id} value={u.name}>
+                                  {u.name} ({u.bn_name})
+                                </option>
+                              ))}
+                        </select>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase tracking-wider">
+                        3. Road No, House No, Area
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="House No, Road No, Area"
+                        value={roadArea}
+                        onChange={(e) => setRoadArea(e.target.value)}
+                        required
+                        className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2.5 text-xs font-semibold outline-none focus:border-brand-orange transition"
+                      />
+                    </div>
                   </div>
 
                   <div>
