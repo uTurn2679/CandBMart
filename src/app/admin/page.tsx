@@ -704,7 +704,15 @@ export default function AdminDashboard() {
                             <p className="font-bold text-zinc-805 dark:text-zinc-200">{o.customerName}</p>
                             <p className="text-[10px] text-zinc-400 font-medium">{o.customerPhone}</p>
                           </td>
-                          <td className="py-3 font-extrabold text-zinc-905 dark:text-white">{o.totalAmount} TK</td>
+                          <td className="py-3">
+                            <p className="font-extrabold text-zinc-905 dark:text-white">{o.totalAmount} TK</p>
+                            {o.payment?.paymentMethod !== "COD" && (
+                              <div className="mt-1 text-[9px] text-zinc-500 font-medium">
+                                <p>Txn: <span className="font-bold text-zinc-700 dark:text-zinc-300">{o.payment?.transactionId || "N/A"}</span></p>
+                                <p>Last 3: <span className="font-bold text-zinc-700 dark:text-zinc-300">{o.payment?.lastThreeDigits || "N/A"}</span></p>
+                              </div>
+                            )}
+                          </td>
                           <td className="py-3">
                             <span className={`px-2 py-0.5 rounded-full text-[9px] font-black ${
                               o.orderStatus === "DELIVERED"

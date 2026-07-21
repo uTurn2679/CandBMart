@@ -405,7 +405,7 @@ export default function CheckoutPage() {
                     <div className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-900 p-4 rounded-2xl space-y-4 animate-in fade-in duration-200">
                       <div className="text-[10px] text-zinc-500 leading-normal font-semibold">
                         <p className="font-bold text-zinc-700 dark:text-zinc-300 mb-1">How to pay:</p>
-                        Send Money of <span className="font-extrabold text-zinc-800 dark:text-white">{totalPayable.toLocaleString()} TK</span> to our merchant number: <span className="font-extrabold text-brand-orange">+8801711111111</span>. Then input either your Transaction ID or the last 3 digits of your mobile number below.
+                        Send Money of <span className="font-extrabold text-zinc-800 dark:text-white">{totalPayable.toLocaleString()} TK</span> to our merchant number: <span className="font-extrabold text-brand-orange">01804914606</span>. Then input either your Transaction ID or the last 3 digits of your mobile number below.
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
