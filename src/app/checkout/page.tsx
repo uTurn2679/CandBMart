@@ -18,6 +18,7 @@ export default function CheckoutPage() {
   const [customerPhone, setCustomerPhone] = useState("");
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [deliveryZone, setDeliveryZone] = useState("INSIDE_DHAKA");
+  const [orderNotes, setOrderNotes] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("COD");
   const [transactionId, setTransactionId] = useState("");
   const [lastThreeDigits, setLastThreeDigits] = useState("");
@@ -153,6 +154,7 @@ export default function CheckoutPage() {
       lastThreeDigits: paymentMethod !== "COD" ? lastThreeDigits : undefined,
       couponCode: appliedCoupon ? appliedCoupon.code : undefined,
       items: orderItems,
+      orderNotes: orderNotes.trim() ? orderNotes : undefined,
     };
 
     try {
@@ -284,6 +286,19 @@ export default function CheckoutPage() {
                       <option value="INSIDE_DHAKA">Inside Dhaka (Starts at 80 TK)</option>
                       <option value="OUTSIDE_DHAKA">Outside Dhaka (Starts at 150 TK)</option>
                     </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase tracking-wider">
+                      Order Notes / পরিমাণ (Optional)
+                    </label>
+                    <textarea
+                      placeholder="অর্ডারের পরিমাণ বা অন্য কোনো বিস্তারিত তথ্য এখানে লিখতে পারেন..."
+                      value={orderNotes}
+                      onChange={(e) => setOrderNotes(e.target.value)}
+                      rows={2}
+                      className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2.5 text-xs font-semibold outline-none focus:border-brand-orange transition resize-none"
+                    />
                   </div>
                 </div>
 
