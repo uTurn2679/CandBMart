@@ -15,6 +15,7 @@ export async function POST(
     // 1. Fetch Order Details
     const order = await prisma.order.findUnique({
       where: { id: orderId },
+      include: { trackingHistory: true }
     });
 
     if (!order) {
@@ -39,12 +40,16 @@ export async function POST(
     }
 
     // 3. Send request to Steadfast API
+    const customerNoteEntry = order.trackingHistory.find(t => t.status === "NOTE");
+    const customerNote = customerNoteEntry ? customerNoteEntry.notes : "";
+
     const steadfastPayload = {
       invoice: order.orderNumber,
       recipient_name: order.customerName,
       recipient_phone: order.customerPhone,
       recipient_address: order.deliveryAddress,
-      cod_amount: order.totalAmount
+      cod_amount: order.totalAmount,
+      note: customerNote || "N/A"
     };
 
     const response = await fetch("https://portal.packzy.com/api/v1/create_order", {

@@ -15,6 +15,7 @@ export async function POST(request: Request) {
       lastThreeDigits,
       couponCode,
       items, // Array of: { productId, variantId, quantity }
+      orderNotes,
     } = body;
 
     // 1. Basic validation
@@ -181,10 +182,20 @@ export async function POST(request: Request) {
             },
           },
           trackingHistory: {
-            create: {
-              status: "PENDING",
-              notes: "Order placed successfully. Awaiting payment verification.",
-            },
+            create: [
+              {
+                status: "PENDING",
+                notes: "Order placed successfully. Awaiting payment verification.",
+              },
+              ...(orderNotes
+                ? [
+                    {
+                      status: "NOTE",
+                      notes: `Customer Note: ${orderNotes}`,
+                    },
+                  ]
+                : []),
+            ],
           },
         },
       });
