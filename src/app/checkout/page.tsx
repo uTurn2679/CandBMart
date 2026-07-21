@@ -53,6 +53,8 @@ export default function CheckoutPage() {
             setRoadArea(parts[0]);
             setThana(parts[1]);
             setDistrict(parts[2]);
+            if (parts[2] === "Dhaka") setDeliveryZone("INSIDE_DHAKA");
+            else setDeliveryZone("OUTSIDE_DHAKA");
           } else {
             setRoadArea(user.address);
           }
@@ -288,8 +290,14 @@ export default function CheckoutPage() {
                         <select
                           value={district}
                           onChange={(e) => {
-                            setDistrict(e.target.value);
+                            const val = e.target.value;
+                            setDistrict(val);
                             setThana(""); // Reset thana when district changes
+                            if (val === "Dhaka") {
+                              setDeliveryZone("INSIDE_DHAKA");
+                            } else {
+                              setDeliveryZone("OUTSIDE_DHAKA");
+                            }
                           }}
                           required
                           className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2.5 text-xs font-semibold outline-none focus:border-brand-orange transition"
@@ -342,19 +350,7 @@ export default function CheckoutPage() {
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase tracking-wider">
-                      Delivery Location / Zone
-                    </label>
-                    <select
-                      value={deliveryZone}
-                      onChange={(e) => setDeliveryZone(e.target.value)}
-                      className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-2.5 text-xs font-semibold outline-none focus:border-brand-orange transition"
-                    >
-                      <option value="INSIDE_DHAKA">Inside Dhaka (Starts at 80 TK)</option>
-                      <option value="OUTSIDE_DHAKA">Outside Dhaka (Starts at 150 TK)</option>
-                    </select>
-                  </div>
+
 
                   <div>
                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase tracking-wider">
