@@ -1055,6 +1055,7 @@ export default function CatalogPage() {
               <li><Link href="/" className="hover:text-brand-orange transition">Privacy Policy</Link></li>
               <li><Link href="/terms" className="hover:text-brand-orange transition">Terms and Conditions</Link></li>
               <li><Link href="/checkout" className="hover:text-brand-orange transition">Checkout Page</Link></li>
+              <li><Link href="/track" className="hover:text-brand-orange transition">Track Order</Link></li>
             </ul>
           </div>
         </div>

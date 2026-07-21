@@ -194,7 +194,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             
             {/* Track Order */}
             <Link 
-              href="/checkout" 
+              href="/track" 
               className="flex flex-col items-center cursor-pointer text-zinc-650 dark:text-zinc-350 hover:text-brand-orange transition"
               title="Track Order"
             >
