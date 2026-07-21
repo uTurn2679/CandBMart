@@ -189,7 +189,7 @@ export default function ProductDetailClient({
               <h3 className="text-sm font-black text-zinc-900 dark:text-white uppercase tracking-widest mb-2">
                 বিবরণ
               </h3>
-              <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed text-sm md:text-base">
+              <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed text-sm md:text-base whitespace-pre-line">
                 {product.description}
               </p>
             </div>
