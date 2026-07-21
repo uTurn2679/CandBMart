@@ -172,8 +172,8 @@ export default function AdminDashboard() {
       const data = await res.json();
       if (data.success) {
         if (!orderStatusFilter) {
-          // Hide DELIVERED orders from the default view to keep it clean
-          setOrders(data.orders.filter((o: any) => o.orderStatus !== "DELIVERED"));
+          // Hide DELIVERED and CANCELLED orders from the default view to keep it clean
+          setOrders(data.orders.filter((o: any) => o.orderStatus !== "DELIVERED" && o.orderStatus !== "CANCELLED"));
         } else {
           setOrders(data.orders);
         }
