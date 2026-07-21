@@ -171,7 +171,12 @@ export default function AdminDashboard() {
       const res = await fetch(url);
       const data = await res.json();
       if (data.success) {
-        setOrders(data.orders);
+        if (!orderStatusFilter) {
+          // Hide DELIVERED orders from the default view to keep it clean
+          setOrders(data.orders.filter((o: any) => o.status !== "DELIVERED"));
+        } else {
+          setOrders(data.orders);
+        }
       }
     } catch (e) {
       console.error("Failed to load orders");
