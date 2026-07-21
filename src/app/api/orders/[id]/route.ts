@@ -7,10 +7,21 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
   try {
     const { id } = await params;
 
-    // Search by UUID, orderNumber, or customerPhone
+    const orConditions: any[] = [
+      { id: id }, 
+      { orderNumber: id }, 
+      { customerPhone: id }
+    ];
+
+    const digitsOnly = id.replace(/\D/g, '');
+    if (digitsOnly.length >= 11) {
+      orConditions.push({ customerPhone: { endsWith: digitsOnly.slice(-11) } });
+    }
+
+    // Search by UUID, orderNumber, or customerPhone (last 11 digits)
     const order = await prisma.order.findFirst({
       where: {
-        OR: [{ id: id }, { orderNumber: id }, { customerPhone: id }],
+        OR: orConditions,
       },
       orderBy: { createdAt: "desc" },
       include: {
