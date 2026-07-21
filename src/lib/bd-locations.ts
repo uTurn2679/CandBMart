@@ -686,29 +686,244 @@ export const bdLocations = [
     "bn_name": "ঢাকা",
     "upazilas": [
       {
-        "id": "365",
-        "name": "Savar",
-        "bn_name": "সাভার"
+        "id": "dhaka-area-0",
+        "name": "Adabor",
+        "bn_name": "Adabor"
       },
       {
-        "id": "366",
+        "id": "dhaka-area-1",
+        "name": "Badda",
+        "bn_name": "Badda"
+      },
+      {
+        "id": "dhaka-area-2",
+        "name": "Bangshal",
+        "bn_name": "Bangshal"
+      },
+      {
+        "id": "dhaka-area-3",
+        "name": "Bimanbandar",
+        "bn_name": "Bimanbandar"
+      },
+      {
+        "id": "dhaka-area-4",
+        "name": "Cantonment",
+        "bn_name": "Cantonment"
+      },
+      {
+        "id": "dhaka-area-5",
+        "name": "Chawkbazar",
+        "bn_name": "Chawkbazar"
+      },
+      {
+        "id": "dhaka-area-6",
+        "name": "Dakshinkhan",
+        "bn_name": "Dakshinkhan"
+      },
+      {
+        "id": "dhaka-area-7",
+        "name": "Darus Salam",
+        "bn_name": "Darus Salam"
+      },
+      {
+        "id": "dhaka-area-8",
+        "name": "Demra",
+        "bn_name": "Demra"
+      },
+      {
+        "id": "dhaka-area-45",
         "name": "Dhamrai",
-        "bn_name": "ধামরাই"
+        "bn_name": "Dhamrai"
       },
       {
-        "id": "367",
-        "name": "Keraniganj",
-        "bn_name": "কেরাণীগঞ্জ"
+        "id": "dhaka-area-9",
+        "name": "Dhanmondi",
+        "bn_name": "Dhanmondi"
       },
       {
-        "id": "368",
-        "name": "Nawabganj",
-        "bn_name": "নবাবগঞ্জ"
-      },
-      {
-        "id": "369",
+        "id": "dhaka-area-47",
         "name": "Dohar",
-        "bn_name": "দোহার"
+        "bn_name": "Dohar"
+      },
+      {
+        "id": "dhaka-area-10",
+        "name": "Gendaria",
+        "bn_name": "Gendaria"
+      },
+      {
+        "id": "dhaka-area-11",
+        "name": "Gulshan",
+        "bn_name": "Gulshan"
+      },
+      {
+        "id": "dhaka-area-12",
+        "name": "Hazaribagh",
+        "bn_name": "Hazaribagh"
+      },
+      {
+        "id": "dhaka-area-13",
+        "name": "Jatrabari",
+        "bn_name": "Jatrabari"
+      },
+      {
+        "id": "dhaka-area-14",
+        "name": "Kadamtali",
+        "bn_name": "Kadamtali"
+      },
+      {
+        "id": "dhaka-area-15",
+        "name": "Kafrul",
+        "bn_name": "Kafrul"
+      },
+      {
+        "id": "dhaka-area-16",
+        "name": "Kalabagan",
+        "bn_name": "Kalabagan"
+      },
+      {
+        "id": "dhaka-area-17",
+        "name": "Kamrangirchar",
+        "bn_name": "Kamrangirchar"
+      },
+      {
+        "id": "dhaka-area-44",
+        "name": "Keraniganj",
+        "bn_name": "Keraniganj"
+      },
+      {
+        "id": "dhaka-area-18",
+        "name": "Khilgaon",
+        "bn_name": "Khilgaon"
+      },
+      {
+        "id": "dhaka-area-19",
+        "name": "Khilkhet",
+        "bn_name": "Khilkhet"
+      },
+      {
+        "id": "dhaka-area-20",
+        "name": "Kotwali",
+        "bn_name": "Kotwali"
+      },
+      {
+        "id": "dhaka-area-21",
+        "name": "Lalbagh",
+        "bn_name": "Lalbagh"
+      },
+      {
+        "id": "dhaka-area-22",
+        "name": "Mirpur",
+        "bn_name": "Mirpur"
+      },
+      {
+        "id": "dhaka-area-23",
+        "name": "Mohammadpur",
+        "bn_name": "Mohammadpur"
+      },
+      {
+        "id": "dhaka-area-24",
+        "name": "Motijheel",
+        "bn_name": "Motijheel"
+      },
+      {
+        "id": "dhaka-area-46",
+        "name": "Nawabganj",
+        "bn_name": "Nawabganj"
+      },
+      {
+        "id": "dhaka-area-25",
+        "name": "New Market",
+        "bn_name": "New Market"
+      },
+      {
+        "id": "dhaka-area-26",
+        "name": "Pallabi",
+        "bn_name": "Pallabi"
+      },
+      {
+        "id": "dhaka-area-27",
+        "name": "Paltan",
+        "bn_name": "Paltan"
+      },
+      {
+        "id": "dhaka-area-28",
+        "name": "Ramna",
+        "bn_name": "Ramna"
+      },
+      {
+        "id": "dhaka-area-29",
+        "name": "Rampura",
+        "bn_name": "Rampura"
+      },
+      {
+        "id": "dhaka-area-30",
+        "name": "Sabujbagh",
+        "bn_name": "Sabujbagh"
+      },
+      {
+        "id": "dhaka-area-31",
+        "name": "Savar",
+        "bn_name": "Savar"
+      },
+      {
+        "id": "dhaka-area-32",
+        "name": "Shah Ali",
+        "bn_name": "Shah Ali"
+      },
+      {
+        "id": "dhaka-area-33",
+        "name": "Shahbagh",
+        "bn_name": "Shahbagh"
+      },
+      {
+        "id": "dhaka-area-34",
+        "name": "Sher-e-Bangla Nagar",
+        "bn_name": "Sher-e-Bangla Nagar"
+      },
+      {
+        "id": "dhaka-area-35",
+        "name": "Shyampur",
+        "bn_name": "Shyampur"
+      },
+      {
+        "id": "dhaka-area-36",
+        "name": "Sutrapur",
+        "bn_name": "Sutrapur"
+      },
+      {
+        "id": "dhaka-area-37",
+        "name": "Tejgaon",
+        "bn_name": "Tejgaon"
+      },
+      {
+        "id": "dhaka-area-38",
+        "name": "Turag",
+        "bn_name": "Turag"
+      },
+      {
+        "id": "dhaka-area-39",
+        "name": "Uttara",
+        "bn_name": "Uttara"
+      },
+      {
+        "id": "dhaka-area-40",
+        "name": "Uttarkhan",
+        "bn_name": "Uttarkhan"
+      },
+      {
+        "id": "dhaka-area-41",
+        "name": "Vasantek",
+        "bn_name": "Vasantek"
+      },
+      {
+        "id": "dhaka-area-42",
+        "name": "Vatara",
+        "bn_name": "Vatara"
+      },
+      {
+        "id": "dhaka-area-43",
+        "name": "Wari",
+        "bn_name": "Wari"
       }
     ]
   },
