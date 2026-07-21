@@ -173,7 +173,7 @@ export default function AdminDashboard() {
       if (data.success) {
         if (!orderStatusFilter) {
           // Hide DELIVERED orders from the default view to keep it clean
-          setOrders(data.orders.filter((o: any) => o.status !== "DELIVERED"));
+          setOrders(data.orders.filter((o: any) => o.orderStatus !== "DELIVERED"));
         } else {
           setOrders(data.orders);
         }
