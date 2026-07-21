@@ -44,6 +44,9 @@ export default function CheckoutPage() {
     if (user) {
       setCustomerName(user.name || "");
       setCustomerPhone(user.phone_number || "");
+      if (user.address) {
+        setDeliveryAddress(user.address);
+      }
     }
   }, [user]);
 

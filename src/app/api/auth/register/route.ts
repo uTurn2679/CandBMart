@@ -4,25 +4,18 @@ import { setSessionCookie, hashPassword } from "@/lib/session";
 
 export async function POST(request: Request) {
   try {
-    const { name, email, phone_number, password } = await request.json();
+    const { name, phone_number, password, address } = await request.json();
 
-    if (!password || (!email && !phone_number)) {
+    if (!password || !phone_number) {
       return NextResponse.json(
-        { error: "Password and at least one identifier (email or phone number) are required." },
+        { error: "Phone number and password are required." },
         { status: 400 }
       );
     }
 
-    const cleanEmail = email ? email.trim().toLowerCase() : null;
     const cleanPhone = phone_number ? phone_number.trim() : null;
 
-    // Check if email already exists
-    if (cleanEmail) {
-      const existingEmail = await prisma.user.findUnique({ where: { email: cleanEmail } });
-      if (existingEmail) {
-        return NextResponse.json({ error: "Email already registered." }, { status: 400 });
-      }
-    }
+    // Email is removed from registration
 
     // Check if phone number already exists
     if (cleanPhone) {
@@ -37,11 +30,11 @@ export async function POST(request: Request) {
     const user = await prisma.user.create({
       data: {
         name: name || "Customer",
-        email: cleanEmail,
+        email: null,
         phone_number: cleanPhone,
+        address: address ? address.trim() : null,
         passwordHash,
         role: "USER",
-        isEmailVerified: false,
         isPhoneVerified: false,
       },
     });
@@ -55,8 +48,8 @@ export async function POST(request: Request) {
       user: {
         id: user.id,
         name: user.name,
-        email: user.email,
         phone_number: user.phone_number,
+        address: user.address,
         role: user.role,
       },
     });

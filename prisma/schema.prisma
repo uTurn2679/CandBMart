@@ -12,6 +12,7 @@ model User {
   name             String?
   email            String?        @unique
   phone_number     String?        @unique
+  address          String?
   passwordHash     String?
   isPhoneVerified  Boolean        @default(false)
   isEmailVerified  Boolean        @default(false)

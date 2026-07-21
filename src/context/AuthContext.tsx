@@ -1,13 +1,14 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { X, Lock, Mail, Phone, User, Key } from "lucide-react";
+import { X, Lock, Mail, Phone, User, Key, MapPin } from "lucide-react";
 
 export interface UserType {
   id: string;
   name: string;
   email: string | null;
   phone_number: string | null;
+  address: string | null;
   role: string;
 }
 
@@ -30,10 +31,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Modal specific state
   const [authMethod, setAuthMethod] = useState<"PASSWORD" | "OTP">("PASSWORD"); // OTP or PASSWORD
   const [authMode, setAuthMode] = useState<"LOGIN" | "REGISTER" | "FORGOT_PASSWORD">("LOGIN"); // LOGIN, REGISTER, FORGOT_PASSWORD
-  const [identifier, setIdentifier] = useState(""); // email or phone
+  const [identifier, setIdentifier] = useState(""); // phone
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [otpCode, setOtpCode] = useState("");
@@ -83,7 +84,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!identifier) {
-      setErrorMsg("Please enter your Phone number or Email.");
+      setErrorMsg("Please enter your Phone number.");
       return;
     }
     setErrorMsg("");
@@ -146,7 +147,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const handleSendResetOTP = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!identifier) {
-      setErrorMsg("Please enter your Phone number or Email.");
+      setErrorMsg("Please enter your Phone number.");
       return;
     }
     setErrorMsg("");
@@ -175,7 +176,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!identifier || !otpCode || !password) {
-      setErrorMsg("Email/Phone, OTP, and New Password are required.");
+      setErrorMsg("Phone number, OTP, and New Password are required.");
       return;
     }
     setErrorMsg("");
@@ -210,7 +211,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const handlePasswordLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!identifier || !password) {
-      setErrorMsg("Email/Phone and Password are required.");
+      setErrorMsg("Phone number and Password are required.");
       return;
     }
     setErrorMsg("");
@@ -239,8 +240,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const handlePasswordRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || (!email && !phone) || !password) {
-      setErrorMsg("Name, Password, and Email or Phone are required.");
+    if (!name || !phone || !password || !address) {
+      setErrorMsg("Name, Phone, Address, and Password are required.");
       return;
     }
     setErrorMsg("");
@@ -249,14 +250,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone_number: phone, password }),
+        body: JSON.stringify({ name, phone_number: phone, password, address }),
       });
       const data = await res.json();
       if (res.ok) {
         setUser(data.user);
         setShowAuthModal(false);
         setName("");
-        setEmail("");
+        setAddress("");
         setPhone("");
         setPassword("");
       } else {
@@ -351,15 +352,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 <form onSubmit={handlePasswordLogin} className="space-y-4">
                   <div>
                     <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
-                      Email or Phone Number
+                      Phone Number
                     </label>
                     <div className="relative">
                       <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-zinc-400">
-                        <Mail size={16} />
+                        <Phone size={16} />
                       </span>
                       <input
                         type="text"
-                        placeholder="e.g. admin@ecommerce.com"
+                        placeholder="e.g. 01711111111"
                         value={identifier}
                         onChange={(e) => setIdentifier(e.target.value)}
                         required
@@ -416,15 +417,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     <form onSubmit={handleSendResetOTP} className="space-y-4">
                       <div>
                         <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
-                          Registered Email or Phone
+                          Phone Number
                         </label>
                         <div className="relative">
                           <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-zinc-400">
-                            <Mail size={16} />
+                            <Phone size={16} />
                           </span>
                           <input
                             type="text"
-                            placeholder="e.g. admin@ecommerce.com"
+                            placeholder="e.g. 01711111111"
                             value={identifier}
                             onChange={(e) => setIdentifier(e.target.value)}
                             required
@@ -526,17 +527,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
-                      Email Address
+                      Phone Number
                     </label>
                     <div className="relative">
                       <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-zinc-400">
-                        <Mail size={16} />
+                        <Phone size={16} />
                       </span>
                       <input
-                        type="email"
-                        placeholder="habib@example.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        type="text"
+                        placeholder="01711111111"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        required
+                        className="w-full pl-10 pr-4 py-2 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-transparent focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none text-sm text-zinc-900 dark:text-white transition"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
+                      Full Delivery Address
+                    </label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-zinc-400">
+                        <MapPin size={16} />
+                      </span>
+                      <input
+                        type="text"
+                        placeholder="House No, Road No, Area, City"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        required
                         className="w-full pl-10 pr-4 py-2 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-transparent focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none text-sm text-zinc-900 dark:text-white transition"
                       />
                     </div>
