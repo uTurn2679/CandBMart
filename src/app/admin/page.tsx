@@ -171,12 +171,7 @@ export default function AdminDashboard() {
       const res = await fetch(url);
       const data = await res.json();
       if (data.success) {
-        if (!orderStatusFilter) {
-          // Hide DELIVERED and CANCELLED orders from the default view to keep it clean
-          setOrders(data.orders.filter((o: any) => o.orderStatus !== "DELIVERED" && o.orderStatus !== "CANCELLED"));
-        } else {
-          setOrders(data.orders);
-        }
+        setOrders(data.orders);
       }
     } catch (e) {
       console.error("Failed to load orders");
