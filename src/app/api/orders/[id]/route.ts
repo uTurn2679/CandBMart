@@ -25,7 +25,19 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
       },
       orderBy: { createdAt: "desc" },
       include: {
-        items: true,
+        items: {
+          include: {
+            product: {
+              select: {
+                slug: true,
+                images: {
+                  where: { isPrimary: true },
+                  take: 1
+                }
+              }
+            }
+          }
+        },
         payment: true,
         trackingHistory: {
           orderBy: { createdAt: "desc" },

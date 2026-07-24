@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import { Check, Clock, Truck, ShieldAlert, ArrowLeft, ClipboardList, Wallet } from "lucide-react";
@@ -225,9 +226,26 @@ export default function OrderTrackingPage() {
               <div className="divide-y divide-zinc-100 dark:divide-zinc-900 space-y-3">
                 {order.items.map((item: any) => (
                   <div key={item.id} className="flex justify-between items-center gap-4 pt-3 first:pt-0">
-                    <div className="min-w-0">
-                      <h4 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 truncate">{item.productName}</h4>
-                      <p className="text-[10px] text-zinc-400 mt-0.5 font-medium">{item.variantName} x {item.quantity}</p>
+                    <div className="flex items-center gap-3 min-w-0">
+                      {item.product?.images?.[0]?.imageUrl ? (
+                        <div className="w-10 h-10 rounded-lg overflow-hidden shrink-0 bg-zinc-100 dark:bg-zinc-800">
+                          <Image 
+                            src={item.product.images[0].imageUrl}  
+                            alt={item.productName} 
+                            width={40} 
+                            height={40} 
+                            className="w-full h-full object-cover" 
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-10 h-10 rounded-lg shrink-0 bg-zinc-100 dark:bg-zinc-800" />
+                      )}
+                      <div className="min-w-0">
+                        <Link href={`/product/${item.product?.slug || '#'}`} className="hover:underline">
+                          <h4 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 truncate">{item.productName}</h4>
+                        </Link>
+                        <p className="text-[10px] text-zinc-400 mt-0.5 font-medium">{item.variantName} x {item.quantity}</p>
+                      </div>
                     </div>
                     <span className="text-xs font-bold text-zinc-905 dark:text-white shrink-0">
                       {item.totalPrice.toLocaleString()} TK
